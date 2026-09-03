@@ -1,0 +1,2246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pharmacology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:ital,wght@0,500;0,600;1,500&display=swap">
+
+<style>
+/* ---- accent presets: hue + tuning only ---- */
+:root,:root[data-accent="teal"]  { --h:176; --as:72%; --al:23%; --asd:52%; --ald:62%; }
+:root[data-accent="pink"]        { --h:335; --as:58%; --al:40%; --asd:62%; --ald:72%; }
+:root[data-accent="violet"]      { --h:272; --as:46%; --al:44%; --asd:52%; --ald:74%; }
+:root[data-accent="blue"]        { --h:212; --as:66%; --al:36%; --asd:58%; --ald:68%; }
+:root[data-accent="amber"]       { --h:32;  --as:74%; --al:32%; --asd:62%; --ald:62%; }
+:root[data-accent="forest"]      { --h:150; --as:52%; --al:26%; --asd:46%; --ald:60%; }
+
+/* ---- light palette: every neutral derived from the same hue ---- */
+:root{
+  --ground:hsl(var(--h) 18% 96%);
+  --surface:hsl(var(--h) 40% 99.5%);
+  --surface-2:hsl(var(--h) 26% 97.4%);
+  --ink:hsl(var(--h) 26% 11%);
+  --muted:hsl(var(--h) 14% 34%);
+  --faint:hsl(var(--h) 13% 41%);
+  --border:hsl(var(--h) 16% 87%);
+  --border-strong:hsl(var(--h) 14% 77%);
+  --accent:hsl(var(--h) var(--as) var(--al));
+  --accent-ink:hsl(var(--h) var(--as) calc(var(--al) - 7%));
+  --accent-soft:hsl(var(--h) var(--as) var(--al) / .09);
+  --on-accent:#fff;
+  --mild:#6E7F3A; --mod:#B0742A; --sev:#9E2B37;
+  --mild-bg:#6E7F3A1a; --mod-bg:#B0742A1a; --sev-bg:#9E2B371a;
+  --shadow:0 1px 2px hsl(var(--h) 26% 11% / .07), 0 8px 24px -16px hsl(var(--h) 26% 11% / .16);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:hsl(var(--h) 24% 6.5%);
+    --surface:hsl(var(--h) 20% 10.5%);
+    --surface-2:hsl(var(--h) 18% 13.5%);
+    --ink:hsl(var(--h) 14% 91%);
+    --muted:hsl(var(--h) 11% 70%);
+    --faint:hsl(var(--h) 10% 60%);
+    --border:hsl(var(--h) 16% 21%);
+    --border-strong:hsl(var(--h) 14% 31%);
+    --accent:hsl(var(--h) var(--asd) var(--ald));
+    --accent-ink:hsl(var(--h) var(--asd) calc(var(--ald) + 13%));
+    --accent-soft:hsl(var(--h) var(--asd) var(--ald) / .16);
+    --on-accent:hsl(var(--h) 32% 8%);
+    --mild:#A3B76A; --mod:#D9A45F; --sev:#DE7C86;
+    --mild-bg:#A3B76A1f; --mod-bg:#D9A45F1f; --sev-bg:#DE7C861f;
+    --shadow:0 1px 2px #0006, 0 8px 24px -16px #0009;
+  }
+}
+:root[data-theme="dark"]{
+    --ground:hsl(var(--h) 24% 6.5%);
+    --surface:hsl(var(--h) 20% 10.5%);
+    --surface-2:hsl(var(--h) 18% 13.5%);
+    --ink:hsl(var(--h) 14% 91%);
+    --muted:hsl(var(--h) 11% 70%);
+    --faint:hsl(var(--h) 10% 60%);
+    --border:hsl(var(--h) 16% 21%);
+    --border-strong:hsl(var(--h) 14% 31%);
+    --accent:hsl(var(--h) var(--asd) var(--ald));
+    --accent-ink:hsl(var(--h) var(--asd) calc(var(--ald) + 13%));
+    --accent-soft:hsl(var(--h) var(--asd) var(--ald) / .16);
+    --on-accent:hsl(var(--h) 32% 8%);
+    --mild:#A3B76A; --mod:#D9A45F; --sev:#DE7C86;
+    --mild-bg:#A3B76A1f; --mod-bg:#D9A45F1f; --sev-bg:#DE7C861f;
+    --shadow:0 1px 2px #0006, 0 8px 24px -16px #0009;
+}
+
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- masthead ---------- */
+.masthead{
+  border-bottom:1px solid var(--border); background:var(--surface);
+  padding:34px 28px 26px;
+}
+.mast-in{max-width:1180px; margin:0 auto; display:flex; flex-wrap:wrap; gap:20px; align-items:flex-end; justify-content:space-between}
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:11px; font-weight:500;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin:0 0 8px;
+}
+h1{
+  font-family:Spectral,Georgia,serif; font-weight:600; font-size:clamp(28px,4.4vw,42px);
+  line-height:1.1; margin:0; letter-spacing:-.015em; text-wrap:balance;
+}
+.sub{margin:10px 0 0; color:var(--muted); max-width:60ch; font-size:14.5px}
+.xlink{
+  display:inline-block; margin-top:14px; font-family:"IBM Plex Mono",monospace;
+  font-size:12px; letter-spacing:.04em; text-decoration:none;
+  color:var(--accent); border:1px solid var(--border-strong);
+  border-radius:20px; padding:6px 13px;
+}
+.xlink:hover{border-color:var(--accent); background:var(--accent-soft)}
+
+
+/* ---------- controls ---------- */
+.controls{
+  position:sticky; top:0; z-index:30; background:var(--surface);
+  border-bottom:1px solid var(--border); padding:11px 28px;
+}
+.ctl-in{max-width:1180px; margin:0 auto; display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+#q{
+  flex:1 1 240px; min-width:180px; padding:9px 12px; font:inherit; font-size:14px;
+  color:var(--ink); background:var(--surface-2);
+  border:1px solid var(--border-strong); border-radius:7px;
+}
+#q::placeholder{color:var(--faint)}
+#q:focus-visible,button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+button{
+  font:inherit; font-size:13px; font-weight:500; padding:9px 14px; cursor:pointer;
+  color:var(--ink); background:var(--surface-2);
+  border:1px solid var(--border-strong); border-radius:7px;
+}
+button:hover{border-color:var(--accent); color:var(--accent)}
+button[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--on-accent)}
+.hint{font-size:12.5px; color:var(--muted); flex-basis:100%}
+
+/* ---------- shell ---------- */
+.shell{max-width:960px; margin:0 auto; padding:26px 28px}
+nav{display:grid; grid-template-columns:repeat(auto-fill,minmax(168px,1fr)); gap:1px 14px}
+nav a{
+  font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.03em;
+  color:var(--muted); text-decoration:none; padding:5px 9px; border-left:2px solid var(--border);
+}
+nav a:hover{color:var(--accent); border-left-color:var(--accent); background:var(--accent-soft)}
+main{display:flex; flex-direction:column; gap:26px; min-width:0}
+
+/* ---------- sections ---------- */
+section{
+  background:var(--surface); border:1px solid var(--border); border-radius:10px;
+  box-shadow:var(--shadow); overflow:hidden; scroll-margin-top:76px;
+}
+.head{padding:16px 20px 13px; border-bottom:1px solid var(--border); background:var(--surface-2)}
+.head h2{
+  font-family:Spectral,Georgia,serif; font-weight:600; font-size:19px;
+  margin:0; letter-spacing:-.01em;
+}
+.head p{margin:5px 0 0; font-size:13px; color:var(--muted); max-width:70ch}
+.slide{
+  float:right; font-family:"IBM Plex Mono",monospace; font-size:10.5px;
+  color:var(--faint); letter-spacing:.05em; padding-left:12px;
+}
+.wrap{overflow-x:auto}
+
+/* ---------- tables ---------- */
+table{border-collapse:collapse; width:100%; min-width:520px; font-size:13.6px}
+th,td{text-align:left; padding:10px 14px; vertical-align:top; border-bottom:1px solid var(--border)}
+thead th{
+  font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:500;
+  letter-spacing:.11em; text-transform:uppercase; color:var(--muted);
+  background:var(--surface-2); border-bottom:1px solid var(--border-strong); white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--accent-soft)}
+.term{font-weight:600; white-space:nowrap}
+.mono{font-family:"IBM Plex Mono",monospace; font-size:12.5px; font-variant-numeric:tabular-nums}
+.step{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--accent);
+  font-weight:600; white-space:nowrap;
+}
+em{font-style:italic; color:var(--muted)}
+code{
+  font-family:"IBM Plex Mono",monospace; font-size:12px; background:var(--accent-soft);
+  color:var(--accent-ink); padding:1px 5px; border-radius:4px;
+}
+
+/* severity encoding — ordinal, so it earns the stripe */
+tr[data-sev] td:first-child{border-left:3px solid transparent}
+tr[data-sev="1"] td:first-child{border-left-color:var(--mild)}
+tr[data-sev="2"] td:first-child{border-left-color:var(--mod)}
+tr[data-sev="3"] td:first-child{border-left-color:var(--sev)}
+.pill{
+  display:inline-block; font-family:"IBM Plex Mono",monospace; font-size:10.5px;
+  font-weight:500; letter-spacing:.06em; text-transform:uppercase;
+  padding:2px 7px; border-radius:20px; white-space:nowrap;
+}
+.p1{background:var(--mild-bg); color:var(--mild)}
+.p2{background:var(--mod-bg); color:var(--mod)}
+.p3{background:var(--sev-bg); color:var(--sev)}
+
+/* ---------- callout ---------- */
+.note{
+  margin:0; padding:12px 20px; background:var(--accent-soft);
+  border-top:1px solid var(--border); font-size:13px; color:var(--muted);
+}
+.note strong{color:var(--accent-ink)}
+.note.warn{background:var(--mod-bg)}
+.note.warn strong{color:var(--mod)}
+
+/* ---------- quiz mode ---------- */
+body.quiz td.a{
+  color:transparent; background:var(--surface-2); cursor:pointer;
+  border-radius:4px; position:relative; user-select:none;
+}
+body.quiz td.a *{visibility:hidden}
+body.quiz td.a::after{
+  content:"tap to reveal"; position:absolute; inset:0;
+  display:flex; align-items:center; padding-left:14px;
+  font-family:"IBM Plex Mono",monospace; font-size:10.5px;
+  letter-spacing:.06em; color:var(--faint);
+}
+body.quiz td.a.show{color:inherit; background:none; cursor:default}
+body.quiz td.a.show *{visibility:visible}
+body.quiz td.a.show::after{content:none}
+
+.hidden{display:none !important}
+#empty{
+  padding:36px 20px; text-align:center; color:var(--muted);
+  font-size:14px; background:var(--surface); border:1px dashed var(--border-strong); border-radius:10px;
+}
+footer{
+  max-width:1180px; margin:0 auto; padding:8px 28px 44px;
+  font-size:12.5px; color:var(--muted);
+}
+
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr; gap:20px; padding:20px}
+  nav{position:static; flex-direction:row; flex-wrap:wrap; gap:6px}
+  nav a{border-left:none; border:1px solid var(--border); border-radius:20px; padding:4px 11px}
+  .masthead,.controls{padding-left:20px; padding-right:20px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none !important; transition:none !important}}
+@media print{
+  .controls,nav,footer{display:none}
+  .shell{grid-template-columns:1fr; padding:0}
+  section{break-inside:avoid; box-shadow:none}
+  body{background:#fff}
+}
+
+/* ---- accent picker ---- */
+.swatches{display:inline-flex; gap:6px; align-items:center}
+.sw{
+  width:20px; height:20px; padding:0; border-radius:50%; cursor:pointer;
+  border:1px solid hsl(var(--sw) 30% 50% / .5);
+  background:hsl(var(--sw) 62% 46%);
+}
+.sw:hover{transform:scale(1.12)}
+.sw[aria-pressed="true"]{box-shadow:0 0 0 2px var(--surface),0 0 0 4px hsl(var(--sw) 62% 46%)}
+.sw:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+
+/* ---- shared class notes ---- */
+.notes{border-top:1px dashed var(--border-strong); background:var(--surface-2); padding:11px 20px 13px}
+.notes-head{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+.notes-head h3{
+  font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:500;
+  letter-spacing:.11em; text-transform:uppercase; color:var(--muted); margin:0;
+}
+.cnote{display:flex; gap:10px; padding:7px 0 6px; border-top:1px solid var(--border); font-size:13.4px}
+.note-who{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--accent);
+  white-space:nowrap; padding-top:2px; flex:0 0 auto; max-width:11ch; overflow:hidden; text-overflow:ellipsis;
+}
+.note-body{flex:1 1 auto; min-width:0; word-wrap:break-word}
+.note-when{font-family:"IBM Plex Mono",monospace; font-size:10px; color:var(--faint); margin-left:6px}
+.note-del{
+  flex:0 0 auto; font:inherit; font-size:15px; line-height:1; padding:2px 6px; cursor:pointer;
+  color:var(--faint); background:none; border:1px solid transparent; border-radius:5px;
+}
+.note-del:hover{color:var(--sev); border-color:var(--border-strong)}
+.note-add{
+  font:inherit; font-size:11.5px; font-family:"IBM Plex Mono",monospace; cursor:pointer;
+  padding:4px 10px; border-radius:20px; color:var(--accent);
+  background:none; border:1px dashed var(--border-strong);
+}
+.note-add:hover{border-color:var(--accent); background:var(--accent-soft); border-style:solid}
+.note-form{display:none; gap:8px; margin-top:9px; flex-wrap:wrap}
+.note-form.open{display:flex}
+.note-form textarea{
+  flex:1 1 240px; min-height:52px; resize:vertical; font:inherit; font-size:13.5px;
+  padding:8px 10px; color:var(--ink); background:var(--surface);
+  border:1px solid var(--border-strong); border-radius:7px;
+}
+.note-form textarea:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.note-msg{font-size:12.5px; color:var(--muted); margin-top:7px}
+.note-msg.ro{color:var(--mod)}
+body.readonly .note-add,body.readonly .note-del{display:none}
+@media print{.notes-head,.note-form,.note-del{display:none} .notes{background:none}}
+
+/* ---- chapter grouping + filter ---- */
+nav .navgroup{
+  font-family:"IBM Plex Mono",monospace; font-size:9.5px; font-weight:500;
+  letter-spacing:.11em; text-transform:uppercase; color:var(--faint);
+  margin:12px 0 3px; padding:0 9px; border-left:2px solid transparent;
+}
+nav .navgroup:first-child{margin-top:0}
+.chips{display:flex; gap:5px; flex-wrap:wrap; align-items:center}
+.chip{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:500;
+  padding:6px 10px; border-radius:20px; cursor:pointer; letter-spacing:.03em;
+  color:var(--muted); background:var(--surface-2);
+  border:1px solid var(--border-strong);
+}
+.chip:hover{border-color:var(--accent); color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--on-accent)}
+@media print{.chips{display:none}}
+
+/* ---- flashcards ---- */
+#fc{
+  position:fixed; inset:0; z-index:60; background:var(--ground);
+  display:flex; flex-direction:column; align-items:center;
+  padding:18px 20px 26px; overflow-y:auto;
+}
+#fc[hidden]{display:none}
+.fc-bar{
+  width:100%; max-width:720px; display:flex; gap:10px; align-items:center;
+  flex-wrap:wrap; margin-bottom:16px;
+}
+.fc-count{
+  font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.06em;
+  color:var(--muted); margin-right:auto;
+}
+.fc-count b{color:var(--accent); font-size:14px}
+.fc-card{
+  width:100%; max-width:720px; min-height:270px; cursor:pointer;
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  box-shadow:var(--shadow); padding:26px 26px 22px;
+  display:flex; flex-direction:column; gap:14px;
+}
+.fc-card:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+.fc-src{
+  font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--faint);
+}
+.fc-prompt{font-size:13px; color:var(--muted); margin-bottom:-6px}
+.fc-prompt[hidden]{display:none}
+.fc-front{
+  font-family:Spectral,Georgia,serif; font-size:clamp(20px,3.2vw,28px);
+  line-height:1.25; color:var(--ink); text-wrap:balance;
+}
+.fc-front strong{font-weight:600}
+.fc-back{border-top:1px solid var(--border); padding-top:14px; font-size:14.5px; line-height:1.6}
+.fc-field{margin-bottom:10px}
+.fc-field:last-child{margin-bottom:0}
+.fc-label{
+  display:block; font-family:"IBM Plex Mono",monospace; font-size:9.5px;
+  letter-spacing:.11em; text-transform:uppercase; color:var(--faint); margin-bottom:2px;
+}
+.fc-hint{
+  margin-top:auto; font-family:"IBM Plex Mono",monospace; font-size:10.5px;
+  letter-spacing:.05em; color:var(--faint);
+}
+.fc-actions{width:100%; max-width:720px; display:flex; gap:9px; margin-top:14px}
+.fc-actions button{flex:1}
+#fc-again{border-color:var(--mod); color:var(--mod)}
+#fc-again:hover{background:var(--mod-bg)}
+#fc-got{border-color:var(--mild); color:var(--mild)}
+#fc-got:hover{background:var(--mild-bg)}
+.fc-done{
+  width:100%; max-width:720px; text-align:center; padding:44px 20px;
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+}
+.fc-done h3{font-family:Spectral,Georgia,serif; font-size:22px; margin:0 0 8px}
+.fc-done p{color:var(--muted); font-size:14px; margin:0 0 18px}
+@media print{#fc{display:none !important}}
+
+/* ---- NCLEX practice ---- */
+#nx{position:fixed; inset:0; z-index:61; background:var(--ground);
+  display:flex; flex-direction:column; align-items:center; padding:18px 20px 30px; overflow-y:auto}
+#nx[hidden]{display:none}
+.nx-bar{width:100%; max-width:760px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:16px}
+.nx-score{font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.06em; color:var(--muted); margin-right:auto}
+.nx-score b{color:var(--accent); font-size:14px}
+.nx-card{width:100%; max-width:760px; background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; box-shadow:var(--shadow); padding:24px 26px 22px}
+.nx-meta{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--faint); margin-bottom:10px}
+.nx-tag{display:inline-block; padding:2px 7px; border-radius:20px; background:var(--accent-soft); color:var(--accent-ink); margin-left:6px}
+.nx-stem{font-size:16.5px; line-height:1.55; margin-bottom:16px; text-wrap:pretty}
+.nx-opts{display:flex; flex-direction:column; gap:8px; margin-bottom:16px}
+.nx-opt{display:flex; gap:11px; align-items:flex-start; padding:11px 13px; cursor:pointer;
+  border:1px solid var(--border-strong); border-radius:9px; font-size:14.5px; line-height:1.5; background:var(--surface)}
+.nx-opt:hover{border-color:var(--accent); background:var(--accent-soft)}
+.nx-opt input{margin:3px 0 0; accent-color:var(--accent); flex:0 0 auto}
+.nx-opt .ltr{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted); flex:0 0 auto}
+body.nx-graded .nx-opt{cursor:default}
+body.nx-graded .nx-opt:hover{border-color:var(--border-strong); background:var(--surface)}
+.nx-opt.right{border-color:var(--mild); background:var(--mild-bg)}
+.nx-opt.wrong{border-color:var(--sev); background:var(--sev-bg)}
+.nx-fillrow{display:flex; gap:10px; align-items:center; margin-bottom:4px}
+#nx-fill{
+  width:170px; padding:11px 13px; font:inherit; font-size:17px;
+  font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums;
+  color:var(--ink); background:var(--surface);
+  border:1px solid var(--border-strong); border-radius:9px;
+}
+#nx-fill:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+#nx-fill:disabled{opacity:1}
+.nx-unit{font-family:"IBM Plex Mono",monospace; font-size:15px; color:var(--muted)}
+.nx-verdict{padding:11px 14px; border-radius:8px; font-weight:600; margin-bottom:12px;
+  font-family:"IBM Plex Mono",monospace; font-size:13.5px}
+.nx-verdict.ok{background:var(--mild-bg); color:var(--mild)}
+.nx-verdict.no{background:var(--sev-bg); color:var(--sev)}
+.nx-rat{font-size:14px; line-height:1.6; color:var(--muted); border-top:1px solid var(--border); padding-top:13px}
+.nx-rat strong{color:var(--ink)}
+.nx-actions{width:100%; max-width:760px; display:flex; gap:9px; margin-top:14px}
+.nx-actions button{flex:1}
+.nx-done{width:100%; max-width:760px; text-align:center; padding:44px 20px; background:var(--surface);
+  border:1px solid var(--border); border-radius:12px}
+.nx-done h3{font-family:Spectral,Georgia,serif; font-size:26px; margin:0 0 6px}
+.nx-done .pct{font-family:"IBM Plex Mono",monospace; font-size:40px; color:var(--accent); margin:6px 0}
+.nx-done p{color:var(--muted); font-size:14px; margin:0 0 18px}
+@media print{#nx{display:none !important}}
+
+/* ---- consolidated toolbar + dropdown panels ---- */
+.menubtn{font-weight:500}
+.menubtn[aria-expanded="true"]{background:var(--accent); border-color:var(--accent); color:var(--on-accent)}
+.menubtn.dots{font-size:17px; line-height:1; padding:6px 12px}
+.panel{
+  position:sticky; top:53px; z-index:29; background:var(--surface);
+  border-bottom:1px solid var(--border); box-shadow:var(--shadow);
+}
+.panel[hidden]{display:none}
+.panel-in{max-width:1180px; margin:0 auto; padding:14px 28px 18px}
+.panel-lbl{
+  font-family:"IBM Plex Mono",monospace; font-size:9.5px; font-weight:500;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--faint);
+  margin:0 0 8px;
+}
+.panel-lbl + .chips,.panel-lbl + .swatches{margin-bottom:16px}
+.panel-in nav{margin-bottom:2px}
+.panel-row{display:flex; gap:8px; flex-wrap:wrap}
+@media (max-width:700px){
+  .panel-in{padding:14px 18px 18px}
+  nav{grid-template-columns:1fr 1fr}
+}
+@media print{.panel{display:none !important}}
+
+/* ---- dosage calculation content (merged from the drill page) ---- */
+.body{padding:18px 20px}
+.formula{
+  font-family:"IBM Plex Mono",monospace; font-size:14px; line-height:1.9;
+  background:var(--accent-soft); color:var(--accent-ink);
+  border:1px solid var(--border); border-radius:8px;
+  padding:14px 16px; margin:0 0 14px; overflow-x:auto;
+}
+.formula b{font-weight:600}
+.worked{border:1px solid var(--border); border-radius:8px; overflow:hidden; margin-top:14px}
+.worked .q{padding:12px 16px; background:var(--surface-2); font-size:14px; border-bottom:1px solid var(--border)}
+.worked ol{margin:0; padding:12px 16px 14px 34px; font-size:13.6px; color:var(--muted)}
+.worked ol li{margin:4px 0}
+.worked ol li strong{color:var(--ink)}
+.ans{font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--mild);
+  background:var(--mild-bg); padding:2px 8px; border-radius:5px}
+.types{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px}
+.types button{
+  font:inherit; font-size:12.5px; font-weight:500; padding:8px 13px; cursor:pointer;
+  color:var(--ink); background:var(--surface-2);
+  border:1px solid var(--border-strong); border-radius:20px;
+}
+.types button:hover{border-color:var(--accent); color:var(--accent)}
+.types button[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--on-accent)}
+.types button.extra{font-size:11.5px; color:var(--muted); border-style:dashed}
+.types button.extra[aria-pressed="true"]{color:var(--on-accent); border-style:solid}
+#dc-prompt{
+  font-size:15.5px; line-height:1.65; padding:16px; border-radius:8px;
+  background:var(--surface-2); border:1px solid var(--border); margin-bottom:14px;
+}
+#dc-prompt .v{font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--accent-ink)}
+.answer-row{display:flex; flex-wrap:wrap; gap:9px; align-items:center}
+#dc-inp{
+  width:150px; padding:9px 12px; font:inherit; font-size:15px;
+  font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums;
+  color:var(--ink); background:var(--surface);
+  border:1px solid var(--border-strong); border-radius:7px;
+}
+#dc-inp:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.unit{font-family:"IBM Plex Mono",monospace; font-size:14px; color:var(--muted)}
+.btn{
+  font:inherit; font-size:13.5px; font-weight:500; padding:9px 16px; cursor:pointer;
+  color:var(--ink); background:var(--surface-2);
+  border:1px solid var(--border-strong); border-radius:7px;
+}
+.btn:hover{border-color:var(--accent); color:var(--accent)}
+.btn.primary{background:var(--accent); border-color:var(--accent); color:var(--on-accent)}
+#dc-verdict{margin-top:14px; font-size:14px; display:none}
+#dc-verdict.on{display:block}
+#dc-verdict .banner{
+  padding:10px 14px; border-radius:7px; font-weight:600; margin-bottom:12px;
+  font-family:"IBM Plex Mono",monospace; font-size:13.5px;
+}
+#dc-verdict.right .banner{background:var(--mild-bg); color:var(--mild)}
+#dc-verdict.wrong .banner{background:var(--sev-bg); color:var(--sev)}
+#dc-verdict.neutral .banner{background:var(--accent-soft); color:var(--accent-ink)}
+#dc-steps{margin:0; padding-left:22px; font-size:13.6px; color:var(--muted); line-height:1.8}
+#dc-steps li strong{color:var(--ink)}
+#dc-steps .mono{color:var(--accent-ink)}
+.score{
+  display:flex; gap:20px; flex-wrap:wrap; font-family:"IBM Plex Mono",monospace;
+  font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);
+  border-top:1px solid var(--border); margin-top:18px; padding-top:14px;
+}
+.score b{color:var(--accent); font-size:14px; letter-spacing:0}
+@media print{#drill{display:none}}
+
+/* ---- side drawer ---- */
+.scrim{
+  position:fixed; inset:0; z-index:38; background:#0b1a1833;
+  opacity:0; visibility:hidden;
+  transition:opacity .18s ease, visibility 0s linear .18s;
+}
+body.drawer-open .scrim{
+  opacity:1; visibility:visible;
+  transition:opacity .18s ease, visibility 0s linear 0s;
+}
+.drawer{
+  position:fixed; top:0; left:0; bottom:0; z-index:39; width:min(310px,84vw);
+  background:var(--surface); border-right:1px solid var(--border);
+  box-shadow:0 0 40px -10px #0b1a1840;
+  display:flex; flex-direction:column; overflow-y:auto;
+  transform:translateX(-100%); visibility:hidden;
+  transition:transform .2s cubic-bezier(.4,0,.2,1), visibility 0s linear .2s;
+}
+body.drawer-open .drawer{
+  transform:none; visibility:visible;
+  transition:transform .2s cubic-bezier(.4,0,.2,1), visibility 0s linear 0s;
+}
+.drawer-head{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:14px 18px 12px; border-bottom:1px solid var(--border);
+  background:var(--surface-2); position:sticky; top:0; z-index:1;
+}
+.drawer-title{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:500;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--accent);
+}
+.drawer-x{
+  font:inherit; font-size:20px; line-height:1; padding:2px 9px; cursor:pointer;
+  color:var(--muted); background:none; border:1px solid transparent; border-radius:6px;
+}
+.drawer-x:hover{color:var(--accent); border-color:var(--border-strong)}
+.drawer .panel-in{max-width:none; padding:16px 18px 26px}
+.drawer nav{display:flex; flex-direction:column; gap:0}
+.drawer nav a{
+  padding:6px 10px; border-left:2px solid var(--border); font-size:12px;
+  border-radius:0 6px 6px 0;
+}
+.drawer nav a:hover{border-left-color:var(--accent)}
+.drawer .navgroup{margin:14px 0 4px; padding-left:10px}
+.drawer .navgroup:first-child{margin-top:0}
+.drawer .chips{margin-bottom:18px}
+
+/* settings stays a compact dropdown under its button */
+#setpanel{display:none}
+#setpanel.open{display:block}
+@media (prefers-reduced-motion:reduce){
+  .drawer,.scrim{transition:none}
+}
+</style>
+<style>
+/* baseline the artifact host normally provides */
+:root{color-scheme:light dark}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none !important}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="mast-in">
+    <div>
+      <p class="eyebrow">NURS-11 &middot; Weeks 1&ndash;2 &middot; Chapters 01&ndash;06</p>
+      <h1>Introduction to Pharmacology</h1>
+      <p class="sub">Unit 1 of Karch&rsquo;s <em>Focus on Nursing Pharmacology</em> (10th ed.), combined with Dr. Kaur&rsquo;s Week 1 and Week 2 decks. Every section is tagged with its chapter and, where it was lectured, its slide numbers. Where the lecture and the textbook differ, the lecture is flagged.</p>
+      <a class="xlink" href="https://claude.ai/code/artifact/8e0bfef9-3e31-4f08-aae0-8f0280b40f34">Chapter 05 dosage calculation drills &rarr;</a>
+    </div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="ctl-in">
+    <button id="secbtn" class="menubtn" aria-expanded="false" aria-controls="secpanel">Sections</button>
+    <input id="q" type="search" placeholder="Search every table…" aria-label="Search">
+    <button id="quiz" aria-pressed="false">Quiz</button>
+    <button id="cards">Flashcards</button>
+    <button id="nclex">NCLEX</button>
+    <button id="setbtn" class="menubtn dots" aria-expanded="false" aria-controls="setpanel" aria-label="Display settings" title="Display settings">&#8943;</button>
+    <p class="hint" id="hint" hidden>Quiz mode blanks the explanation column. Read the term, say the answer, then tap the cell to check.</p>
+  </div>
+
+  <div class="scrim" id="scrim"></div>
+  <aside class="drawer" id="secpanel" aria-label="Sections menu">
+    <div class="drawer-head">
+      <span class="drawer-title">Sections</span>
+      <button class="drawer-x" id="secclose" aria-label="Close menu">&times;</button>
+    </div>
+    <div class="panel-in">
+      <p class="panel-lbl">Filter by chapter</p>
+      <span class="chips" role="group" aria-label="Filter by chapter">
+      <button class="chip" data-ch="all" aria-pressed="true">All</button>
+      <button class="chip" data-ch="01" aria-pressed="false">Ch 01</button>
+      <button class="chip" data-ch="02" aria-pressed="false">Ch 02</button>
+      <button class="chip" data-ch="03" aria-pressed="false">Ch 03</button>
+      <button class="chip" data-ch="04" aria-pressed="false">Ch 04</button>
+      <button class="chip" data-ch="05" aria-pressed="false">Ch 05</button>
+      <button class="chip" data-ch="06" aria-pressed="false">Ch 06</button>
+    </span>
+      <p class="panel-lbl">Jump to a section</p>
+      <nav aria-label="Sections">
+    <p class="navgroup" data-ch="01">Ch 01 · Introduction to Drugs</p>
+    <a href="#sources" data-ch="01">Sources &amp; names</a>
+    <a href="#approval" data-ch="01">Approval phases</a>
+    <a href="#legal" data-ch="01">Legal regulation</a>
+    <p class="navgroup" data-ch="02">Ch 02 · Pharmacodynamics & Pharmacokinetics</p>
+    <a href="#core" data-ch="02">Core concepts</a>
+    <a href="#pd" data-ch="02">Pharmacodynamics</a>
+    <a href="#adme" data-ch="02">ADME</a>
+    <a href="#time" data-ch="02">Time &amp; dosing</a>
+    <a href="#factors" data-ch="02">Response factors</a>
+    <p class="navgroup" data-ch="03">Ch 03 · Adverse Reactions</p>
+    <a href="#adverse" data-ch="03">Adverse reactions</a>
+    <a href="#allergy" data-ch="03">Allergic reactions</a>
+    <a href="#tox" data-ch="03">Organ toxicity</a>
+    <a href="#terato" data-ch="03">Teratogenicity</a>
+    <a href="#manage" data-ch="03">Managing toxicity</a>
+    <p class="navgroup" data-ch="04">Ch 04 · Nursing Process, Safety & CJMM</p>
+    <a href="#role" data-ch="04">Nurse&rsquo;s role</a>
+    <a href="#cjmm" data-ch="04">Nursing process &amp; CJMM</a>
+    <a href="#rights" data-ch="04">The Rights</a>
+    <a href="#errors" data-ch="04">Medication errors</a>
+    <a href="#ismp" data-ch="04">Safe notation</a>
+    <a href="#errors2" data-ch="04">If an error occurs</a>
+    <a href="#teaching" data-ch="04">Patient education</a>
+    <p class="navgroup" data-ch="05">Ch 05 · Administration & Dosage</p>
+    <a href="#routes" data-ch="05">Routes &amp; forms</a>
+    <a href="#scope" data-ch="05">Week 2 scope</a>
+    <a href="#convert" data-ch="05">Conversions</a>
+    <a href="#systems" data-ch="05">Measuring systems</a>
+    <a href="#methods" data-ch="05">D &divide; H &times; Q</a>
+    <a href="#process" data-ch="05">Before you calculate</a>
+    <a href="#kaur" data-ch="05">Worked examples</a>
+    <a href="#herset" data-ch="05">Her practice set</a>
+    <a href="#drill" data-ch="05">Practice engine</a>
+    <p class="navgroup" data-ch="06">Ch 06 · Challenges to Therapy</p>
+    <a href="#interactions" data-ch="06">Interactions</a>
+    <a href="#challenges" data-ch="06">Challenges to therapy</a>
+    <a href="#barriers" data-ch="06">Real-world barriers</a>
+    <a href="#otc2" data-ch="06">OTC &amp; online info</a>
+    <p class="navgroup" data-ch="test">Self-test</p>
+    <a href="#test" data-ch="test">Self-test</a></nav>
+    </div>
+  </aside>
+
+  <div class="panel" id="setpanel">
+    <div class="panel-in">
+      <p class="panel-lbl">Accent colour</p>
+      <span class="swatches" role="group" aria-label="Accent colour">
+      <button class="sw" data-accent="pink"   style="--sw:335" title="Pink"   aria-label="Pink"   aria-pressed="false"></button>
+      <button class="sw" data-accent="violet" style="--sw:272" title="Violet" aria-label="Violet" aria-pressed="false"></button>
+      <button class="sw" data-accent="blue"   style="--sw:212" title="Blue"   aria-label="Blue"   aria-pressed="false"></button>
+      <button class="sw" data-accent="teal"   style="--sw:176" title="Teal"   aria-label="Teal"   aria-pressed="false"></button>
+      <button class="sw" data-accent="forest" style="--sw:150" title="Forest" aria-label="Forest" aria-pressed="false"></button>
+      <button class="sw" data-accent="amber"  style="--sw:32"  title="Amber"  aria-label="Amber"  aria-pressed="false"></button>
+    </span>
+      <p class="panel-lbl">Display</p>
+      <div class="panel-row">
+        <button id="theme">Light / dark</button>
+        <button id="print">Print</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="shell">
+
+  <main>
+
+  <section id="sources" data-ch="01">
+    <div class="head"><span class="slide">Ch 01 &middot; pp. 4&ndash;7 &middot; Slides 6, 9</span>
+      <h2>Where drugs come from &mdash; and what they&rsquo;re called</h2></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Category</th><th>Definition</th><th>Examples from lecture</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Natural &mdash; plant</td><td class="a">Derived from plant material.</td><td class="a mono">digoxin</td></tr>
+        <tr><td class="term">Natural &mdash; animal</td><td class="a">Derived from animal sources.</td><td class="a mono">insulin</td></tr>
+        <tr><td class="term">Natural &mdash; inorganic</td><td class="a">Elements and mineral salts. Karch&rsquo;s Table 1.3 lists their therapeutic uses.</td><td class="a"><span class="mono">aluminum</span> antacid, hyperphosphatemia &middot; <span class="mono">fluoride</span> cavities, osteoporosis &middot; <span class="mono">gold</span> rheumatoid arthritis &middot; <span class="mono">iron</span> iron-deficiency anemia</td></tr>
+        <tr><td class="term">Synthetic</td><td class="a">Made or modified in the lab; includes <strong>prototype drugs</strong> &mdash; the model drug of a class that the rest are compared against.</td><td class="a"><em>Learn the prototype, infer the class.</em></td></tr>
+        <tr><td class="term">Orphan drug</td><td class="a">Developed for a rare disease; small market, so development is incentivized by law.</td><td class="a"><em>Rare = orphan.</em></td></tr>
+        <tr><td class="term">OTC</td><td class="a">Available without prescription &mdash; common use, but <strong>not risk-free</strong>. Patients often omit them from med lists.</td><td class="a"><em>Always ask what they take that isn&rsquo;t prescribed.</em></td></tr>
+        <tr><td class="term">Behind-the-counter (BTC)</td><td class="a"><strong>A third category students miss.</strong> Available <em>without</em> a prescription, but carrying more legal restriction than ordinary OTC drugs &mdash; kept behind the pharmacy counter.</td><td class="a"><em>Not OTC, not prescription. Karch names it as its own key term.</em></td></tr>
+        <tr><td class="term">What makes a chemical a drug</td><td class="a">It must show <strong>demonstrated therapeutic value or efficacy without severe toxicity</strong> or damaging properties. Efficacy alone is not enough.</td><td class="a"><span class="mono">dronabinol (Marinol)</span> &mdash; a synthetic version of delta-9-THC from cannabis, used for chemotherapy nausea and AIDS-related weight loss. Cannabis itself is <strong>Schedule I</strong> federally.</td></tr>
+        <tr><td class="term">Generic vs. brand</td><td class="a">Same <strong>active ingredient</strong>; may differ in fillers, appearance, and price.</td><td class="a"><em>Generic name is lowercase; Brand is capitalized.</em></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+  <section id="approval" data-ch="01">
+    <div class="head"><span class="slide">Ch 01 &middot; pp. 8&ndash;11 &middot; Slide 7</span>
+      <h2>Drug development and approval</h2>
+      <p>A genuine sequence &mdash; each stage answers a different question, and nothing skips ahead.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Stage</th><th>Phase</th><th>Question it answers</th><th>Subjects</th></tr></thead>
+      <tbody>
+        <tr><td class="step">01</td><td class="term">Preclinical</td><td class="a">Two purposes: <strong>(a)</strong> does it have the presumed effect in living tissue, and <strong>(b)</strong> does it cause adverse effects? Tested <strong>in vitro</strong> (outside a living organism) and <strong>in vivo</strong> (inside or on one).</td><td class="a"><strong>No humans.</strong> Biologic differences mean computer models alone are inadequate.</td></tr>
+        <tr><td class="step">02</td><td class="term">Phase I</td><td class="a"><strong>Is it safe?</strong> Dose range and toxicity.</td><td class="a">Small group of healthy volunteers</td></tr>
+        <tr><td class="step">03</td><td class="term">Phase II</td><td class="a"><strong>Does it work?</strong> Effectiveness in the target condition.</td><td class="a">Patients who have the disease</td></tr>
+        <tr><td class="step">04</td><td class="term">Phase III</td><td class="a"><strong>Is it better?</strong> Compared against existing treatment or placebo.</td><td class="a">Large, diverse patient population</td></tr>
+        <tr><td class="step">05</td><td class="term">FDA approval</td><td class="a">Marketing is authorized for specific indications.</td><td class="a">&mdash;</td></tr>
+        <tr><td class="step">06</td><td class="term">Phase IV</td><td class="a"><strong>Post-marketing surveillance.</strong> Rare and long-term effects that trials were too small or too short to catch.</td><td class="a">The whole treated public</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Phase IV is why drugs get withdrawn <em>after</em> approval. A trial of 3,000 people cannot detect a reaction that occurs in 1 of 50,000 &mdash; <strong>nurse reporting is how those signals surface</strong>.</p>
+  </section>
+  <section id="legal" data-ch="01">
+    <div class="head"><span class="slide">Ch 01 &middot; pp. 12&ndash;14 &middot; Slide 8</span>
+      <h2>Legal regulation of medications</h2>
+      <p>The deck names the Controlled Substances Act schedules and pregnancy categories without detail; both are commonly tested, so they&rsquo;re expanded here.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Schedule</th><th>Abuse potential</th><th>Examples</th><th>Prescribing</th></tr></thead>
+      <tbody>
+        <tr data-sev="3"><td class="term mono">C-I</td><td class="a"><span class="pill p3">Highest</span> No accepted medical use</td><td class="a">Heroin, LSD, MDMA</td><td class="a">Cannot be prescribed</td></tr>
+        <tr data-sev="3"><td class="term mono">C-II</td><td class="a"><span class="pill p3">High</span> Severe dependence risk; accepted medical use</td><td class="a">Morphine, fentanyl, oxycodone, hydromorphone, methylphenidate</td><td class="a"><strong>No refills.</strong> New script each time</td></tr>
+        <tr data-sev="2"><td class="term mono">C-III</td><td class="a"><span class="pill p2">Moderate</span> Moderate&ndash;low physical, high psychological</td><td class="a">Buprenorphine, ketamine, testosterone, codeine combinations</td><td class="a">Up to 5 refills / 6 months</td></tr>
+        <tr data-sev="1"><td class="term mono">C-IV</td><td class="a"><span class="pill p1">Low</span> Low relative to C-III</td><td class="a">Benzodiazepines (lorazepam, diazepam), zolpidem, tramadol</td><td class="a">Up to 5 refills / 6 months</td></tr>
+        <tr data-sev="1"><td class="term mono">C-V</td><td class="a"><span class="pill p1">Lowest</span> Limited quantities of narcotics</td><td class="a">Antidiarrheals and cough preparations with low-dose codeine, pregabalin</td><td class="a">Some available OTC by state</td></tr>
+      </tbody>
+    </table></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Pregnancy category</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td class="term mono">A</td><td class="a">Adequate, well-controlled human studies show <strong>no fetal risk</strong> in the first trimester.</td></tr>
+        <tr><td class="term mono">B</td><td class="a">Animal studies show no risk, but human studies are inadequate &mdash; or animal risk was not confirmed in humans.</td></tr>
+        <tr><td class="term mono">C</td><td class="a">Animal studies show an adverse effect; no adequate human studies. Benefit <em>may</em> warrant the risk.</td></tr>
+        <tr><td class="term mono">D</td><td class="a">Positive evidence of human fetal risk, but benefit may still outweigh it in serious disease.</td></tr>
+        <tr data-sev="3"><td class="term mono">X</td><td class="a"><strong>Contraindicated in pregnancy.</strong> Risk clearly outweighs any benefit.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Year</th><th>The disaster</th><th>The law it produced</th></tr></thead>
+      <tbody>
+        <tr data-sev="3"><td class="term mono">1930s</td><td class="a">&ldquo;Elixir of sulfanilamide&rdquo; was distributed in a vehicle of <strong>ethylene glycol</strong> that had never been tested in humans. Ethylene glycol is toxic; <strong>hundreds died</strong> and many more became very ill.</td><td class="a"><strong>Federal Food, Drug, and Cosmetic Act of 1938</strong> &mdash; gave the FDA power to enforce standards for testing drug toxicity and monitoring labeling.</td></tr>
+        <tr data-sev="3"><td class="term mono">1960s</td><td class="a"><strong>Thalidomide</strong> (Thalomid) was used as a sleeping aid during pregnancy, resulting in the birth of many babies with <strong>limb deformities</strong>.</td><td class="a"><strong>Kefauver&ndash;Harris Act of 1962</strong> &mdash; gave the FDA regulatory control over testing and evaluating drugs, and set standards for <strong>efficacy and safety</strong>.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><strong>Which law wins:</strong> the FDA regulates development and sale, but local laws further regulate distribution and administration. <strong>In most cases the strictest law prevails</strong> &mdash; and rules vary from state to state and even within a state, so know the ones where you practice.</p>
+    <p class="note warn"><strong>The pregnancy categories are being phased out.</strong> The FDA required a pregnancy category on every new drug starting in <strong>1979</strong>. In <strong>2014</strong> it added guidelines covering the drug&rsquo;s presence in human milk, and in <strong>2015</strong> it moved from letter categories to <strong>risk levels</strong>. Newly approved and revised labels carry no letter &mdash; instead they state risk for <strong>fertility, pregnancy, and lactation</strong>. High risk in pregnancy means research showed fetal toxicity; high risk in lactation means the drug is known to enter human milk and could harm the infant; low risk means no problems shown so far. Learn the letters as your lecture presents them, but expect risk levels on a current insert.</p>
+  </section>
+  <section id="core" data-ch="02">
+    <div class="head"><span class="slide">Ch 02 &middot; Slides 3, 10&ndash;11</span>
+      <h2>Core concepts</h2>
+      <p>The four definitions the rest of the course is built on. Pharmacodynamics and pharmacokinetics are the pair most often confused &mdash; keep the direction of the arrow straight.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Term</th><th>What it means</th><th>Memory hook</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Pharmacology</td><td class="a">The study of the biological effects of chemicals (drugs) on living systems.</td><td class="a"><em>The whole field.</em></td></tr>
+        <tr><td class="term">Pharmacotherapeutics</td><td class="a">Pharmacology narrowed to therapy &mdash; using drugs to prevent, diagnose, treat, or relieve suffering.</td><td class="a"><em>Pharmacology with a patient in front of it.</em></td></tr>
+        <tr><td class="term">Pharmacodynamics</td><td class="a">What the <strong>drug does to the body</strong> &mdash; receptor binding, enzyme inhibition, selective toxicity.</td><td class="a"><em><strong>D</strong>ynamics = <strong>D</strong>rug&rsquo;s action <em>on</em> you.</em></td></tr>
+        <tr><td class="term">Pharmacokinetics</td><td class="a">What the <strong>body does to the drug</strong> &mdash; absorption, distribution, metabolism, excretion.</td><td class="a"><em><strong>K</strong>inetics = movement; the body <em>moves</em> the drug.</em></td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Every drug has <strong>both</strong> therapeutic and adverse effects. There is no drug with only the effect you want &mdash; that idea underpins the entire second half of this deck.</p>
+  </section>
+  <section id="pd" data-ch="02">
+    <div class="head"><span class="slide">Ch 02 &middot; pp. 21&ndash;22 &middot; Slide 10</span>
+      <h2>Pharmacodynamics &mdash; how drugs act on the body</h2>
+      <p>Karch frames this as <strong>four ways drugs work</strong>, then explains the receptor machinery underneath. The four-way list is the one most likely to appear as a question.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Drugs usually work in one of four ways</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td class="step">01</td><td class="a"><strong>Replace or substitute for missing chemicals.</strong> Insulin and thyroid hormone are the pattern.</td></tr>
+        <tr><td class="step">02</td><td class="a"><strong>Increase or stimulate cellular activity.</strong></td></tr>
+        <tr><td class="step">03</td><td class="a"><strong>Depress or slow cellular activity.</strong></td></tr>
+        <tr><td class="step">04</td><td class="a"><strong>Interfere with the functioning of foreign cells</strong> &mdash; invading microorganisms or neoplasms &mdash; causing cell death. Drugs acting this way are <strong>chemotherapeutic agents</strong>.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Receptor site type</th><th>How binding produces an effect</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Gated ion channel</td><td class="a">Binding changes the opening of an ion channel, altering the flow of components into and out of the cell.</td></tr>
+        <tr><td class="term">Transmembranous receptor</td><td class="a">Spans the entire cell membrane. The chemical interacts with the receptor <em>outside</em> the cell and affects the portion <em>inside</em> it.</td></tr>
+        <tr><td class="term">G protein&ndash;coupled receptor</td><td class="a">Stimulation makes the receptor contact the G protein, which activates an enzyme or opens a channel as a <strong>second messenger</strong>.</td></tr>
+        <tr><td class="term">Intracellular receptor</td><td class="a">Drugs able to enter the cell react with receptors inside it.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Mechanism</th><th>What the drug does</th><th>Think of it as</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Agonist</td><td class="a">Binds the receptor and <strong>activates</strong> it, producing the same effect as the body&rsquo;s own chemical.</td><td class="a"><em>A key that turns the lock.</em></td></tr>
+        <tr><td class="term">Antagonist</td><td class="a">Binds the receptor and <strong>blocks</strong> it, preventing the natural chemical from acting.</td><td class="a"><em>A key that fits but won&rsquo;t turn &mdash; and jams the lock.</em></td></tr>
+        <tr><td class="term">Partial agonist</td><td class="a">Binds and activates, but produces a <strong>weaker</strong> response than a full agonist.</td><td class="a"><em>A key that turns halfway.</em></td></tr>
+        <tr><td class="term">Enzyme inhibition</td><td class="a">Blocks an enzyme rather than a receptor, interrupting a chemical pathway.</td><td class="a"><em>Removing a step from the assembly line.</em></td></tr>
+        <tr><td class="term">Selective toxicity</td><td class="a">Attacks the invading organism or abnormal cell while sparing healthy host cells.</td><td class="a"><em>The goal of every antibiotic and chemo agent &mdash; and never perfect, which is why they have side effects.</em></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+  <section id="adme" data-ch="02">
+    <div class="head"><span class="slide">Ch 02 &middot; Slides 11&ndash;13</span>
+      <h2>Pharmacokinetics &mdash; ADME</h2>
+      <p>What the body does to the drug, in order. Each stage has a factor that can go wrong and a patient population where it does.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Stage</th><th>Definition</th><th>What affects it</th><th>Clinical consequence</th></tr></thead>
+      <tbody>
+        <tr><td class="step">A</td><td class="term">Absorption<br><span class="a" style="font-weight:400"><em>drug &rarr; bloodstream</em></span></td><td class="a">Route (IV, IM, SC, oral, sublingual, inhalation, topical), blood flow to the site, food in the stomach, drug formulation.</td><td class="a"><strong>IV = 100% bioavailable, no absorption phase.</strong> Oral is slowest and most variable.</td></tr>
+        <tr><td class="step">D</td><td class="term">Distribution<br><span class="a" style="font-weight:400"><em>blood &rarr; tissues</em></span></td><td class="a">Perfusion of the tissue, <strong>protein binding</strong>, and barriers &mdash; the blood&ndash;brain barrier and the placenta.</td><td class="a">Only <strong>unbound (free)</strong> drug is active. Low albumin &rarr; more free drug &rarr; toxicity at a normal dose.</td></tr>
+        <tr><td class="step">M</td><td class="term">Metabolism<br><span class="a" style="font-weight:400"><em>biotransformation</em></span></td><td class="a">Primarily the <strong>liver</strong>, via the <strong>CYP450</strong> enzyme system. Oral drugs undergo the <strong>first-pass effect</strong>.</td><td class="a">Liver impairment &rarr; drug accumulates. First-pass is why some oral doses are much larger than IV.</td></tr>
+        <tr><td class="step">E</td><td class="term">Excretion<br><span class="a" style="font-weight:400"><em>drug &rarr; out</em></span></td><td class="a">Mainly the <strong>kidneys</strong>; also bile, lungs, sweat, and <strong>breast milk</strong>.</td><td class="a">Renal impairment &rarr; accumulation and toxicity. Breast milk matters for the nursing mother.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><strong>First-pass effect:</strong> an orally absorbed drug travels through the portal vein to the liver and is partly metabolized <em>before</em> it ever reaches systemic circulation. Any route that bypasses the portal system &mdash; IV, IM, sublingual, rectal, transdermal &mdash; escapes it.</p>
+    <div class="wrap"><table>
+      <thead><tr><th>Route</th><th>Absorption?</th><th>First-pass?</th><th>Dr. Kaur&rsquo;s teaching point</th></tr></thead>
+      <tbody>
+        <tr><td class="term">IV</td><td class="a">No</td><td class="a">No</td><td class="a">Enters the bloodstream directly &mdash; there is no absorption step at all.</td></tr>
+        <tr><td class="term">Oral</td><td class="a">Yes</td><td class="a"><strong>Often yes</strong></td><td class="a">Absorbed from the GI tract; many drugs pass through the liver first.</td></tr>
+        <tr><td class="term">IM / SubQ</td><td class="a">Yes</td><td class="a">No</td><td class="a">Absorbed from tissue into blood; usually bypasses first-pass.</td></tr>
+        <tr><td class="term">Sublingual / buccal</td><td class="a">Yes</td><td class="a">No</td><td class="a">Absorbed through oral mucosa; bypasses first-pass.</td></tr>
+        <tr><td class="term">Rectal</td><td class="a">Yes</td><td class="a">Partial / variable</td><td class="a">Some venous drainage bypasses the liver, some does not.</td></tr>
+        <tr><td class="term">Transdermal / inhaled</td><td class="a">Yes</td><td class="a">No</td><td class="a">Absorbed through skin or lungs; bypasses first-pass.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note warn"><strong>She corrected this in Week 2 because it gets confused:</strong> absorption and first-pass are related but not the same thing. <strong>&ldquo;No first-pass&rdquo; does not mean &ldquo;no absorption.&rdquo;</strong> IV is the one route with neither. Topical medications are usually intended for a local effect, though some systemic absorption can occur.</p>
+  </section>
+  <section id="time" data-ch="02">
+    <div class="head"><span class="slide">Ch 02 &middot; Slides 11&ndash;13</span>
+      <h2>Time course and dosing terms</h2></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Term</th><th>Definition</th><th>Why the nurse cares</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Onset</td><td class="a">Time from administration until the drug begins to produce an effect.</td><td class="a">Tells you when to start looking for a response.</td></tr>
+        <tr><td class="term">Peak</td><td class="a">Time at which the drug reaches its <strong>highest concentration</strong>.</td><td class="a">When the effect &mdash; and the risk of adverse effects &mdash; is greatest. Peak levels are drawn here.</td></tr>
+        <tr><td class="term">Duration</td><td class="a">How long the effect lasts.</td><td class="a">Determines when the next dose is due.</td></tr>
+        <tr><td class="term">Half-life <span class="mono">(t&frac12;)</span></td><td class="a">Time for the serum concentration to fall by <strong>half</strong>.</td><td class="a"><strong>Guides dosing frequency.</strong> Long half-life &rarr; less frequent dosing, greater accumulation risk.</td></tr>
+        <tr><td class="term">Bioavailability</td><td class="a">The fraction of an administered dose that reaches systemic circulation unchanged.</td><td class="a">IV is 100% by definition; oral is always less.</td></tr>
+        <tr><td class="term">Trough</td><td class="a">The <strong>lowest</strong> concentration, drawn just before the next dose.</td><td class="a">Paired with peak for drugs needing serum monitoring.</td></tr>
+        <tr><td class="term">Critical concentration</td><td class="a">The amount of drug that must be present at the site of action to produce the <strong>desired therapeutic effect</strong>.</td><td class="a">Below it, nothing therapeutic happens; well above it, toxicity. A named learning objective in Karch&rsquo;s Chapter 2.</td></tr>
+        <tr><td class="term">Dynamic equilibrium</td><td class="a">The actual concentration the drug reaches in the body &mdash; the <strong>net result</strong> of absorption, distribution, metabolism, and excretion happening at once.</td><td class="a">Explains why the dose given is not the concentration achieved. Also a named objective.</td></tr>
+        <tr><td class="term">Active transport</td><td class="a">Movement of a substance across a cell membrane that <strong>requires energy</strong>.</td><td class="a">Contrast with passive diffusion, which does not.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+  <section id="factors" data-ch="02">
+    <div class="head"><span class="slide">Ch 02 &middot; Slide 14</span>
+      <h2>Factors influencing drug response</h2>
+      <p>Why the same dose of the same drug produces different results in two patients.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Factor</th><th>How it changes the response</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Weight</td><td class="a">Standard doses assume an average adult. Higher body mass may need more; lower needs less. Many drugs are dosed per kg.</td></tr>
+        <tr><td class="term">Age</td><td class="a"><strong>The two extremes are the risk.</strong> Infants have immature liver and kidneys; older adults have declining function and altered body composition.</td></tr>
+        <tr><td class="term">Gender</td><td class="a">Differences in body-fat percentage and muscle vascularity affect distribution and absorption &mdash; the IM scenario in the deck.</td></tr>
+        <tr><td class="term">Physiological factors</td><td class="a">Time of day, hydration, electrolytes, and normal variation.</td></tr>
+        <tr><td class="term">Pathological factors</td><td class="a"><strong>Liver and kidney disease are the two that change everything</strong> &mdash; they impair metabolism and excretion.</td></tr>
+        <tr><td class="term">Genetics</td><td class="a">Inherited enzyme variation makes patients fast or slow metabolizers of the same drug.</td></tr>
+        <tr><td class="term">Immunologic</td><td class="a">Prior sensitization sets up allergic response on re-exposure.</td></tr>
+        <tr><td class="term">Psychological</td><td class="a">Expectation and belief affect outcome &mdash; the placebo effect is real and measurable.</td></tr>
+        <tr><td class="term">Environment</td><td class="a">Temperature, noise, and surroundings alter response, especially for sedatives and analgesics.</td></tr>
+        <tr><td class="term">Tolerance</td><td class="a">Repeated exposure &rarr; <strong>decreased</strong> response &rarr; larger doses needed for the same effect.</td></tr>
+        <tr><td class="term">Accumulation</td><td class="a">Drug is taken in faster than it is eliminated &rarr; concentration builds &rarr; toxicity.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+  <section id="adverse" data-ch="03">
+    <div class="head"><span class="slide">Ch 03 &middot; Slides 18&ndash;19</span>
+      <h2>Adverse effects and types of reaction</h2>
+      <p>An adverse effect is any <strong>undesired</strong> drug effect. Reactions are either predictable (extensions of known pharmacology) or unpredictable.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Type</th><th>What happens</th><th>Predictable?</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Primary action</td><td class="a">The <strong>intended effect, but too strong</strong> &mdash; an overdose of the therapeutic action itself.</td><td class="a">Predictable</td><td class="a">An antihypertensive causing hypotension.</td></tr>
+        <tr><td class="term">Secondary action</td><td class="a">An effect the drug produces <strong>in addition to</strong> the intended one &mdash; ordinary side effects.</td><td class="a">Predictable</td><td class="a">An antihistamine causing drowsiness.</td></tr>
+        <tr><td class="term">Drug allergy</td><td class="a"><strong>Immune-mediated hypersensitivity</strong>. Requires prior sensitizing exposure &mdash; not dose-related.</td><td class="a">Unpredictable</td><td class="a">Rash or anaphylaxis on a second course of penicillin.</td></tr>
+        <tr><td class="term">Idiosyncratic</td><td class="a">A strange, <strong>unexpected</strong> reaction not explained by the drug&rsquo;s known pharmacology; often genetic.</td><td class="a">Unpredictable</td><td class="a">Excitation from a drug that normally sedates.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><strong>Why adverse effects happen at all:</strong> drugs act on multiple body systems at once, patients differ in sensitivity, dosing may be wrong for the individual, and individual variation is unavoidable.</p>
+  </section>
+  <section id="allergy" data-ch="03">
+    <div class="head"><span class="slide">Ch 03 &middot; Slide 20</span>
+      <h2>Allergic reactions</h2>
+      <p>Severity here is genuinely ordinal &mdash; the stripe and pill encode where a presentation sits on that scale.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Severity</th><th>Presentation</th><th>Nursing action</th></tr></thead>
+      <tbody>
+        <tr data-sev="1"><td class="term"><span class="pill p1">Mild</span></td><td class="a">Rash, hives (urticaria), itching.</td><td class="a">Stop the drug, notify the provider, document, monitor for progression.</td></tr>
+        <tr data-sev="2"><td class="term"><span class="pill p2">Moderate</span></td><td class="a">Angioedema (swelling of face, lips, tongue), wheezing.</td><td class="a">Stop the drug immediately, assess the airway, notify provider urgently, prepare for escalation.</td></tr>
+        <tr data-sev="3"><td class="term"><span class="pill p3">Severe</span></td><td class="a"><strong>Anaphylaxis</strong> &mdash; airway closure, bronchospasm, circulatory collapse. Life-threatening.</td><td class="a">Stop the drug, call for emergency help, maintain airway, <strong>epinephrine</strong>, oxygen, IV fluids. Document and flag the allergy on the chart.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Hypersensitivity type</th><th>Mechanism</th><th>Timing &amp; example</th></tr></thead>
+      <tbody>
+        <tr><td class="term mono">Type I</td><td class="a">IgE-mediated, immediate.</td><td class="a">Minutes &mdash; anaphylaxis, urticaria.</td></tr>
+        <tr><td class="term mono">Type II</td><td class="a">Cytotoxic; IgG/IgM against cell surfaces.</td><td class="a">Hemolytic anemia, thrombocytopenia.</td></tr>
+        <tr><td class="term mono">Type III</td><td class="a">Immune complex deposition.</td><td class="a">Hours to days &mdash; serum sickness, vasculitis.</td></tr>
+        <tr><td class="term mono">Type IV</td><td class="a">Delayed, T-cell mediated.</td><td class="a">48&ndash;72 hours &mdash; contact dermatitis, some severe skin reactions.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">The universal first step for any suspected drug allergy is the same: <strong>stop the drug, treat the reaction, document it.</strong> Severity changes what &ldquo;treat&rdquo; means, never the order.</p>
+  </section>
+  <section id="tox" data-ch="03">
+    <div class="head"><span class="slide">Ch 03 &middot; pp. 38&ndash;48 &middot; Slide 21</span>
+      <h2>Organ and tissue toxicity</h2>
+      <p>Grouped by system, with what you assess and the lab that tracks it &mdash; this is the table most worth knowing cold. Chapter 3&rsquo;s objectives are the clinical significance of adverse reactions, <strong>the four types of allergic response</strong>, drug-induced tissue damage, and applying clinical judgment to them.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>System</th><th>Toxic effects</th><th>What to monitor</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Dermatologic</td><td class="a">Karch&rsquo;s range: from a <strong>simple rash</strong> to potentially fatal <strong>exfoliative dermatitis</strong>. Also stomatitis (mouth inflammation) and <strong>Stevens&ndash;Johnson syndrome</strong>.</td><td class="a">Skin and oral mucosa assessment. <strong>SJS is a medical emergency</strong> &mdash; blistering with mucous membrane involvement.</td></tr>
+        <tr><td class="term">Gastrointestinal</td><td class="a">Nausea, vomiting, diarrhea, ulceration and GI bleeding.</td><td class="a">Intake and output, abdominal assessment, stool for occult blood.</td></tr>
+        <tr><td class="term">Liver</td><td class="a"><strong>Hepatotoxicity</strong> &mdash; the liver metabolizes most drugs, so it takes the exposure.</td><td class="a"><span class="mono">AST, ALT, bilirubin.</span> Watch for jaundice, dark urine, right upper quadrant pain.</td></tr>
+        <tr><td class="term">Kidneys</td><td class="a"><strong>Nephrotoxicity</strong> &mdash; the kidneys concentrate drugs during excretion.</td><td class="a"><span class="mono">BUN, creatinine, GFR.</span> Urine output, edema, daily weights.</td></tr>
+        <tr><td class="term">Blood / bone marrow</td><td class="a"><strong>Blood dyscrasia</strong> &mdash; Karch&rsquo;s term for bone marrow suppression caused by drug effects on the rapidly multiplying cells of the marrow. Produces lower-than-normal levels of blood cells.</td><td class="a"><span class="mono">CBC with differential.</span> Infection signs, fatigue and pallor, bruising and bleeding.</td></tr>
+        <tr><td class="term">Superinfection</td><td class="a">Normal flora destroyed &rarr; overgrowth of resistant organisms.</td><td class="a">Watch for oral thrush, vaginal yeast infection, and new-onset diarrhea (<em>C. difficile</em>) during antibiotic therapy.</td></tr>
+        <tr><td class="term">Neurologic</td><td class="a"><strong>EPS</strong> (extrapyramidal symptoms), <strong>NMS</strong> (neuroleptic malignant syndrome), anticholinergic effects.</td><td class="a">Abnormal movements, rigidity. <strong>NMS = high fever, rigidity, altered mental status, autonomic instability &mdash; life-threatening.</strong></td></tr>
+        <tr><td class="term">Sensory</td><td class="a"><strong>Ototoxicity</strong> (hearing and balance), <strong>ocular toxicity</strong> (vision).</td><td class="a">Ask about ringing in the ears, hearing loss, dizziness, and vision changes &mdash; patients rarely volunteer these.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><strong>Anticholinergic effects</strong> &mdash; the classic mnemonic: dry as a bone (dry mouth), red as a beet (flushing), blind as a bat (blurred vision), mad as a hatter (confusion), hot as a hare (hyperthermia). Add urinary retention and constipation.</p>
+  </section>
+  <section id="terato" data-ch="03">
+    <div class="head"><span class="slide">Ch 03 &middot; Slide 22</span>
+      <h2>Teratogenicity</h2></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Aspect</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Definition</td><td class="a">A drug effect that <strong>causes birth defects</strong> in the developing fetus.</td></tr>
+        <tr><td class="term">Examples</td><td class="a">Isotretinoin, some anticonvulsants, chemotherapy agents.</td></tr>
+        <tr data-sev="3"><td class="term">Timing of risk</td><td class="a"><strong>First trimester is the highest-risk period</strong> &mdash; organogenesis. Risk is greatest before many patients know they are pregnant.</td></tr>
+        <tr><td class="term">Nursing responsibility</td><td class="a">Check pregnancy status before administering, educate on effective contraception, and confirm the patient understands why it matters.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+  <section id="manage" data-ch="03">
+    <div class="head"><span class="slide">Ch 03 &middot; Slides 23, 25</span>
+      <h2>Managing toxicity and adverse reactions</h2>
+      <p>The response scales with severity &mdash; but assessment and documentation never drop out.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Situation</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Always</td><td class="a"><strong>Continuous assessment.</strong> You cannot catch what you are not monitoring for.</td></tr>
+        <tr data-sev="1"><td class="term"><span class="pill p1">Mild effects</span></td><td class="a">Supportive care &mdash; comfort measures, timing adjustments, symptom relief. The drug usually continues.</td></tr>
+        <tr data-sev="2"><td class="term"><span class="pill p2">Moderate</span></td><td class="a"><strong>Hold the drug</strong> and notify the provider.</td></tr>
+        <tr data-sev="3"><td class="term"><span class="pill p3">Severe</span></td><td class="a"><strong>Stop the drug.</strong> Give the antidote if one exists, provide urgent supportive therapy, escalate immediately.</td></tr>
+        <tr><td class="term">Poisoning / overdose</td><td class="a">Too much drug causes <strong>damage across multiple body systems</strong>. Requires urgent supportive care and antidote therapy where available.</td></tr>
+        <tr><td class="term">Afterward</td><td class="a">Notify the provider, <strong>document thoroughly</strong>, and educate the patient so it is not repeated.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+  <section id="role" data-ch="04">
+    <div class="head"><span class="slide">Ch 04 &middot; Slides 4, 26</span>
+      <h2>The nurse&rsquo;s role in drug therapy</h2>
+      <p>Five verbs, in the order they happen around a single dose.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Step</th><th>Verb</th><th>What it looks like in practice</th></tr></thead>
+      <tbody>
+        <tr><td class="step">01</td><td class="term">Assess</td><td class="a">Before giving: confirm identity, check vitals and relevant labs, review allergies and current meds.</td></tr>
+        <tr><td class="step">02</td><td class="term">Administer</td><td class="a">Give safely using the Five Rights, then document immediately.</td></tr>
+        <tr><td class="step">03</td><td class="term">Assess again</td><td class="a">Monitor after giving &mdash; is the therapeutic effect happening, and are adverse effects appearing?</td></tr>
+        <tr><td class="step">04</td><td class="term">Intervene</td><td class="a">Make the regimen tolerable: timing with meals, comfort measures, managing side effects.</td></tr>
+        <tr><td class="step">05</td><td class="term">Educate</td><td class="a">Teach the patient the drug, its purpose, what to watch for, and why adherence matters.</td></tr>
+        <tr><td class="step">06</td><td class="term">Prevent</td><td class="a">Prevent errors and keep the whole-patient view &mdash; the holistic check that catches what protocol misses.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+  <section id="cjmm" data-ch="04">
+    <div class="head"><span class="slide">Ch 04 &middot; pp. 49&ndash;60</span>
+      <h2>The nursing process and the CJMM</h2>
+      <p>Verified against Karch. Two things here differ from what most students write down: the process has <strong>six</strong> elements, not five, and Karch says <strong>&ldquo;nursing conclusion,&rdquo;</strong> not &ldquo;nursing diagnosis.&rdquo; Table 4.1 in the book aligns the two frameworks &mdash; that alignment is reproduced below.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Step</th><th>Nursing process</th><th>CJMM cognitive skill</th><th>What you actually do</th></tr></thead>
+      <tbody>
+        <tr><td class="step">01</td><td class="term">Assessment</td><td class="term">Recognize cues</td><td class="a">Systematic, organized data collection &mdash; physical, intellectual, emotional, social, cultural, and environmental. The goal is to <strong>spot the cues</strong> that explain the complaint or signal danger. <br><br><strong>Dr. Kaur’s six assessment domains (Wk2 slide 8):</strong> <strong>patient</strong> — two identifiers, age, weight, pregnancy or lactation where relevant &middot; <strong>medication history</strong> — prescription, OTC, vitamins, herbals, substances, and the last dose &middot; <strong>allergies</strong> — what actually happened; allergy or intolerance? &middot; <strong>current status</strong> — vitals, symptoms, ability to swallow, pain, mental status &middot; <strong>labs and organ function</strong> — renal, hepatic, electrolytes, glucose, drug levels when ordered &middot; <strong>understanding</strong> — why they take it, their concerns, and whether they can obtain and take it safely.</td></tr>
+        <tr><td class="step">02</td><td class="term">Analysis</td><td class="term">Analyze cues</td><td class="a">Work out what the cues mean together in this patient&rsquo;s situation.</td></tr>
+        <tr><td class="step">03</td><td class="term">Nursing conclusions<br><span style="font-weight:400"><em>generate hypotheses</em></span></td><td class="term">Prioritize hypotheses</td><td class="a">State the actual or potential concern the assessment points to, then rank concerns by likelihood and danger.</td></tr>
+        <tr><td class="step">04</td><td class="term">Planning</td><td class="term">Generate solutions</td><td class="a">Prioritize the gathered information and plot the interventions that will meet the goals and desired outcomes.</td></tr>
+        <tr><td class="step">05</td><td class="term">Intervention /<br>implementation</td><td class="term">Take action</td><td class="a">Carry it out &mdash; administer the drug, provide comfort measures, teach the patient.</td></tr>
+        <tr><td class="step">06</td><td class="term">Evaluation</td><td class="term">Evaluate outcomes</td><td class="a">Determine the effects of what you did, which feeds straight back into further assessment and intervention.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><strong>Why the CJMM exists:</strong> it was developed by the <strong>NCSBN</strong> &mdash; the body that writes the NCLEX &mdash; as a framework for measuring clinical judgment and decision making. That is why Next Gen NCLEX items are phrased in its language rather than the classic five-step vocabulary.</p>
+    <div class="wrap"><table>
+      <thead><tr><th>Karch key term</th><th>Definition</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Nursing</td><td class="a">The art of nurturing and caring for the sick, combined with the scientific application of chemistry, anatomy, physiology, biology, nutrition, psychology, and pharmacology to the clinical situation.</td></tr>
+        <tr><td class="term">Nursing process</td><td class="a">The problem-solving method used to deliver efficient care: gather information, analyze it into a nursing conclusion, prioritize the concerns, set goals and outcomes, intervene, and evaluate.</td></tr>
+        <tr><td class="term">Assessment</td><td class="a">Information gathering about the patient&rsquo;s current status, including past history and physical examination. Provides the <strong>baseline</strong> and the clues to whether therapy is working.</td></tr>
+        <tr><td class="term">Hypothesis</td><td class="a">A proposed explanation built from limited data, used to generate a plan of action and direct further investigation.</td></tr>
+        <tr><td class="term">Nursing conclusion</td><td class="a">A statement of an actual or potential concern, drawn from assessment of the clinical situation, that directs the nursing interventions needed.</td></tr>
+        <tr><td class="term">Planning</td><td class="a">Prioritizing what assessment found and using the nursing conclusions to plot the interventions that meet the goals and desired outcomes.</td></tr>
+        <tr><td class="term">Interventions</td><td class="a">Actions taken to meet the patient&rsquo;s needs &mdash; drug administration, comfort measures, and patient teaching.</td></tr>
+        <tr><td class="term">Evaluation</td><td class="a">Determining the effects of the interventions that were instituted, leading to further assessment and intervention.</td></tr>
+        <tr><td class="term">Health literacy</td><td class="a">The patient&rsquo;s ability to find, understand, and use information and resources to inform health-related decisions and actions. <strong>Low health literacy drives nonadherence and home dosing errors</strong> &mdash; assess it before you teach.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+  <section id="rights" data-ch="04">
+    <div class="head"><span class="slide">Ch 04 &middot; Wk1 s5 &middot; Wk2 s10</span>
+      <h2>The Rights of medication administration</h2>
+      <p><strong>Week 1 taught five. Week 2 expanded it to ten.</strong> Dr. Kaur presents them as a safety framework and warns that programs and facilities organise them differently &mdash; so use them <em>with</em> clinical judgment, not instead of it.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>#</th><th>Right</th><th>What you verify</th></tr></thead>
+      <tbody>
+        <tr><td class="step">01</td><td class="term">Patient</td><td class="a">Use <strong>two identifiers</strong>.</td></tr>
+        <tr><td class="step">02</td><td class="term">Medication</td><td class="a">Match the order and MAR against the label.</td></tr>
+        <tr><td class="step">03</td><td class="term">Dose</td><td class="a">Calculate it &mdash; then check it for <strong>reasonableness</strong>.</td></tr>
+        <tr><td class="step">04</td><td class="term">Route</td><td class="a">Correct formulation <em>and</em> correct route.</td></tr>
+        <tr><td class="step">05</td><td class="term">Time</td><td class="a">Schedule, interval, and when the last dose was given.</td></tr>
+        <tr><td class="step">06</td><td class="term">Reason</td><td class="a">Why is this patient receiving this drug?</td></tr>
+        <tr><td class="step">07</td><td class="term">Assessment</td><td class="a">Are the required vitals and labs safe for this dose?</td></tr>
+        <tr><td class="step">08</td><td class="term">Education / refusal</td><td class="a">Explain it; respect questions and the patient&rsquo;s right to refuse.</td></tr>
+        <tr><td class="step">09</td><td class="term">Documentation</td><td class="a">Document what was <strong>actually given</strong>.</td></tr>
+        <tr><td class="step">10</td><td class="term">Response</td><td class="a">Evaluate the effect and any adverse effects.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note warn"><strong>Her exact caution:</strong> the rights help catch errors &mdash; they do <em>not</em> replace assessment, clarification, or stopping when something does not make sense. Her warm-up case makes the point: an order for metoprolol 25 mg with a hold parameter of systolic &lt; 100, and a BP of 88/54. The dose is &ldquo;right.&rdquo; You still hold it.</p>
+    <div class="wrap"><table>
+      <thead><tr><th>Right</th><th>What you verify</th><th>Where it goes wrong</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Right patient</td><td class="a">Confirm identity with <strong>at least two identifiers</strong> &mdash; typically name and date of birth.</td><td class="a"><em>Room number is not an identifier. Patients move.</em></td></tr>
+        <tr><td class="term">Right drug</td><td class="a">Check the label against the order and the MAR.</td><td class="a"><em>Look-alike / sound-alike names.</em></td></tr>
+        <tr><td class="term">Right dose</td><td class="a">Verify the dose being prepared and given, including the calculation.</td><td class="a"><em>Decimal-point errors; wrong concentration on hand.</em></td></tr>
+        <tr><td class="term">Right route</td><td class="a">Oral, IV, IM, subcutaneous, sublingual, inhalation, topical &mdash; as ordered.</td><td class="a"><em>Giving an IV-only formulation by another route.</em></td></tr>
+        <tr><td class="term">Right time</td><td class="a">Correct time, frequency, interval, and relation to meals.</td><td class="a"><em>Missing the meal relationship changes absorption.</em></td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Many programs add <strong>right documentation</strong>, <strong>right reason</strong>, <strong>right response</strong>, and <strong>right to refuse</strong>. This deck teaches five &mdash; answer five unless the question says otherwise.</p>
+  </section>
+  <section id="errors" data-ch="04">
+    <div class="head"><span class="slide">Ch 04 &middot; p. 55, Box 4.3</span>
+      <h2>Medication errors and patient teaching</h2>
+      <p>Karch opens this section with the report that put medication safety on the national agenda.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Fact</th><th>Figure</th></tr></thead>
+      <tbody>
+        <tr><td class="term">The landmark study</td><td class="a">The Institute of Medicine&rsquo;s <em>To Err Is Human: Building a Safer Health System</em>, published in <strong>2000</strong>.</td></tr>
+        <tr data-sev="3"><td class="term">Reported deaths</td><td class="a"><strong>44,000</strong> reported hospital deaths per year from medication errors &mdash; the report judged the true number likely closer to <strong>98,000</strong>.</td></tr>
+        <tr><td class="term">Annual cost</td><td class="a">Estimated at over <strong>$21 billion</strong> per year to the healthcare system.</td></tr>
+        <tr><td class="term">Why the risk is rising</td><td class="a">An aging population, more drugs available, heavy OTC and alternative-therapy use, and shorter hospital stays that push complex regimens into the home.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Box 4.3 &mdash; teach every patient</th><th>What to cover</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Name, dose, and action</td><td class="a">Patients often see several providers. Urge them to carry a written or electronic list of everything they take, for any provider and for emergencies.</td></tr>
+        <tr><td class="term">Timing of administration</td><td class="a">Frequency, spacing from other drugs, and relation to meals.</td></tr>
+        <tr><td class="term">Storage and preparation</td><td class="a">Refrigeration, mixing with a specific liquid, and any special handling &mdash; confirm they can actually carry it out.</td></tr>
+        <tr><td class="term">What to avoid</td><td class="a">Specific prescriptions, OTC drugs, and alternative therapies that would interact. <strong>Patients frequently do not count OTC or herbal products as &ldquo;drugs&rdquo;</strong> and take them alongside prescriptions.</td></tr>
+        <tr><td class="term">Comfort measures</td><td class="a">How to cope with expected adverse effects &mdash; which reduces anxiety and prevents nonadherence. Example: schedule a diuretic for a day when bathrooms are close by.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+  <section id="ismp" data-ch="04">
+    <div class="head"><span class="slide">Wk2 &middot; Slides 11&ndash;12</span>
+      <h2>Error-resistant notation and safety habits</h2>
+      <p>From the ISMP list of error-prone abbreviations and dose designations. These are the notation choices that turn into tenfold dose errors.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Write this</th><th>Not this</th><th>Because</th></tr></thead>
+      <tbody>
+        <tr data-sev="3"><td class="term mono">0.5 mg</td><td class="a mono">.5 mg</td><td class="a"><strong>Always a leading zero.</strong> A missed decimal point reads as <span class="mono">5 mg</span> &mdash; ten times the dose.</td></tr>
+        <tr data-sev="3"><td class="term mono">5 mg</td><td class="a mono">5.0 mg</td><td class="a"><strong>Never a trailing zero.</strong> Reads as <span class="mono">50 mg</span>.</td></tr>
+        <tr><td class="term mono">mL</td><td class="a mono">cc</td><td class="a">&ldquo;cc&rdquo; is easily misread; ISMP recommends mL.</td></tr>
+        <tr><td class="term mono">units</td><td class="a mono">U &nbsp;or&nbsp; IU</td><td class="a">&ldquo;U&rdquo; can be read as a zero or a four.</td></tr>
+        <tr><td class="term mono">mcg</td><td class="a">ambiguous symbols</td><td class="a">Spell it out rather than using a symbol that can be misread.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Habits that prevent errors</th></tr></thead>
+      <tbody>
+        <tr><td class="a">Compare the medication with the MAR or order at <strong>key points</strong> in the process.</td></tr>
+        <tr><td class="a">Use barcode scanning and independent double-checks when policy requires them.</td></tr>
+        <tr><td class="a">Clarify orders that are incomplete, illegible, contradictory, or unsafe.</td></tr>
+        <tr><td class="a"><strong>Do not bypass alerts</strong> or use workarounds just to get it done.</td></tr>
+        <tr><td class="a">Know hold parameters, monitoring needs, and maximum or safe-dose information.</td></tr>
+        <tr><td class="a">Minimise interruptions during preparation and administration.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><strong>When something does not match: STOP &rarr; verify &rarr; clarify.</strong></p>
+  </section>
+  <section id="errors2" data-ch="04">
+    <div class="head"><span class="slide">Wk2 &middot; Slide 14</span>
+      <h2>If a medication error occurs</h2>
+      <p>Her framing: <strong>patient safety first, learning comes next.</strong> The order matters &mdash; the patient is step one, the paperwork is not.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Step</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td class="step">01</td><td class="a"><strong>Assess and protect the patient.</strong></td></tr>
+        <tr><td class="step">02</td><td class="a">Notify the appropriate clinician and obtain any needed treatment.</td></tr>
+        <tr><td class="step">03</td><td class="a">Follow the organisation&rsquo;s medication-error policy.</td></tr>
+        <tr><td class="step">04</td><td class="a">Document the clinical facts and the patient&rsquo;s response.</td></tr>
+        <tr><td class="step">05</td><td class="a">Complete the required safety or incident report.</td></tr>
+        <tr><td class="step">06</td><td class="a">Use external reporting when indicated.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="wrap"><table>
+      <thead><tr><th>External reporting</th><th>What it is for</th></tr></thead>
+      <tbody>
+        <tr><td class="term">FDA MedWatch</td><td class="a">Serious adverse events, product problems, therapeutic failure or inequivalence, and product-use errors.</td></tr>
+        <tr><td class="term">ISMP MERP</td><td class="a">Medication errors, <strong>close calls</strong>, and hazardous conditions &mdash; reported for learning and prevention.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+  <section id="teaching" data-ch="04">
+    <div class="head"><span class="slide">Wk2 &middot; Slides 9, 13</span>
+      <h2>Patient education as a safety intervention</h2>
+      <p>Her reasoning: <strong>the patient is the last person who can catch an error</strong> &mdash; so give them enough information to do it.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Teach every patient</th></tr></thead>
+      <tbody>
+        <tr><td class="a">Medication <strong>name and purpose</strong>.</td></tr>
+        <tr><td class="a">How and when to take it.</td></tr>
+        <tr><td class="a">Important side effects, and <strong>when to seek help</strong>.</td></tr>
+        <tr><td class="a">Interactions or precautions that matter.</td></tr>
+        <tr><td class="a">What to do about a missed dose, when applicable.</td></tr>
+        <tr><td class="a">Storage, the measuring device, and safe disposal.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Technique</th><th>How it works</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Teach-back</td><td class="a">Put the burden on your own explaining, not on the patient&rsquo;s memory: <em>&ldquo;Just so I know I explained it clearly, can you tell me how you will take this medicine when you are home?&rdquo;</em></td></tr>
+        <tr><td class="term">Respecting refusal</td><td class="a">Pause, assess the reason, provide information, notify or clarify as appropriate, and <strong>document the clinical facts</strong>.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Plan the outcome before you give the drug</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Expected therapeutic effect</td><td class="a">Pain decreases &middot; blood pressure moves toward goal &middot; infection symptoms improve &middot; blood glucose responds.</td></tr>
+        <tr data-sev="2"><td class="term">Safety parameters</td><td class="a">What should make you pause, hold, or clarify: an abnormal vital sign &middot; an allergy concern &middot; an unsafe lab &middot; duplicate therapy &middot; a dose outside the expected range.</td></tr>
+        <tr><td class="term">Evaluation</td><td class="a">Did the intended effect occur? Any adverse effect? What teaching needs reinforcing? Does the plan need adjusting?</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+  <section id="routes" data-ch="05">
+    <div class="head"><span class="slide">Ch 05 &middot; pp. 61&ndash;62</span>
+      <h2>Routes of administration</h2>
+      <p>Route determines how fast the drug arrives and whether it meets the liver first. Onset times are typical ranges, not guarantees.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Route</th><th>Typical onset</th><th>First-pass?</th><th>Key nursing point</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Intravenous (IV)</td><td class="a mono">30&ndash;60 sec</td><td class="a">No</td><td class="a"><strong>Fastest and least reversible</strong> &mdash; 100% bioavailable. Cleanse the site aseptically and <strong>assess the line for patency</strong>; do not start if there are signs of vein irritation or infiltration. Check compatibility before running drugs in the same line, and label, date, and time the line.</td></tr>
+        <tr><td class="term">Intramuscular (IM)</td><td class="a mono">10&ndash;20 min</td><td class="a">No</td><td class="a">Inject <strong>deep into muscle at a 90-degree angle</strong>. Karch&rsquo;s recommended sites: <strong>ventrogluteal, vastus lateralis, deltoid</strong>. Withdraw slowly, engage the safety device, <strong>do not recap</strong>, dispose in the sharps container.</td></tr>
+        <tr><td class="term">Subcutaneous (SC)</td><td class="a mono">15&ndash;30 min</td><td class="a">No</td><td class="a">Slower than IM; small volumes only. Rotate sites with repeated dosing.</td></tr>
+        <tr><td class="term">Sublingual / buccal</td><td class="a mono">3&ndash;5 min</td><td class="a">No &mdash; bypasses</td><td class="a">Absorbed straight into systemic circulation. Do not swallow.</td></tr>
+        <tr><td class="term">Oral (PO)</td><td class="a mono">30&ndash;90 min</td><td class="a"><strong>Yes</strong></td><td class="a">Safest and most convenient, slowest and most variable. Food and GI status change absorption.</td></tr>
+        <tr><td class="term">Rectal</td><td class="a mono">5&ndash;30 min</td><td class="a">Partial</td><td class="a">Useful when the patient is vomiting or unconscious. Absorption is erratic.</td></tr>
+        <tr><td class="term">Inhalation</td><td class="a mono">seconds&ndash;min</td><td class="a">No</td><td class="a">Large surface area, rapid uptake. Mostly local respiratory effect.</td></tr>
+        <tr><td class="term">Transdermal</td><td class="a mono">hours</td><td class="a">No</td><td class="a">Steady sustained levels. <strong>Remove the old patch</strong> before applying the new one.</td></tr>
+        <tr><td class="term">Topical</td><td class="a mono">varies</td><td class="a">No</td><td class="a">Local effect intended; broken skin increases systemic absorption.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><strong>Preventing medication errors:</strong> verify the order against the MAR, never give a drug someone else prepared, question any order that is illegible or seems wrong, avoid dangerous abbreviations, and use two identifiers every time. <strong>Report errors that reach the patient <em>and</em> near misses</strong> &mdash; near misses are how systems get fixed.</p>
+  </section>
+  <section id="scope" data-ch="05">
+    <div class="head"><span class="slide">Week 2 &middot; Slide 19</span>
+      <h2>What Dr. Kaur is emphasizing &mdash; and what she isn&rsquo;t</h2>
+      <p>She narrowed the scope in lecture. Her stated reason: <em>fewer low-yield systems means more time practicing the calculations you will actually use.</em> This page now follows her list, not the textbook&rsquo;s wider one.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Know and practice</th><th>De-emphasized for this lecture</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="a"><strong>Metric system</strong><br>g &harr; mg &harr; mcg &nbsp;&middot;&nbsp; L &harr; mL &nbsp;&middot;&nbsp; lb &harr; kg</td>
+          <td class="a">Apothecary system<br>Avoirdupois system</td>
+        </tr>
+        <tr>
+          <td class="a"><strong>Tablets and capsules</strong></td>
+          <td class="a">Household spoon dosing</td>
+        </tr>
+        <tr>
+          <td class="a"><strong>Oral liquids measured in mL</strong></td>
+          <td class="a">&ldquo;cc&rdquo; as a volume unit</td>
+        </tr>
+        <tr>
+          <td class="a"><strong>Basic weight-based doses</strong></td>
+          <td class="a"><strong>Memorising three different calculation methods</strong> &mdash; use one</td>
+        </tr>
+        <tr>
+          <td class="a"><strong>Electronic infusion pump rates</strong> (mL/hr)</td>
+          <td class="a">BSA chemotherapy calculations<br>Manual drip-rate calculations, unless your dosage course requires them now</td>
+        </tr>
+      </tbody>
+    </table></div>
+    <p class="note warn"><strong>This changed the page.</strong> The apothecary table and the gtt/min drills below are still here because Karch teaches them and your dosage course may want them &mdash; but both are now labelled as outside Week 2&rsquo;s scope, and <code>D &divide; H &times; Q</code> is the only setup modelled.</p>
+  </section>
+  <section id="convert" data-ch="05">
+    <div class="head"><span class="slide">Know these cold</span>
+      <h2>Conversions you must have memorized</h2>
+      <p>Almost every wrong answer in dosage calculation traces back to a unit that was never converted. Convert first, calculate second.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>From</th><th>To</th><th>Factor</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">1 kg</td><td class="mono">1000 g</td><td class="mono">&times; 1000</td></tr>
+        <tr><td class="mono">1 g</td><td class="mono">1000 mg</td><td class="mono">&times; 1000</td></tr>
+        <tr><td class="mono">1 mg</td><td class="mono">1000 mcg</td><td class="mono">&times; 1000</td></tr>
+        <tr><td class="mono">1 L</td><td class="mono">1000 mL</td><td class="mono">&times; 1000</td></tr>
+        <tr><td class="mono">1 kg</td><td class="mono">2.2 lb</td><td class="mono">lb &divide; 2.2 = kg</td></tr>
+        <tr><td class="mono">1 tsp</td><td class="mono">5 mL</td><td class="mono">&mdash;</td></tr>
+        <tr><td class="mono">1 tbsp</td><td class="mono">15 mL</td><td class="mono">3 tsp</td></tr>
+        <tr><td class="mono">1 oz</td><td class="mono">30 mL</td><td class="mono">2 tbsp</td></tr>
+        <tr><td class="mono">1 mL</td><td class="mono">1 cc</td><td class="mono">identical volumes</td></tr>
+        <tr><td class="mono">1 tsp</td><td class="mono">60 gtt (drops)</td><td class="mono">household</td></tr>
+        <tr><td class="mono">1 lb</td><td class="mono">16 oz</td><td class="mono">household</td></tr>
+        <tr><td class="mono">1 hr</td><td class="mono">60 min</td><td class="mono">&mdash;</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note warn"><strong>Zeros kill patients.</strong> Always write a leading zero before a decimal (<span class="mono">0.5 mg</span>, never <span class="mono">.5 mg</span>) and <em>never</em> a trailing zero (<span class="mono">5 mg</span>, never <span class="mono">5.0 mg</span>). A missed decimal point is a tenfold overdose.</p>
+  </section>
+  <section id="systems" data-ch="05">
+    <div class="head"><span class="slide">Karch Table 5.1 &middot; Ch 05</span>
+      <h2>The three measuring systems</h2>
+      <p>Karch teaches three. <strong>Dr. Kaur de-emphasized apothecary and avoirdupois for Week 2</strong> &mdash; kept here for the textbook and for your dosage course, but metric is what she is testing.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>System</th><th>Solid measure</th><th>Liquid measure</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Metric<br><span style="font-weight:400"><em>the standard</em></span></td>
+            <td class="mono">gram (g)<br>1 g = 1,000 mg<br>1 mg = 1,000 mcg<br>1 kg = 1,000 g</td>
+            <td class="mono">liter (L)<br>1 mL = 0.001 L<br>1 mL = 1 cubic centimeter = 1 cc</td></tr>
+        <tr><td class="term">Apothecary<br><span style="font-weight:400"><em>largely historical</em></span></td>
+            <td class="mono">grain (gr)<br>60 gr = 1 dram (dr)<br>8 dr = 1 ounce (oz)</td>
+            <td class="mono">minim (min)<br>60 min = 1 fluidram (fl dr)<br>8 fl dr = 1 fluid ounce (fl oz)</td></tr>
+        <tr><td class="term">Household<br><span style="font-weight:400"><em>what patients use</em></span></td>
+            <td class="mono">pound (lb)<br>1 lb = 16 ounces (oz)</td>
+            <td class="mono">pint (pt)<br>2 pt = 1 quart (qt)<br>4 qt = 1 gallon (gal)<br>16 oz = 1 pt = 2 cups<br>32 tbsp = 1 pt &nbsp;&middot;&nbsp; 3 tsp = 1 tbsp<br>60 drops (gtt) = 1 tsp</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><strong>Why metric wins:</strong> in <strong>1995</strong> the U.S. Pharmacopeia Convention set standards requiring every prescription to carry the metric measure for quantity and strength, and established that drugs may be dispensed only in metric form. You still need the other two for <strong>conversion</strong> &mdash; finding the equivalent value between two systems.</p>
+  </section>
+  <section id="methods" data-ch="05">
+    <div class="head"><span class="slide">Pick one and stay with it</span>
+      <h2>The one setup: Desired &divide; Have &times; Quantity</h2>
+      <p>Karch names three acceptable methods. <strong>Dr. Kaur models one</strong>, and explicitly lists &ldquo;memorising three different calculation methods&rdquo; as de-emphasized. Use hers. The other two are shown once below so you recognise them if a question is phrased that way.</p></div>
+    <div class="body" style="padding-bottom:0">
+      <p class="formula"><b>Dose to give</b> = <b>D</b> &divide; <b>H</b> &times; <b>Q</b><br>
+      <span style="font-size:12.5px"><b>D</b> = desired / ordered dose &nbsp;&middot;&nbsp; <b>H</b> = dose on hand &nbsp;&middot;&nbsp; <b>Q</b> = quantity containing H</span></p>
+      <p style="margin:0;font-size:13.4px;color:var(--muted)">Keep the units visible as you work. They should cancel, or lead you to the unit the question asked for.</p>
+    </div>
+    <div class="body">
+      <div class="worked">
+        <div class="q"><strong>Order:</strong> 375 mg PO. <strong>On hand:</strong> 250 mg per 5 mL. <strong>How many mL?</strong></div>
+        <ol>
+          <li><strong>Formula (desired over have).</strong> <span class="mono">(375 &divide; 250) &times; 5 = 7.5</span> &rarr; <span class="ans">7.5 mL</span></li>
+          <li><strong>Ratio&ndash;proportion.</strong> <span class="mono">250 mg : 5 mL :: 375 mg : x</span> &rarr; <span class="mono">250x = 1875</span> &rarr; <span class="ans">7.5 mL</span></li>
+          <li><strong>Dimensional analysis.</strong> <span class="mono">375 mg &times; (5 mL / 250 mg) = 7.5 mL</span>. Units cancel, leaving mL &rarr; <span class="ans">7.5 mL</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="body" style="padding-top:0">
+      <div class="worked">
+        <div class="q"><strong>Karch&rsquo;s own example (p. 66).</strong> An order is written for 324 mg of aspirin by mouth. The tablets available are 81 mg. How many tablets should the nurse give?</div>
+        <ol>
+          <li><strong>Ratio and proportion, set up as Karch does:</strong> <span class="mono">amount available / one tablet = amount prescribed / number of tablets</span></li>
+          <li><span class="mono">81 mg / 1 tablet = 324 mg / X</span> &rarr; <span class="mono">81X = 324</span></li>
+          <li><strong>Answer:</strong> <span class="ans">4 tablets</span></li>
+        </ol>
+      </div>
+    </div>
+    <p class="note"><strong>Why dimensional analysis is worth learning:</strong> it carries the units through the arithmetic, so if your units do not cancel to the unit you were asked for, you know you set it up wrong <em>before</em> you get a number.</p>
+  </section>
+  <section id="process" data-ch="05">
+    <div class="head"><span class="slide">Week 2 &middot; Slides 18, 21</span>
+      <h2>Before you calculate</h2>
+      <p>Her framing: <em>a correct calculation with the wrong unit can still harm a patient.</em> Most errors are caught here, before any arithmetic happens.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Step</th><th>The six-step process</th></tr></thead>
+      <tbody>
+        <tr><td class="term mono">01</td><td class="a">Read the order.</td></tr>
+        <tr><td class="term mono">02</td><td class="a">Identify what is available.</td></tr>
+        <tr><td class="term mono">03</td><td class="a">Match or convert the units.</td></tr>
+        <tr><td class="term mono">04</td><td class="a">Calculate.</td></tr>
+        <tr><td class="term mono">05</td><td class="a">Round correctly.</td></tr>
+        <tr><td class="term mono">06</td><td class="a"><strong>Ask: does this make sense?</strong></td></tr>
+      </tbody>
+    </table></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Safety setup</th><th>What to check</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Units match</td><td class="a">Convert the order and the available dose into the same unit <em>before</em> calculating.</td></tr>
+        <tr><td class="term">Decimal is safe</td><td class="a">Use a leading zero. Never use a trailing zero.</td></tr>
+        <tr><td class="term">Quantity is clear</td><td class="a">Tablet? mL? vial? package? Know exactly what <strong>Q</strong> represents.</td></tr>
+        <tr><td class="term">Rounding rule known</td><td class="a"><strong>Do not round early.</strong> Follow your course or facility direction.</td></tr>
+        <tr><td class="term">Answer is reasonable</td><td class="a">Would this really need 0.02 tablets? 20 tablets? 75 mL? <strong>Pause if the answer looks strange.</strong></td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><strong>Do not let the calculator make the clinical decision for you.</strong> The reasonableness check is the step students skip, and it is the one that catches a tenfold error.</p>
+  </section>
+  <section id="kaur" data-ch="05">
+    <div class="head"><span class="slide">Week 2 &middot; Slides 23&ndash;27</span>
+      <h2>Dr. Kaur&rsquo;s worked examples</h2>
+      <p>The four she modelled in class, in her setup and with her reasonableness checks.</p></div>
+    <div class="body">
+      <div class="worked">
+        <div class="q"><strong>Tablets.</strong> Order: acetaminophen 650 mg PO. Available: 325 mg per tablet.</div>
+        <ol>
+          <li>D = <span class="mono">650 mg</span>, H = <span class="mono">325 mg</span>, Q = <span class="mono">1 tablet</span>. Units already match.</li>
+          <li><span class="mono">650 &divide; 325 &times; 1</span> &rarr; <span class="ans">2 tablets</span></li>
+          <li><strong>Reasonableness:</strong> 650 mg is twice 325 mg, so 2 tablets makes sense.</li>
+        </ol>
+      </div>
+      <div class="worked">
+        <div class="q"><strong>Oral liquid.</strong> Order: amoxicillin 600 mg PO. Available: 400 mg / 5 mL.</div>
+        <ol>
+          <li><strong>Why Q = 5 mL:</strong> the 400 mg on hand is contained in 5 mL, so Q is the 5 mL &mdash; not 1.</li>
+          <li><span class="mono">600 &divide; 400 &times; 5 mL</span> &rarr; <span class="ans">7.5 mL</span></li>
+          <li><strong>Safety habit:</strong> measure with an appropriately marked oral dosing device in mL. <strong>Never a household spoon.</strong></li>
+        </ol>
+      </div>
+      <div class="worked">
+        <div class="q"><strong>Weight-based, two steps.</strong> Order: cefazolin 25 mg/kg/dose. Patient weighs 20 kg. Prepared concentration 100 mg/mL.</div>
+        <ol>
+          <li><strong>Step 1 &mdash; find the ordered dose.</strong> <span class="mono">25 mg/kg &times; 20 kg = 500 mg per dose</span></li>
+          <li><strong>Step 2 &mdash; convert to what is available.</strong> <span class="mono">500 &divide; 100 &times; 1 mL</span> &rarr; <span class="ans">5 mL</span></li>
+          <li><strong>Never skip</strong> the dose-range or maximum-dose check when the order or policy requires it.</li>
+        </ol>
+      </div>
+      <div class="worked">
+        <div class="q"><strong>Infusion pump.</strong> Infuse 1,000 mL over 8 hours. What rate will you program?</div>
+        <ol>
+          <li><span class="mono">mL/hr = total volume (mL) &divide; time (hr)</span> &mdash; hours in the denominator.</li>
+          <li><span class="mono">1,000 &divide; 8</span> &rarr; <span class="ans">125 mL/hr</span></li>
+          <li><strong>The pump is a tool.</strong> Verify the programmed rate against the order before starting the infusion.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+  <section id="herset" data-ch="05">
+    <div class="head"><span class="slide">Week 2 &middot; Slides 24, 28&ndash;29</span>
+      <h2>Her practice set</h2>
+      <p>The five she assigned in class. Turn on the answers only after you have written the setup &mdash; she asks for units, not just the number.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th style="width:52%">Question</th><th>Setup and answer</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Levothyroxine 75 mcg PO ordered. Available 25 mcg per tablet. How many tablets?</strong></td><td class="a"><span class="mono">75 &divide; 25 &times; 1</span> = <span class="ans">3 tablets</span></td></tr>
+        <tr><td><strong>Order 500 mg. Available 250 mg/tablet. How many tablets?</strong></td><td class="a"><span class="mono">500 &divide; 250 &times; 1</span> = <span class="ans">2 tablets</span></td></tr>
+        <tr><td><strong>Order 300 mg. Available 100 mg/5 mL. How many mL?</strong></td><td class="a"><span class="mono">300 &divide; 100 &times; 5</span> = <span class="ans">15 mL</span></td></tr>
+        <tr><td><strong>Patient weighs 176 lb. Convert to kg.</strong></td><td class="a"><span class="mono">176 &divide; 2.2</span> = <span class="ans">80 kg</span></td></tr>
+        <tr><td><strong>Infuse 250 mL over 2 hr. What mL/hr?</strong></td><td class="a"><span class="mono">250 &divide; 2</span> = <span class="ans">125 mL/hr</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="note warn"><strong>Her list of common mistakes:</strong> unit mismatch &middot; wrong Q &middot; rounding too early &middot; missing unit on the answer &middot; an implausible result you didn&rsquo;t stop to question.</p>
+  </section>
+  <section id="drill" data-ch="05">
+    <div class="head"><span class="slide">Endless practice</span>
+      <h2>Practice engine</h2>
+      <p>Pick a type, work the problem on paper, then check. Every problem is newly generated, so you can drill until it is automatic. The first three are Dr. Kaur&rsquo;s Week 2 scope; the two dashed types sit outside it and are here for your dosage course.</p></div>
+    <div class="body">
+      <div class="types" role="group" aria-label="Problem type">
+        <button data-t="0" aria-pressed="true">Tablets &amp; liquids</button>
+        <button data-t="1" aria-pressed="false">Weight-based</button>
+        <button data-t="2" aria-pressed="false">Pump rate (mL/hr)</button>
+        <button data-t="5" aria-pressed="false">Mixed review</button>
+        <button data-t="3" aria-pressed="false" class="extra">Critical-care drip &middot; beyond Week 2</button>
+        <button data-t="4" aria-pressed="false" class="extra">Drip rate gtt/min &middot; de-emphasized</button>
+      </div>
+
+      <div id="dc-prompt">Loading a problem&hellip;</div>
+
+      <div class="answer-row">
+        <input id="dc-inp" type="text" inputmode="decimal" autocomplete="off" placeholder="Answer" aria-label="Your answer">
+        <span class="unit" id="dc-unit"></span>
+        <button class="btn primary" id="dc-check">Check</button>
+        <button class="btn" id="dc-next">New problem</button>
+        <button class="btn" id="dc-show">Show me</button>
+      </div>
+
+      <div id="dc-verdict" aria-live="polite">
+        <div class="banner" id="dc-banner"></div>
+        <ol id="dc-steps"></ol>
+      </div>
+
+      <div class="score">
+        <span>Correct <b id="dc-right">0</b></span>
+        <span>Attempted <b id="dc-total">0</b></span>
+        <span>Streak <b id="dc-streak">0</b></span>
+      </div>
+    </div>
+  </section>
+  <section id="interactions" data-ch="06">
+    <div class="head"><span class="slide">Ch 06 &middot; Slide 17</span>
+      <h2>Drug interactions</h2></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Type</th><th>Mechanism</th><th>Classic example</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Drug&ndash;drug</td><td class="a">One drug alters another&rsquo;s <strong>absorption, distribution, metabolism, or excretion</strong> &mdash; interactions map onto ADME.</td><td class="a">Two protein-bound drugs compete; the displaced one becomes free and toxic.</td></tr>
+        <tr><td class="term">Drug&ndash;food</td><td class="a">Food changes absorption or inhibits metabolizing enzymes.</td><td class="a"><strong>Grapefruit juice</strong> inhibits CYP3A4 &rarr; less metabolism &rarr; higher drug levels. Alcohol; timing with meals.</td></tr>
+        <tr><td class="term">Drug&ndash;lab</td><td class="a">The drug alters a laboratory value without a matching change in the patient&rsquo;s condition.</td><td class="a">A result can look abnormal because of the drug, not the disease &mdash; know what your patient is taking before interpreting labs.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+  <section id="challenges" data-ch="06">
+    <div class="head"><span class="slide">Ch 06 &middot; pp. 72&ndash;80</span>
+      <h2>Challenges to safe and effective drug therapy</h2>
+      <p>This chapter is <strong>not</strong> about lifespan dosing, which is what its title suggests. Karch's five objectives are media and advertising, OTC drugs, herbal and alternative therapies, emergency preparedness, and healthcare costs.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Challenge</th><th>What Karch says</th><th>Nursing implication</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Information overload</td><td class="a">Patients arrive influenced by advertising, the internet, and the alternative-therapy industry. The era of the provider being seen as always right is over &mdash; patients come with requests and demands.</td><td class="a">Expect to be asked about specific drugs by name. Correcting bad information is part of the job.</td></tr>
+        <tr><td class="term">Media influence</td><td class="a">Direct-to-consumer prescription advertising became legal in the <strong>1990s</strong>. If an ad states what a drug treats, it must also state contraindications, adverse effects, and precautions &mdash; so <strong>many ads simply never state the indication</strong>, freeing them to use pure imagery.</td><td class="a">When a patient requests an advertised drug, find out what they think it does.</td></tr>
+        <tr data-sev="2"><td class="term">OTC drugs</td><td class="a">Many were <strong>&ldquo;grandfathered in&rdquo;</strong> before modern testing standards, so they were never evaluated to the standard new drugs face. Ipecac is the cautionary case &mdash; a standard for years, until the FDA announced in <strong>2003</strong> it was not effective for its intended use.</td><td class="a"><strong>OTC drugs can mask the signs and symptoms of an underlying problem</strong>, delaying real diagnosis. Duplicate ingredients across cold and allergy products cause accidental overdose.</td></tr>
+        <tr><td class="term">Self-care</td><td class="a">Self-diagnosing and determining one&rsquo;s own treatment needs. The FDA weighs it when considering OTC status &mdash; lovastatin was rejected for OTC in 2009 and 2010 because high lipids have no symptoms and need a blood test.</td><td class="a">Ask specifically about products for headache, colds, and constipation. <strong>Patients do not consider OTC drugs &ldquo;real&rdquo; drugs</strong> and omit them from drug histories.</td></tr>
+        <tr data-sev="2"><td class="term">Herbal &amp; alternative therapies</td><td class="a">The FDA treats them as <strong>dietary supplements</strong>, not medications, so they are not tightly regulated. Also includes nondrug measures &mdash; imagery, massage, acupuncture, relaxation.</td><td class="a">Not benign: unexpected effects, toxic reactions, interactions with prescription and OTC drugs, and unknown ingredients that alter potency. The clinician&rsquo;s job is to <strong>balance</strong> what the patient wants to use against the prescribed regimen.</td></tr>
+        <tr><td class="term">Emergency preparedness</td><td class="a">Since 9/11, the CDC and Office of Homeland Security address exposure to biologic and chemical weapons. <strong>Biologic weapons</strong> &mdash; &ldquo;germ warfare&rdquo; &mdash; are bacteria, viruses, or parasites used at scale to incapacitate or destroy a population. The 2001 anthrax mailings and the COVID-19 pandemic are the reference events.</td><td class="a">Karch directs nurses to <span class="mono">cdc.gov</span> and its A&ndash;Z index for evolving guidance.</td></tr>
+        <tr data-sev="3"><td class="term">The opioid crisis</td><td class="a"><strong>Over 75% of drug overdose deaths in 2022 involved an opioid.</strong> The CDC reports <strong>224 deaths per day</strong> from opioid overdose in 2022, and <strong>two-thirds</strong> were caused by synthetic opioids &mdash; often illicitly manufactured fentanyl.</td><td class="a">Tighter prescribing has <em>lowered</em> prescription-opioid deaths while illicit-opioid deaths rose. Responses: reversal agents in the hands of first responders and the public, safer delivery research, better chronic pain treatment, more rehabilitation access.</td></tr>
+        <tr><td class="term">Illicit &amp; recreational drugs</td><td class="a">Nonprescription drugs with no known therapeutic use, taken to enhance mood or increase pleasure. <strong>Alcohol and nicotine are legal drugs that cause serious problems.</strong> Marijuana is legal in some states but not sanctioned federally; heroin is illegal at both levels.</td><td class="a">They interact with prescribed drugs and alter the patient&rsquo;s response. They also <strong>mask underlying medical problems</strong>. Karch points to <span class="mono">nida.nih.gov</span>.</td></tr>
+        <tr><td class="term">Healthcare costs</td><td class="a">Costs have skyrocketed. Patients are discharged far earlier, and many procedures that once required days of hospitalization no longer involve admission at all.</td><td class="a"><strong>Less monitoring means more responsibility falls on the patient and family &mdash; which makes teaching critical, and the nurse is usually the one who does it.</strong></td></tr>
+        <tr><td class="term">Insurance coverage</td><td class="a"><strong>Private:</strong> employment-based, direct-purchased, TRICARE. <strong>Public:</strong> Medicare (federal), Medicaid (state), Veterans Affairs. Plan types include EPO, HMO, POS, and PPO.</td><td class="a">High Deductible Health Plans trade a lower premium for higher per-service cost, often paired with an HSA. Tier systems and generic-only coverage change what a patient can actually afford &mdash; and some patients have no coverage at all.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><strong>Karch&rsquo;s own Key Points for this chapter:</strong> OTC drugs are deemed safe by the FDA <em>when used as directed</em> and need no prescription; they can mask disease, interact with prescriptions, and be taken above the recommended dose to the point of toxicity. Herbal and alternative therapies are dietary supplements and are not tightly regulated; they can produce unexpected effects and toxic reactions, interact with prescription drugs, and contain unknown ingredients that alter effectiveness and toxicity.</p>
+  </section>
+  <section id="barriers" data-ch="06">
+    <div class="head"><span class="slide">Ch 06 &middot; Wk2 slides 32&ndash;37</span>
+      <h2>Why a correct plan still fails</h2>
+      <p>Week 2 moved Chapter 6 from broad healthcare trends to <strong>patient-level barriers you can actually assess and act on</strong>. This is the more exam-useful framing of the two.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Barrier</th><th>The question it raises</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Access &amp; cost</td><td class="a">Can the patient obtain this medication <strong>consistently</strong>?</td></tr>
+        <tr><td class="term">Adherence</td><td class="a">Is the regimen realistic? Any missed or altered doses?</td></tr>
+        <tr><td class="term">Health literacy</td><td class="a">Does the patient understand the purpose and the instructions?</td></tr>
+        <tr><td class="term">Polypharmacy</td><td class="a">Prescription plus OTC plus supplement burden increases complexity.</td></tr>
+        <tr><td class="term">Information quality</td><td class="a">Social media, advertising, and websites can mislead.</td></tr>
+        <tr><td class="term">Care transitions</td><td class="a">Discharge, home care, and multiple prescribers all increase error risk.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note warn"><strong>Her strongest instruction:</strong> never assume &ldquo;noncompliance&rdquo; before you assess the barrier. The opening move is <em>&ldquo;Walk me through how you take your medicines at home.&rdquo;</em></p>
+    <div class="wrap"><table>
+      <thead><tr><th>Step</th><th>Cost, adherence and home care</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Ask</td><td class="a"><em>&ldquo;Walk me through how you take your medicines at home.&rdquo;</em></td></tr>
+        <tr><td class="term">Identify</td><td class="a">Cost &middot; transportation &middot; side effects &middot; schedule &middot; literacy &middot; beliefs &middot; swallowing &middot; memory.</td></tr>
+        <tr><td class="term">Solve</td><td class="a">Pharmacist or prescriber &middot; simplified regimen &middot; a generic option where appropriate &middot; assistance programmes &middot; pill organiser or reminders.</td></tr>
+        <tr><td class="term">Teach</td><td class="a">Purpose &middot; schedule &middot; warning signs &middot; follow-up &middot; teach-back.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><strong>On generics:</strong> an FDA-approved generic must meet standards for the same active ingredient, strength, dosage form, route, and <strong>bioequivalence</strong> to the reference product. That makes a generic switch a legitimate cost solution, not a compromise.</p>
+  </section>
+  <section id="otc2" data-ch="06">
+    <div class="head"><span class="slide">Ch 06 &middot; Wk2 slides 33&ndash;34, 36&ndash;37</span>
+      <h2>OTC, supplements, online information and disposal</h2>
+      <p>Her one-line thesis: <strong>&ldquo;natural&rdquo; and &ldquo;over the counter&rdquo; do not mean risk-free.</strong></p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Topic</th><th>What to know</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Ask about everything</td><td class="a">OTC pain, cold, sleep and allergy products &middot; vitamins and minerals &middot; herbal products and teas &middot; energy or weight-loss products &middot; cannabis, CBD or other substances when clinically relevant.</td></tr>
+        <tr data-sev="2"><td class="term">Why it matters</td><td class="a">Duplicate ingredients, interactions, adverse effects, and <strong>altered lab or clinical findings</strong>.</td></tr>
+        <tr><td class="term">How supplements are regulated</td><td class="a">The FDA regulates dietary supplements but <strong>does not approve them for safety and effectiveness before marketing</strong> the way it approves drugs. Product quality and evidence vary.</td></tr>
+        <tr><td class="term">Your response</td><td class="a">Document use, check interactions, <strong>avoid judgment</strong>, and use reliable references.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Evaluating medication information online</th><th>Ask</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Who</td><td class="a">Who wrote or reviewed it &mdash; and are they qualified? Who funds or sponsors the site?</td></tr>
+        <tr><td class="term">Where</td><td class="a">Where does the information come from? Are references provided?</td></tr>
+        <tr><td class="term">When</td><td class="a">When was it last updated?</td></tr>
+        <tr><td class="term">Why</td><td class="a">Why does the site exist &mdash; education, sales, advocacy, or advertising?</td></tr>
+        <tr><td class="term">Corroboration</td><td class="a">Does it match other reliable sources?</td></tr>
+        <tr><td class="term">Good starting points</td><td class="a"><span class="mono">FDA</span> &middot; <span class="mono">MedlinePlus / NIH</span> &middot; <span class="mono">DailyMed</span> &middot; your institution&rsquo;s drug database.</td></tr>
+        <tr data-sev="3"><td class="term">Do not rely on</td><td class="a">A social post, an influencer, an ad, or a <strong>&ldquo;.org&rdquo; label alone</strong> as proof that information is accurate. <em>A domain ending is not evidence.</em></td></tr>
+      </tbody>
+    </table></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Two things patients ask about</th><th>The answer</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Buying medicines online</td><td class="a">Use a <strong>state-licensed</strong> pharmacy. Be wary of sites selling prescription medication without a valid prescription, prices that seem too good to be true, or products of unknown origin. FDA <strong>BeSafeRx</strong> helps patients verify safer options.</td></tr>
+        <tr><td class="term">Disposing of medicines</td><td class="a">For most unused or expired medicines the FDA recommends a <strong>drug take-back or mail-back</strong> option. Follow product-specific instructions; <strong>flushing is reserved for certain medicines on the FDA flush list</strong> when take-back is not readily available.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Substance use</th><th>Use a safety lens, not a stigma lens</th></tr></thead>
+      <tbody>
+        <tr><td class="term">Assess</td><td class="a">What substances, how often, when was the last use? Any withdrawal, intoxication, interaction, or overdose concern?</td></tr>
+        <tr><td class="term">Respond</td><td class="a"><strong>Nonjudgmental language.</strong> Address immediate safety, notify the care team as needed, follow withdrawal and overdose protocols.</td></tr>
+        <tr><td class="term">Educate &amp; connect</td><td class="a">Harm-reduction education, <strong>naloxone where indicated</strong>, treatment and referral resources, and clear medication instructions.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+  <section id="test" data-ch="01 02 03 04 05 06">
+    <div class="head"><span class="slide">Ch 01&ndash;06 &middot; Slides 15&ndash;16, 24&ndash;25</span>
+      <h2>Self-test</h2>
+      <p>Both questions from the lecture, plus four drawn from the material above. Turn on quiz mode and answer before revealing.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th style="width:46%">Question</th><th>Answer</th></tr></thead>
+      <tbody>
+        <tr><td><strong>An IM injection is given to a 35-year-old male (165 lb) and an 18-year-old female (125 lb). Who absorbs the drug faster, and why?</strong></td><td class="a"><strong>The male.</strong> He has more vascular muscle mass, and absorption from an IM site depends on blood flow to that muscle. The female has a higher body-fat percentage and less vascular muscle, so absorption is slower. <em>(Lecture slides 15&ndash;16.)</em></td></tr>
+        <tr><td><strong>True or false: poisoning occurs when too much of a drug causes damage to multiple body systems.</strong></td><td class="a"><strong>True.</strong> An overdose produces multi-system damage and requires urgent supportive care plus antidote therapy where one exists. <em>(Lecture slides 24&ndash;25.)</em></td></tr>
+        <tr><td><strong>A patient with low serum albumin is given a normal dose of a highly protein-bound drug. What happens?</strong></td><td class="a">More drug remains <strong>unbound (free)</strong> and pharmacologically active, so a normal dose can produce <strong>toxicity</strong>. Only free drug exerts an effect.</td></tr>
+        <tr><td><strong>Why can the oral dose of a drug be much larger than its IV dose?</strong></td><td class="a">The <strong>first-pass effect</strong>. Orally absorbed drug passes through the liver via the portal vein and is partly metabolized before reaching systemic circulation. IV bypasses this entirely.</td></tr>
+        <tr><td><strong>A patient develops a rash on the first-ever dose of a drug. Is this most likely an allergy?</strong></td><td class="a">Unlikely as a true allergy &mdash; <strong>hypersensitivity requires prior sensitizing exposure</strong>. Consider an idiosyncratic or secondary reaction. Still stop the drug, notify, and document.</td></tr>
+        <tr><td><strong>Which two organ systems, when diseased, most change how a drug behaves &mdash; and which ADME stage does each affect?</strong></td><td class="a"><strong>Liver</strong> (metabolism) and <strong>kidneys</strong> (excretion). Impairment of either causes the drug to accumulate toward toxic levels at ordinary doses.</td></tr>
+        <tr><td><strong>Week 2 warm-up.</strong> Order: metoprolol 25 mg PO now. MAR: hold if systolic BP &lt; 100. Current BP 88/54. Give it, hold and assess, or ask the patient?</td><td class="a"><strong>Hold and assess / clarify.</strong> The dose is correct, but a hold parameter is met. <em>The &ldquo;right dose&rdquo; is not enough &mdash; assessment and clinical judgment come first.</em> Asking the patient what they prefer does not resolve a safety parameter.</td></tr>
+        <tr><td><strong>Mini-case A.</strong> Patient says penicillin caused hives. New order: amoxicillin.</td><td class="a"><strong>Stop and clarify before giving.</strong> Hives is a true allergic reaction, and amoxicillin is a penicillin-class antibiotic &mdash; cross-reactivity is the concern. Verify the reaction, notify the prescriber.</td></tr>
+        <tr><td><strong>Mini-case B.</strong> Order: acetaminophen 650 mg. Available: 325 mg tablets.</td><td class="a"><strong>Proceed &mdash; this is a normal calculation.</strong> <span class="mono">650 &divide; 325 &times; 1 = 2 tablets.</span> Two tablets is a reasonable answer for a dose twice the tablet strength.</td></tr>
+        <tr><td><strong>Mini-case C.</strong> Order to give now. Patient asks &ldquo;what is this for?&rdquo;</td><td class="a"><strong>Stop and teach before giving.</strong> Answer the question &mdash; name and purpose. An informed patient is the last safety check, and consent depends on it.</td></tr>
+        <tr><td><strong>Mini-case D.</strong> Order reads 0.5 mg. The MAR displays .5 mg.</td><td class="a"><strong>Clarify.</strong> A naked decimal is an ISMP error-prone designation &mdash; <span class="mono">.5 mg</span> can be read as <span class="mono">5 mg</span>. Confirm the intended dose and report the display as a hazardous condition.</td></tr>
+        <tr><td><strong>Integrated case.</strong> Ms. Alvarez, 67, discharged yesterday, says she takes half of some pills when money is tight, uses an unlisted OTC sleep aid and herbal supplement, saw a post claiming supplements are safer than prescriptions, and asks what her new pain medicine is for. Order: acetaminophen 650 mg; available 325 mg tablets.</td><td class="a"><strong>Assess:</strong> full medication history including the unlisted OTC and herbal, last dose, allergies, pain, liver history (acetaminophen), and her understanding.<br><strong>Barriers:</strong> cost-driven dose-splitting, polypharmacy with undisclosed products, information quality from social media, a care transition, and a health-literacy gap.<br><strong>Teach:</strong> name and purpose, the acetaminophen ceiling and its presence in combination OTC products, why the supplement must be disclosed, and cost options &mdash; then teach-back.<br><strong>Math:</strong> <span class="mono">650 &divide; 325 &times; 1</span> = <span class="ans">2 tablets</span>, if it is otherwise safe to give.</td></tr>
+        <tr><td><strong>Her four layers of a safe medication plan.</strong></td><td class="a"><strong>1.</strong> Right patient and assessment &mdash; is this appropriate now? <strong>2.</strong> Right medication plan &mdash; order, dose, route, timing, indication, monitoring. <strong>3.</strong> Right calculation &mdash; units match, correct math, reasonable answer. <strong>4.</strong> Right real-world plan &mdash; can the patient understand, obtain, and safely continue it?<br><em>Medication safety = clinical judgment + calculation + communication + systems thinking.</em></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <div id="empty" class="hidden">No rows match that filter.</div>
+  </main>
+</div>
+
+
+
+<div id="nx" hidden aria-label="NCLEX practice">
+  <div class="nx-bar">
+    <span class="nx-score">Q <b id="nx-n">1</b>/<span id="nx-tot">0</span> &middot; <span id="nx-right">0</span> correct</span>
+    <button id="nx-restart" type="button">Restart</button>
+    <button id="nx-close" type="button">Close</button>
+  </div>
+  <div class="nx-card" id="nx-card">
+    <div class="nx-meta" id="nx-meta"></div>
+    <div class="nx-stem" id="nx-stem"></div>
+    <div class="nx-opts" id="nx-opts"></div>
+    <div id="nx-result" hidden>
+      <div class="nx-verdict" id="nx-verdict"></div>
+      <div class="nx-rat" id="nx-rat"></div>
+    </div>
+  </div>
+  <div class="nx-actions">
+    <button id="nx-submit" type="button">Submit</button>
+    <button id="nx-next" type="button" hidden>Next question</button>
+  </div>
+  <div class="nx-done" id="nx-done" hidden>
+    <h3>Set complete</h3>
+    <div class="pct" id="nx-pct"></div>
+    <p id="nx-summary"></p>
+    <button id="nx-again" type="button">Go again</button>
+  </div>
+</div>
+
+<div id="fc" hidden aria-label="Flashcards">
+  <div class="fc-bar">
+    <span class="fc-count"><b id="fc-left">0</b> left &middot; <span id="fc-known">0</span> known</span>
+    <button id="fc-shuffle" type="button">Shuffle</button>
+    <button id="fc-restart" type="button">Restart</button>
+    <button id="fc-close" type="button">Close</button>
+  </div>
+  <div class="fc-card" id="fc-card" tabindex="0" role="button" aria-label="Flip card">
+    <div class="fc-src" id="fc-src"></div>
+    <div class="fc-prompt" id="fc-prompt" hidden></div>
+    <div class="fc-front" id="fc-front"></div>
+    <div class="fc-back" id="fc-back" hidden></div>
+    <div class="fc-hint" id="fc-hint">click, or press space, to flip</div>
+  </div>
+  <div class="fc-actions" id="fc-actions">
+    <button id="fc-again" type="button">Again</button>
+    <button id="fc-got" type="button">Got it</button>
+  </div>
+  <div class="fc-done" id="fc-done" hidden>
+    <h3 id="fc-done-h">Deck complete</h3>
+    <p id="fc-done-p"></p>
+    <button id="fc-done-restart" type="button">Go again</button>
+  </div>
+</div>
+
+<script type="application/json" id="state">{"notes":{}}</script>
+
+<footer>Built from Dr. Kaur&rsquo;s Week 1 (27 slides) and Week 2 (40 slides) decks and the Unit 1 chapter structure of Karch&rsquo;s <em>Focus on Nursing Pharmacology</em>, 10th ed. (Tucker). Chapters 01&ndash;06 have all been read directly from Karch&rsquo;s text and page numbers are cited on each section. Content read by section headings, so some intervening pages were skipped &mdash; notably Chapter 5&rsquo;s pediatric dosing and Table 6.1. The Controlled Substances schedules and monitoring labs remain standard nursing content rather than quotations from this edition.</footer>
+
+<script>
+
+(function(){
+  var KEY='pharm-accent', root=document.documentElement;
+  function paint(v){
+    root.setAttribute('data-accent',v);
+    document.querySelectorAll('.sw').forEach(function(b){
+      b.setAttribute('aria-pressed', b.dataset.accent===v ? 'true':'false');
+    });
+  }
+  var saved='teal';
+  try{ saved=localStorage.getItem(KEY)||'teal'; }catch(e){}
+  paint(saved);
+  document.querySelectorAll('.sw').forEach(function(b){
+    b.addEventListener('click',function(){
+      paint(b.dataset.accent);
+      try{ localStorage.setItem(KEY,b.dataset.accent); }catch(e){}
+    });
+  });
+})();
+(function(){
+  var q=document.getElementById('q'), empty=document.getElementById('empty');
+  var quizBtn=document.getElementById('quiz'), themeBtn=document.getElementById('theme');
+
+  var curCh='all';
+  function applyFilters(){
+    var t=q.value.trim().toLowerCase(), any=false;
+    document.querySelectorAll('main section').forEach(function(sec){
+      var chs=(sec.dataset.ch||'').split(' ');
+      if(curCh!=='all' && chs.indexOf(curCh)===-1){ sec.classList.add('hidden'); return; }
+      var rows=sec.querySelectorAll('tbody tr'), visible;
+      if(rows.length){
+        var shown=0;
+        rows.forEach(function(tr){
+          var hit=!t||tr.textContent.toLowerCase().indexOf(t)>-1;
+          tr.classList.toggle('hidden',!hit);
+          if(hit) shown++;
+        });
+        /* prose outside the tables counts too, or worked examples vanish */
+        visible = shown>0 || (!!t && sec.textContent.toLowerCase().indexOf(t)>-1);
+        if(visible && shown===0) rows.forEach(function(tr){ tr.classList.remove('hidden'); });
+      } else {
+        /* table-less sections (worked examples, practice engine) match on their own text */
+        visible = !t || sec.textContent.toLowerCase().indexOf(t)>-1;
+      }
+      sec.classList.toggle('hidden',!visible);
+      if(visible) any=true;
+    });
+    document.querySelectorAll('nav a[data-ch],nav .navgroup[data-ch]').forEach(function(el){
+      var c=el.dataset.ch;
+      el.classList.toggle('hidden', curCh!=='all' && c!==curCh && c!=='test');
+    });
+    empty.classList.toggle('hidden',any);
+  }
+  q.addEventListener('input',applyFilters);
+  document.querySelectorAll('.chip').forEach(function(b){
+    b.addEventListener('click',function(){
+      curCh=b.dataset.ch;
+      document.querySelectorAll('.chip').forEach(function(x){
+        x.setAttribute('aria-pressed', x===b ? 'true':'false'); });
+      applyFilters();
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
+
+  quizBtn.addEventListener('click',function(){
+    var on=document.body.classList.toggle('quiz');
+    quizBtn.setAttribute('aria-pressed',on?'true':'false');
+    if(!on) document.querySelectorAll('td.a.show').forEach(function(c){c.classList.remove('show');});
+  });
+
+  document.addEventListener('click',function(e){
+    if(!document.body.classList.contains('quiz')) return;
+    var cell=e.target.closest('td.a');
+    if(cell) cell.classList.add('show');
+  });
+
+  themeBtn.addEventListener('click',function(){
+    var r=document.documentElement, cur=r.getAttribute('data-theme');
+    if(!cur) cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+    r.setAttribute('data-theme',cur==='dark'?'light':'dark');
+  });
+
+  document.getElementById('print').addEventListener('click',function(){
+    document.body.classList.remove('quiz');
+    quizBtn.setAttribute('aria-pressed','false');
+    window.print();
+  });
+})();
+</script>
+
+<script>
+/* ---- shared class notes: the page is the record ---- */
+(function(){
+  var PRISTINE=null, api=null, readOnly=false;
+  var state={notes:{}};
+  try{
+    var raw=document.getElementById('state');
+    if(raw && raw.textContent.trim()) state=JSON.parse(raw.textContent);
+  }catch(e){}
+  if(!state.notes) state.notes={};
+
+  /* snapshot the delivered document BEFORE any notes UI exists, with
+     per-viewer display state (theme, accent, quiz) normalised out */
+  (function capture(){
+    var r=document.documentElement,
+        th=r.getAttribute('data-theme'), ac=r.getAttribute('data-accent'),
+        bc=document.body.className;
+    r.removeAttribute('data-theme'); r.removeAttribute('data-accent');
+    document.body.className='';
+    PRISTINE='<!doctype html>\n'+r.outerHTML;
+    if(th) r.setAttribute('data-theme',th);
+    if(ac) r.setAttribute('data-accent',ac);
+    document.body.className=bc;
+  })();
+
+  function esc(t){ return String(t).replace(/[&<>"']/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  function buildDoc(){
+    var json=JSON.stringify(state).replace(/</g,'\\u003c');
+    return PRISTINE.replace(
+      /(<script type="application\/json" id="state">)[\s\S]*?(<\/script>)/,
+      function(_,a,b){ return a+json+b; });
+  }
+
+  function setReadOnly(msg){
+    readOnly=true; document.body.classList.add('readonly');
+    document.querySelectorAll('.note-form').forEach(function(f){f.classList.remove('open');});
+    document.querySelectorAll('.note-msg').forEach(function(m){
+      m.className='note-msg ro'; m.textContent=msg;
+    });
+  }
+
+  var PENDING='pharm-pending-note';
+  function stash(sec,txt){ try{ sessionStorage.setItem(PENDING,JSON.stringify({s:sec,t:txt})); }catch(e){} }
+  function unstash(){ try{ sessionStorage.removeItem(PENDING); }catch(e){} }
+
+  function save(sectionId, pendingText){
+    if(!api){ return Promise.resolve(); }
+    /* a conflict reloads this view; JS variables do not survive that, sessionStorage does */
+    if(pendingText) stash(sectionId,pendingText); else unstash();
+    return api.publish(buildDoc()).then(function(){ unstash(); }).catch(function(e){
+      var code=e&&e.code;
+      if(code==='conflict') return;                    /* keep the stash; reload restores it */
+      unstash();
+      if(code==='not_writer'||code==='not_granted'){
+        setReadOnly('You have view-only access to this page, so notes cannot be saved. Ask Bryanna for edit access.');
+        render();
+        return;
+      }
+      var m=document.querySelector('#'+sectionId+' .note-msg');
+      if(m){ m.className='note-msg ro'; m.textContent='Could not save ('+(code||'error')+'). Your note is still on screen — try again.'; }
+    });
+  }
+
+  function who(){
+    var n=null; try{ n=localStorage.getItem('pharm-name'); }catch(e){}
+    if(n) return n;
+    n=(window.prompt('Your name (shown next to your notes):')||'').trim().slice(0,24);
+    if(!n) return null;
+    try{ localStorage.setItem('pharm-name',n); }catch(e){}
+    return n;
+  }
+
+  function render(){
+    document.querySelectorAll('main section[id]').forEach(function(sec){
+      var id=sec.id, list=state.notes[id]||[];
+      var box=sec.querySelector('.notes');
+      if(!box){
+        box=document.createElement('div'); box.className='notes';
+        box.innerHTML='<div class="notes-head"><h3>Class notes</h3>'+
+          '<button class="note-add" type="button">+ add a note</button></div>'+
+          '<div class="note-list"></div>'+
+          '<div class="note-form"><textarea placeholder="Something your instructor stressed, a mnemonic, an exam hint…" maxlength="600"></textarea>'+
+          '<button class="btn-save" type="button">Save</button></div>'+
+          '<div class="note-msg"></div>';
+        sec.appendChild(box);
+        var form=box.querySelector('.note-form'), ta=form.querySelector('textarea');
+        box.querySelector('.note-add').addEventListener('click',function(){
+          form.classList.toggle('open'); if(form.classList.contains('open')) ta.focus();
+        });
+        form.querySelector('.btn-save').addEventListener('click',function(){
+          var txt=ta.value.trim(); if(!txt) return;
+          var name=who(); if(!name) return;
+          if(!state.notes[id]) state.notes[id]=[];
+          state.notes[id].push({
+            id:String(Math.random()).slice(2)+String(Date.now()).slice(-5),
+            who:name, text:txt,
+            at:new Date().toISOString().slice(0,10)
+          });
+          ta.value=''; form.classList.remove('open');
+          render(); save(id, txt);
+        });
+      }
+      var ul=box.querySelector('.note-list');
+      ul.innerHTML = list.map(function(n){
+        return '<div class="cnote"><span class="note-who">'+esc(n.who)+'</span>'+
+               '<span class="note-body">'+esc(n.text)+
+               '<span class="note-when">'+esc(n.at||'')+'</span></span>'+
+               '<button class="note-del" type="button" data-id="'+esc(n.id)+'" title="Delete this note" aria-label="Delete note">&times;</button></div>';
+      }).join('');
+      ul.querySelectorAll('.note-del').forEach(function(b){
+        b.addEventListener('click',function(){
+          state.notes[id]=(state.notes[id]||[]).filter(function(n){return n.id!==b.dataset.id;});
+          if(!state.notes[id].length) delete state.notes[id];
+          render(); save(id);
+        });
+      });
+      var head=box.querySelector('.notes-head');
+      head.style.display = (list.length===0 && readOnly) ? 'none' : '';
+    });
+  }
+
+  render();
+
+  /* recover a note that lost a save race on the previous page load */
+  (function restore(){
+    var raw=null; try{ raw=sessionStorage.getItem(PENDING); }catch(e){}
+    if(!raw) return;
+    unstash();
+    try{
+      var pnd=JSON.parse(raw), sec=document.getElementById(pnd.s);
+      if(!sec||!pnd.t) return;
+      var form=sec.querySelector('.note-form'), ta=form&&form.querySelector('textarea');
+      if(!ta) return;
+      ta.value=pnd.t; form.classList.add('open');
+      var m=sec.querySelector('.note-msg');
+      if(m){ m.className='note-msg ro';
+        m.textContent='Someone else saved a moment before you did, so this note was not added. It is restored above \u2014 press Save to add it now.'; }
+    }catch(e){}
+  })();
+
+  if(window.claude && claude.use){
+    claude.use('artifact').then(function(a){
+      api=a;
+      if(!a) setReadOnly('Shared notes are unavailable in this view — you can still read everything else.');
+    }).catch(function(){});
+  } else {
+    setReadOnly('Shared notes are unavailable in this view — you can still read everything else.');
+  }
+})();
+</script>
+
+<script>
+/* ---- flashcards: deck is built from whatever is currently visible ---- */
+(function(){
+  var fc=document.getElementById('fc'), card=document.getElementById('fc-card'),
+      front=document.getElementById('fc-front'), back=document.getElementById('fc-back'),
+      prompt=document.getElementById('fc-prompt'),
+      src=document.getElementById('fc-src'), hint=document.getElementById('fc-hint'),
+      left=document.getElementById('fc-left'), known=document.getElementById('fc-known'),
+      done=document.getElementById('fc-done'), actions=document.getElementById('fc-actions'),
+      doneP=document.getElementById('fc-done-p');
+  var deck=[], cur=null, nKnown=0, total=0;
+
+  function build(){
+    var out=[];
+    document.querySelectorAll('main section').forEach(function(sec){
+      if(sec.classList.contains('hidden')) return;
+      var secName=(sec.querySelector('.head h2')||{}).textContent||'';
+      var chap=(sec.querySelector('.slide')||{}).textContent||'';
+      sec.querySelectorAll('table').forEach(function(tbl){
+        var heads=[].slice.call(tbl.querySelectorAll('thead th')).map(function(th){return th.textContent.trim();});
+        tbl.querySelectorAll('tbody tr').forEach(function(tr){
+          if(tr.classList.contains('hidden')) return;
+          var tds=tr.querySelectorAll('td');
+          if(tds.length<2) return;
+          var fi=0;
+          if(tds[0].classList.contains('step')) fi=1;       /* "01" is a useless prompt */
+          if(fi>=tds.length-1) return;
+          var f=tds[fi].innerHTML.trim();
+          if(!f || f.replace(/<[^>]*>/g,'').trim().length<2) return;
+          var fields=[];
+          for(var i=fi+1;i<tds.length;i++){
+            var lab=heads[i]||'';
+            fields.push('<div class="fc-field">'+(lab?'<span class="fc-label">'+lab+'</span>':'')+tds[i].innerHTML+'</div>');
+          }
+          out.push({front:f, back:fields.join(''), prompt:(heads[fi]||''), src:(chap? chap+' &middot; ':'')+secName});
+        });
+      });
+    });
+    return out;
+  }
+
+  function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; } return a; }
+
+  function show(){
+    if(!deck.length){
+      card.hidden=true; actions.hidden=true; done.hidden=false;
+      doneP.innerHTML='You worked through <strong>'+total+'</strong> card'+(total===1?'':'s')+'.';
+      left.textContent='0'; known.textContent=nKnown;
+      return;
+    }
+    card.hidden=false; actions.hidden=false; done.hidden=true;
+    cur=deck[0];
+    src.innerHTML=cur.src; front.innerHTML=cur.front;
+    /* a bare "When" is useless without the column it came from */
+    var showPrompt = cur.prompt && cur.front.replace(/<[^>]*>/g,'').trim().length < 22;
+    prompt.hidden = !showPrompt;
+    if(showPrompt) prompt.textContent = cur.prompt;
+    back.innerHTML=cur.back; back.hidden=true;
+    hint.textContent='click, or press space, to flip';
+    left.textContent=deck.length; known.textContent=nKnown;
+  }
+
+  function flip(){
+    if(!deck.length) return;
+    back.hidden=!back.hidden;
+    hint.textContent = back.hidden ? 'click, or press space, to flip'
+      : 'Again puts it back in the deck · Got it removes it';
+  }
+
+  function open(){
+    deck=shuffle(build());
+    if(!deck.length){ window.alert('No cards in view — clear the search or chapter filter first.'); return; }
+    total=deck.length; nKnown=0;
+    document.body.classList.remove('quiz');
+    document.getElementById('quiz').setAttribute('aria-pressed','false');
+    fc.hidden=false; document.body.style.overflow='hidden';
+    show(); card.focus();
+  }
+  function close(){ fc.hidden=true; document.body.style.overflow=''; }
+
+  document.getElementById('cards').addEventListener('click',open);
+  document.getElementById('fc-close').addEventListener('click',close);
+  card.addEventListener('click',flip);
+  document.getElementById('fc-got').addEventListener('click',function(){ deck.shift(); nKnown++; show(); });
+  document.getElementById('fc-again').addEventListener('click',function(){ deck.push(deck.shift()); show(); });
+  document.getElementById('fc-shuffle').addEventListener('click',function(){ shuffle(deck); show(); });
+  document.getElementById('fc-restart').addEventListener('click',open);
+  document.getElementById('fc-done-restart').addEventListener('click',open);
+
+  document.addEventListener('keydown',function(e){
+    if(fc.hidden) return;
+    if(e.key===' '||e.key==='Enter'){ e.preventDefault(); flip(); }
+    else if(e.key==='Escape'){ close(); }
+    else if(e.key==='ArrowRight'){ e.preventDefault(); deck.shift(); nKnown++; show(); }
+    else if(e.key==='ArrowLeft'){ e.preventDefault(); deck.push(deck.shift()); show(); }
+  });
+})();
+</script>
+
+<script>
+/* ---- NCLEX-style practice ---- */
+(function(){
+  var BANK = [{"ch": "01", "q": "A chemical is being evaluated for development into a drug. Which finding would BEST support moving it forward?", "o": ["It produces a strong effect at very low doses", "It has demonstrated therapeutic value without severe toxicity", "It is derived from a natural plant source", "It is chemically similar to an existing approved drug"], "a": [1], "r": "Karch: to become a drug, a chemical must have demonstrated therapeutic value or efficacy <strong>without severe toxicity or damaging properties<\/strong>. Potency, natural origin, and similarity to an existing drug are not the deciding criteria.", "t": "mc"}, {"ch": "01", "q": "Hundreds of people died in the 1930s after a sulfanilamide preparation was dissolved in ethylene glycol. Which law resulted?", "o": ["Kefauver–Harris Act of 1962", "Controlled Substances Act", "Federal Food, Drug, and Cosmetic Act of 1938", "Pregnancy and Lactation Labeling Rule"], "a": [2], "r": "The elixir of sulfanilamide disaster produced the <strong>Federal Food, Drug, and Cosmetic Act of 1938<\/strong>, giving the FDA power to enforce standards for testing drug toxicity and monitoring labeling. Thalidomide, in the 1960s, produced Kefauver–Harris.", "t": "mc"}, {"ch": "01", "q": "A nurse is teaching about the Kefauver–Harris Act of 1962. Which statement is accurate?", "o": ["It created the schedules for controlled substances", "It followed the thalidomide tragedy and added standards for efficacy and safety", "It required all prescriptions to use metric measure", "It established the orphan drug program"], "a": [1], "r": "Thalidomide, used as a sleeping aid in pregnancy, caused limb deformities. The resulting <strong>Kefauver–Harris Act of 1962<\/strong> gave the FDA regulatory control over testing and evaluating drugs and set standards for <strong>efficacy and safety<\/strong>.", "t": "mc"}, {"ch": "01", "q": "Which statements about preclinical trials are correct? <em>Select all that apply.<\/em>", "o": ["They may be conducted in vitro", "They may be conducted in vivo", "They include human participants", "They evaluate adverse effects", "They determine whether the chemical has the presumed effect in living tissue"], "a": [0, 1, 3, 4], "r": "Preclinical testing is done <strong>in vitro<\/strong> (outside a living organism) and <strong>in vivo<\/strong> (inside or on one), for two purposes: whether the presumed effect occurs in living tissue, and whether adverse effects appear. <strong>Humans are not included<\/strong> until Phase I.", "t": "sata"}, {"ch": "01", "q": "Which phase of drug development answers the question, \"Is this drug better than what we already use?\"", "o": ["Phase I", "Phase II", "Phase III", "Phase IV"], "a": [2], "r": "Phase I asks whether it is <em>safe<\/em> (healthy volunteers). Phase II asks whether it <em>works<\/em> (patients with the disease). <strong>Phase III compares it against existing treatment or placebo<\/strong> in a large, diverse population. Phase IV is post-marketing surveillance.", "t": "mc"}, {"ch": "01", "q": "A patient asks why a medication is kept behind the pharmacy counter but needs no prescription. The nurse explains this is which category?", "o": ["Over-the-counter (OTC)", "Behind-the-counter (BTC)", "Orphan drug", "Schedule V controlled substance"], "a": [1], "r": "<strong>Behind-the-counter drugs<\/strong> are available without a prescription but carry more legal restriction than ordinary OTC products.", "t": "mc"}, {"ch": "01", "q": "A prescription for a Schedule II medication is being processed. Which statement is correct?", "o": ["Up to five refills are permitted within six months", "No refills are permitted; a new prescription is required each time", "It may be dispensed over the counter in some states", "It has no accepted medical use in the United States"], "a": [1], "r": "<strong>C-II drugs allow no refills<\/strong> — a new prescription is required each time. Five refills in six months applies to C-III and C-IV. No accepted medical use describes C-I.", "t": "mc"}, {"ch": "01", "q": "A drug approved two years ago is withdrawn after reports of a rare fatal liver reaction. Which phase of drug evaluation identified this problem?", "o": ["Preclinical testing", "Phase II clinical trials", "Phase III clinical trials", "Phase IV post-marketing surveillance"], "a": [3], "r": "<strong>Phase IV<\/strong> is post-marketing surveillance. A trial of a few thousand people cannot detect a reaction occurring in 1 of 50,000, so rare and long-term effects surface only after wide release — which is why nurse reporting after approval matters.", "t": "mc"}, {"ch": "02", "q": "A nursing student asks how to keep pharmacodynamics and pharmacokinetics straight. Which explanation is correct?", "o": ["Pharmacodynamics is what the body does to the drug", "Pharmacodynamics is what the drug does to the body", "Pharmacokinetics is how the drug binds to receptors", "The two terms describe the same process"], "a": [1], "r": "<strong>Pharmacodynamics = the Drug’s action on the body<\/strong> (receptors, enzymes). Pharmacokinetics = what the body does to the drug — absorption, distribution, metabolism, excretion.", "t": "mc"}, {"ch": "02", "q": "Karch describes four ways drugs usually work. Which is NOT one of them?", "o": ["Replacing or substituting for missing chemicals", "Increasing or stimulating cellular activity", "Altering the genetic code of the host cell", "Interfering with the functioning of foreign cells"], "a": [2], "r": "The four are: replace or substitute missing chemicals, increase or stimulate cellular activity, depress or slow cellular activity, and interfere with foreign cells (chemotherapeutic agents). <strong>Altering the host genetic code is not among them.<\/strong>", "t": "mc"}, {"ch": "02", "q": "Which are recognised receptor site types? <em>Select all that apply.<\/em>", "o": ["Gated ion channels", "Transmembranous receptors", "G protein–coupled receptors", "Intracellular receptors", "Portal receptors"], "a": [0, 1, 2, 3], "r": "Karch lists gated ion channels, transmembranous receptors, G protein–coupled receptors, and intracellular receptors. <strong>\"Portal receptors\" do not exist<\/strong> — the portal circulation relates to first-pass metabolism, not receptors.", "t": "sata"}, {"ch": "02", "q": "A drug is ordered IV rather than orally to avoid the first-pass effect. Which statement best explains the nurse’s understanding?", "o": ["IV drugs are absorbed more completely from the GI tract", "IV drugs enter systemic circulation directly, with no absorption step and no first-pass metabolism", "IV drugs are metabolised by the kidneys instead of the liver", "IV drugs bypass distribution to the tissues"], "a": [1], "r": "IV medication enters systemic circulation directly. <strong>There is no absorption step and no first-pass metabolism, and bioavailability is 100%.<\/strong> Distribution still occurs normally.", "t": "mc"}, {"ch": "02", "q": "Dr. Kaur emphasised that \"no first-pass does not mean no absorption.\" Which route has NEITHER absorption nor first-pass metabolism?", "o": ["Sublingual", "Intramuscular", "Intravenous", "Transdermal"], "a": [2], "r": "Sublingual, IM, and transdermal all involve <strong>absorption<\/strong> but bypass first-pass metabolism. <strong>Only IV has neither<\/strong> — it enters the bloodstream directly.", "t": "mc"}, {"ch": "02", "q": "A patient with a serum albumin of 1.9 g/dL is prescribed a normal dose of a highly protein-bound drug. What should the nurse anticipate?", "o": ["A reduced therapeutic effect", "Signs of drug toxicity", "Delayed onset of action", "No change from the expected response"], "a": [1], "r": "Only <strong>unbound (free)<\/strong> drug is pharmacologically active. With low albumin there are fewer binding sites, so more drug remains free — producing <strong>toxicity at an ordinary dose<\/strong>.", "t": "mc"}, {"ch": "02", "q": "The half-life of a drug primarily guides which nursing consideration?", "o": ["The route selected for administration", "How frequently the drug is dosed", "Whether the drug crosses the blood–brain barrier", "The drug’s bioavailability"], "a": [1], "r": "Half-life is the time for serum concentration to fall by half, and it <strong>guides dosing frequency<\/strong>. A long half-life means less frequent dosing and greater accumulation risk.", "t": "mc"}, {"ch": "02", "q": "Which term describes the amount of drug that must be present at the site of action to produce the desired therapeutic effect?", "o": ["Bioavailability", "Dynamic equilibrium", "Critical concentration", "Trough level"], "a": [2], "r": "<strong>Critical concentration<\/strong> is the amount needed to produce the desired therapeutic effect. Dynamic equilibrium is the concentration actually reached, as the net result of absorption, distribution, metabolism, and excretion.", "t": "mc"}, {"ch": "02", "q": "Which factors influence a patient’s response to a drug? <em>Select all that apply.<\/em>", "o": ["Body weight", "Renal and hepatic function", "Genetic variation in metabolising enzymes", "Tolerance from repeated exposure", "The colour of the tablet"], "a": [0, 1, 2, 3], "r": "Weight, pathological factors (especially <strong>liver and kidney disease<\/strong>), genetics, and tolerance all alter response. Tablet colour does not — though patient expectation (the placebo effect) is a genuine psychological factor.", "t": "sata"}, {"ch": "03", "q": "A patient receiving chemotherapy develops a white blood cell count of 1,800/mm³ and a platelet count of 40,000/mm³. The nurse documents this as which adverse effect?", "o": ["Blood dyscrasia", "Superinfection", "Idiosyncratic reaction", "Type II hypersensitivity"], "a": [0], "r": "<strong>Blood dyscrasia<\/strong> is Karch’s term for bone marrow suppression caused by drug effects on the rapidly multiplying cells of the marrow, producing lower-than-normal blood cell levels.", "t": "mc"}, {"ch": "03", "q": "A patient is receiving a known hepatotoxic drug. Which should the nurse monitor? <em>Select all that apply.<\/em>", "o": ["AST and ALT", "Jaundice", "Dark urine", "Right upper quadrant pain", "Serum potassium"], "a": [0, 1, 2, 3], "r": "Hepatotoxicity is tracked with <strong>AST, ALT, and bilirubin<\/strong>, plus clinical signs — jaundice, dark urine, and right upper quadrant pain. Potassium is an electrolyte, not a marker of liver injury.", "t": "sata"}, {"ch": "03", "q": "Ten minutes after receiving IV penicillin a patient develops stridor, wheezing, and hypotension. What is the nurse’s FIRST action?", "o": ["Document the reaction in the medical record", "Stop the infusion immediately", "Administer diphenhydramine", "Obtain a full set of vital signs"], "a": [1], "r": "This is <strong>anaphylaxis<\/strong>. The first action is always to <strong>stop the drug<\/strong>, then call for emergency help, maintain the airway, and give epinephrine. Documentation matters but is never the first action in an emergency.", "t": "mc"}, {"ch": "03", "q": "A patient develops a rash 60 hours after starting a new antibiotic. This delayed, T-cell mediated response is which hypersensitivity type?", "o": ["Type I", "Type II", "Type III", "Type IV"], "a": [3], "r": "<strong>Type IV<\/strong> is delayed and T-cell mediated, appearing at 48–72 hours. Type I is IgE-mediated and immediate (minutes); Type II is cytotoxic; Type III involves immune complexes over hours to days.", "t": "mc"}, {"ch": "03", "q": "A patient taking an antipsychotic develops a temperature of 40°C, muscle rigidity, altered mental status, and unstable blood pressure. The nurse suspects:", "o": ["Extrapyramidal symptoms", "Neuroleptic malignant syndrome", "Anticholinergic toxicity", "Serotonin withdrawal"], "a": [1], "r": "<strong>NMS<\/strong> presents with high fever, rigidity, altered mental status, and autonomic instability, and is <strong>life-threatening<\/strong>. EPS involves abnormal movements without this systemic picture.", "t": "mc"}, {"ch": "03", "q": "Which findings suggest anticholinergic effects? <em>Select all that apply.<\/em>", "o": ["Dry mouth", "Blurred vision", "Urinary retention", "Confusion", "Bradycardia"], "a": [0, 1, 2, 3], "r": "The classic picture: dry as a bone, red as a beet, blind as a bat, mad as a hatter, hot as a hare — plus urinary retention and constipation. Anticholinergics cause <strong>tachycardia, not bradycardia<\/strong>.", "t": "sata"}, {"ch": "03", "q": "A woman of childbearing age is prescribed isotretinoin. When is the risk of teratogenic effect greatest?", "o": ["Throughout the entire pregnancy equally", "During the first trimester", "During the third trimester", "Only during labour and delivery"], "a": [1], "r": "<strong>The first trimester is the highest-risk period<\/strong> because organogenesis occurs then — often before a patient knows she is pregnant. Confirm pregnancy status and educate about contraception.", "t": "mc"}, {"ch": "03", "q": "A patient becomes agitated and restless after a dose of a sedating medication. The nurse recognises this as which type of adverse reaction?", "o": ["Primary action", "Secondary action", "Drug allergy", "Idiosyncratic reaction"], "a": [3], "r": "An <strong>idiosyncratic reaction<\/strong> is a strange, unexpected response not explained by the drug’s known pharmacology, often genetic in origin. A primary action would be excessive sedation.", "t": "mc"}, {"ch": "04", "q": "An order reads metoprolol 25 mg PO now. The MAR states \"hold if systolic BP < 100.\" The patient’s BP is 88/54. What is the nurse’s best action?", "o": ["Give the dose, since it is correctly calculated", "Hold the dose and assess or clarify with the prescriber", "Ask the patient whether they would like to take it", "Give half the ordered dose"], "a": [1], "r": "A hold parameter is met. <strong>Hold and assess or clarify.<\/strong> Dr. Kaur’s point: the \"right dose\" is not enough — assessment and clinical judgment come first. Splitting a dose without an order is never acceptable.", "t": "mc"}, {"ch": "04", "q": "Which are included in the expanded medication \"rights\" taught in Week 2? <em>Select all that apply.<\/em>", "o": ["Right reason", "Right assessment", "Right documentation", "Right response", "Right diagnosis"], "a": [0, 1, 2, 3], "r": "The ten rights add reason, assessment, education/refusal, documentation, and response to the original five. <strong>\"Right diagnosis\" is not one of them<\/strong> — diagnosing is outside the administration framework.", "t": "sata"}, {"ch": "04", "q": "The Clinical Judgment Measurement Model was developed by which body?", "o": ["The American Nurses Association", "The Food and Drug Administration", "The National Council of State Boards of Nursing", "The Institute for Safe Medication Practices"], "a": [2], "r": "The CJMM was developed by the <strong>NCSBN<\/strong> — the body that generates the NCLEX. That is why Next Gen NCLEX items use its language: recognise cues, analyse cues, prioritise hypotheses, generate solutions, take action, evaluate outcomes.", "t": "mc"}, {"ch": "04", "q": "In Karch’s 10th edition, the step in which the nurse states an actual or potential concern that directs interventions is called:", "o": ["Nursing diagnosis", "Nursing conclusion", "Nursing hypothesis", "Nursing evaluation"], "a": [1], "r": "This edition uses <strong>nursing conclusion<\/strong>, not \"nursing diagnosis.\" It pairs with \"generate hypotheses\" and aligns with the CJMM skill <em>prioritise hypotheses<\/em>.", "t": "mc"}, {"ch": "04", "q": "A nurse realises she administered a medication to the wrong patient. What is the FIRST action?", "o": ["Complete an incident report", "Notify the prescriber", "Assess and protect the patient", "Document the error in the chart"], "a": [2], "r": "<strong>Patient safety first, learning comes next.<\/strong> Assess and protect the patient, then notify the clinician, follow policy, document, and complete the safety report.", "t": "mc"}, {"ch": "04", "q": "A nurse wants to report a close call that did not reach the patient, so others can learn from it. Which is the appropriate external program?", "o": ["FDA MedWatch", "ISMP Medication Errors Reporting Program", "The Joint Commission sentinel event database", "The state board of nursing"], "a": [1], "r": "<strong>ISMP MERP<\/strong> collects medication errors, <strong>close calls<\/strong>, and hazardous conditions for learning and prevention. MedWatch handles serious adverse events, product problems, therapeutic failure, and product-use errors.", "t": "mc"}, {"ch": "04", "q": "Which notations follow ISMP error-prone abbreviation guidance? <em>Select all that apply.<\/em>", "o": ["0.5 mg", "5 mg", "5.0 mg", "mcg", "10 U of insulin"], "a": [0, 1, 3], "r": "Use a <strong>leading zero<\/strong> (0.5 mg) and <strong>never a trailing zero<\/strong> (5.0 mg reads as 50 mg). Spell out <strong>mcg<\/strong> and <strong>units<\/strong> — \"U\" can be misread as a zero or a four.", "t": "sata"}, {"ch": "04", "q": "A nurse says, \"Just so I know I explained it clearly, can you tell me how you will take this at home?\" This technique is:", "o": ["Motivational interviewing", "Teach-back", "Therapeutic silence", "Reflective listening"], "a": [1], "r": "<strong>Teach-back<\/strong> places the burden on the nurse’s explanation rather than the patient’s memory, and verifies understanding. Dr. Kaur frames the patient as the last person who can catch an error.", "t": "mc"}, {"ch": "04", "q": "A competent patient refuses a scheduled medication. Which action is appropriate?", "o": ["Administer it in food to ensure the dose is taken", "Document the refusal and take no further action", "Pause, assess the reason, provide information, notify or clarify as appropriate, and document", "Tell the patient the provider requires them to take it"], "a": [2], "r": "Refusal is the patient’s right. <strong>Assess the reason, inform, notify or clarify, and document the clinical facts.<\/strong> Concealing medication in food is deceptive; documenting alone misses the chance to address a fixable concern.", "t": "mc"}, {"ch": "04", "q": "A nurse is preparing to administer a medication on a busy unit. Which action correctly identifies the patient?", "o": ["Confirming the room and bed number against the MAR", "Asking the patient to confirm their name and date of birth", "Checking the name on the door of the room", "Asking a family member at the bedside to confirm identity"], "a": [1], "r": "At least <strong>two identifiers<\/strong> are required, typically name and date of birth, obtained from the patient where possible. Room and bed number are never identifiers — patients move. A family member is not an acceptable substitute.", "t": "mc"}, {"ch": "05", "q": "Order: acetaminophen 650 mg PO. Available: 325 mg tablets. Record your answer as a whole number.", "a": 2, "r": "D ÷ H × Q = <span class=\"mono\">650 ÷ 325 × 1<\/span> = <strong>2 tablets<\/strong>. Reasonableness check: 650 mg is twice 325 mg, so two tablets makes sense.", "t": "fill", "unit": "tablets"}, {"ch": "05", "q": "Order: amoxicillin 600 mg PO. Available: 400 mg per 5 mL. Record your answer to one decimal place.", "a": 7.5, "r": "<span class=\"mono\">600 ÷ 400 × 5 mL<\/span> = <strong>7.5 mL<\/strong>. Q is 5 mL because the 400 mg on hand is contained in 5 mL — a common error is using 1 instead. Measure with a marked oral device, never a household spoon.", "t": "fill", "unit": "mL"}, {"ch": "05", "q": "Order: cefazolin 25 mg/kg/dose for a child weighing 20 kg. Record your answer as a whole number.", "a": 500, "r": "<span class=\"mono\">25 mg/kg × 20 kg<\/span> = <strong>500 mg per dose<\/strong>. If the concentration were 100 mg/mL, step two would give 5 mL. Never skip the safe-dose-range check when required.", "t": "fill", "unit": "mg"}, {"ch": "05", "q": "A patient weighs 176 lb. Record your answer as a whole number.", "a": 80, "r": "<span class=\"mono\">176 ÷ 2.2<\/span> = <strong>80 kg<\/strong>. Dividing by 2.2 converts pounds to kilograms; multiplying by 2.2 goes the other way.", "t": "fill", "unit": "kg"}, {"ch": "05", "q": "Infuse 1,000 mL of normal saline over 8 hours. Record your answer as a whole number.", "a": 125, "r": "<span class=\"mono\">1,000 mL ÷ 8 hr<\/span> = <strong>125 mL/hr<\/strong>. Always verify the programmed rate against the order before starting the infusion.", "t": "fill", "unit": "mL/hr"}, {"ch": "05", "q": "When giving an intramuscular injection, which technique is correct?", "o": ["Insert at a 45-degree angle into subcutaneous tissue", "Insert deep into muscle at a 90-degree angle", "Recap the needle before disposal", "Massage the site vigorously afterward"], "a": [1], "r": "IM injections go <strong>deep into muscle at a 90-degree angle<\/strong> — ventrogluteal, vastus lateralis, or deltoid. <strong>Never recap<\/strong>; engage the safety device and use the sharps container.", "t": "mc"}, {"ch": "05", "q": "Which routes bypass first-pass metabolism? <em>Select all that apply.<\/em>", "o": ["Sublingual", "Oral", "Intramuscular", "Transdermal", "Intravenous"], "a": [0, 2, 3, 4], "r": "Sublingual, IM, transdermal, and IV all bypass the portal circulation and therefore first-pass metabolism. <strong>Oral is the route that undergoes it<\/strong>, which is why some oral doses are much larger than IV.", "t": "sata"}, {"ch": "06", "q": "A patient says she takes half her prescribed tablets when money is tight. What is the nurse’s best initial response?", "o": ["Explain that skipping doses is noncompliant and unsafe", "Ask her to walk through how she takes her medicines at home", "Notify the prescriber that the patient is nonadherent", "Provide written instructions on the correct schedule"], "a": [1], "r": "<strong>Never assume \"noncompliance\" before assessing the barrier.<\/strong> The opening move is to ask her to walk through how she takes her medicines — then identify the barrier (cost) and solve it: generic option, assistance programme, simplified regimen.", "t": "mc"}, {"ch": "06", "q": "Which are patient-level barriers to effective drug therapy? <em>Select all that apply.<\/em>", "o": ["Access and cost", "Health literacy", "Polypharmacy", "Care transitions", "The drug’s half-life"], "a": [0, 1, 2, 3], "r": "Week 2 lists access and cost, adherence, health literacy, polypharmacy, information quality, and care transitions. <strong>Half-life is a pharmacokinetic property<\/strong>, not a barrier you assess and act on socially.", "t": "sata"}, {"ch": "06", "q": "A patient states her herbal supplement must be safe because it is FDA regulated. What is the most accurate response?", "o": ["She is correct; supplements undergo the same approval as drugs", "The FDA regulates supplements but does not approve them for safety and effectiveness before marketing", "The FDA does not regulate supplements in any way", "Supplements are approved only if sold in pharmacies"], "a": [1], "r": "The FDA <strong>regulates<\/strong> dietary supplements but <strong>does not approve them for safety and effectiveness before marketing<\/strong> the way it approves drugs. Quality and evidence vary, and supplements can interact with prescriptions.", "t": "mc"}, {"ch": "06", "q": "According to the CDC data cited in Chapter 6, approximately what proportion of drug overdose deaths in 2022 involved an opioid?", "o": ["About 25%", "About 50%", "Over 75%", "Under 10%"], "a": [2], "r": "<strong>Over 75%<\/strong> of 2022 overdose deaths involved an opioid. The CDC reported 224 deaths per day, with two-thirds caused by synthetic opioids — often illicitly manufactured fentanyl.", "t": "mc"}, {"ch": "06", "q": "A patient asks how to judge whether a medication website is trustworthy. Which is the best guidance?", "o": ["A \".org\" ending confirms the site is reliable", "Check who wrote it, whether references are given, when it was updated, and why the site exists", "Any site appearing first in search results is reliable", "Sites without advertising are always accurate"], "a": [1], "r": "<strong>A domain ending is not evidence.<\/strong> Evaluate authorship and qualifications, sources and references, the update date, the site’s purpose and funding, and whether it matches other reliable sources such as FDA, MedlinePlus, or DailyMed.", "t": "mc"}, {"ch": "06", "q": "A patient asks what to do with unused opioid tablets. Which reflects current FDA guidance?", "o": ["Flush all unused medications immediately", "Use a drug take-back or mail-back option when available", "Dispose of them in the household rubbish without preparation", "Return them to the prescribing physician"], "a": [1], "r": "For most unused or expired medicines the FDA recommends a <strong>take-back or mail-back option<\/strong>. Flushing is reserved for specific medicines on the <strong>FDA flush list<\/strong> when take-back is not readily available.", "t": "mc"}, {"ch": "06", "q": "A patient reports taking several over-the-counter products for a cold. Which concern should the nurse prioritise?", "o": ["OTC products cannot interact with prescription medications", "Duplicate ingredients across products may cause an unintended overdose", "OTC products are all evaluated under current FDA testing standards", "OTC products are safe at any dose if taken as directed"], "a": [1], "r": "Patients taking several preparations to cover different symptoms can easily <strong>double up on the same ingredient<\/strong> — acetaminophen is the classic case — and reach a toxic dose. OTC drugs also interact with prescriptions and can mask underlying disease, and many were \"grandfathered in\" before modern testing standards.", "t": "mc"}];
+  var nx=document.getElementById('nx'), card=document.getElementById('nx-card'),
+      meta=document.getElementById('nx-meta'), stem=document.getElementById('nx-stem'),
+      opts=document.getElementById('nx-opts'), result=document.getElementById('nx-result'),
+      verdict=document.getElementById('nx-verdict'), rat=document.getElementById('nx-rat'),
+      submit=document.getElementById('nx-submit'), next=document.getElementById('nx-next'),
+      done=document.getElementById('nx-done'), actions=document.querySelector('.nx-actions');
+  var deck=[], i=0, nRight=0;
+
+  function curChapter(){
+    var c=document.querySelector('.chip[aria-pressed="true"]');
+    return c ? c.dataset.ch : 'all';
+  }
+  function shuffle(a){ for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var t=a[k];a[k]=a[j];a[j]=t;} return a; }
+
+  function open(){
+    var ch=curChapter();
+    deck=shuffle(BANK.filter(function(q){ return ch==='all'||q.ch===ch; }).slice());
+    if(!deck.length){ window.alert('No questions for that chapter yet.'); return; }
+    i=0; nRight=0;
+    document.body.classList.remove('quiz');
+    document.getElementById('quiz').setAttribute('aria-pressed','false');
+    nx.hidden=false; document.body.style.overflow='hidden';
+    document.getElementById('nx-tot').textContent=deck.length;
+    render();
+  }
+  function close(){ nx.hidden=true; document.body.style.overflow=''; document.body.classList.remove('nx-graded'); }
+
+  function render(){
+    document.body.classList.remove('nx-graded');
+    card.hidden=false; actions.hidden=false; done.hidden=true;
+    result.hidden=true; submit.hidden=false; next.hidden=true;
+    var q=deck[i];
+    var tag = q.t==='sata' ? '<span class="nx-tag">select all that apply</span>'
+            : q.t==='fill' ? '<span class="nx-tag">fill in the blank</span>' : '';
+    meta.innerHTML='Chapter '+q.ch+tag;
+    stem.innerHTML=q.q;
+    if(q.t==='fill'){
+      opts.innerHTML='<div class="nx-fillrow"><input id="nx-fill" type="text" inputmode="decimal" '+
+        'autocomplete="off" aria-label="Your answer" placeholder="0"><span class="nx-unit">'+q.unit+'</span></div>';
+      setTimeout(function(){ var f=document.getElementById('nx-fill'); if(f) f.focus(); },0);
+    } else {
+      opts.innerHTML=q.o.map(function(o,k){
+        return '<label class="nx-opt" data-k="'+k+'">'+
+          '<input type="'+(q.t==='sata'?'checkbox':'radio')+'" name="nxo" value="'+k+'">'+
+          '<span class="ltr">'+String.fromCharCode(65+k)+'</span><span>'+o+'</span></label>';
+      }).join('');
+    }
+    document.getElementById('nx-n').textContent=(i+1);
+    document.getElementById('nx-right').textContent=nRight;
+  }
+
+  function grade(){
+    var q=deck[i], ok;
+    if(q.t==='fill'){
+      var f=document.getElementById('nx-fill');
+      var raw=(f.value||'').trim().replace(/,/g,'');
+      if(raw==='') { f.focus(); return; }
+      var n=parseFloat(raw);
+      if(isNaN(n)) { f.focus(); return; }
+      ok = Math.abs(n-q.a) < 0.05;
+      f.disabled=true;
+    } else {
+      var picked=[].slice.call(opts.querySelectorAll('input:checked')).map(function(x){return +x.value;});
+      if(!picked.length) return;
+      ok = picked.length===q.a.length && picked.every(function(k){ return q.a.indexOf(k)>-1; });
+    }
+    if(ok) nRight++;
+    document.body.classList.add('nx-graded');
+    if(q.t!=='fill'){
+      opts.querySelectorAll('.nx-opt').forEach(function(el){
+        var k=+el.dataset.k;
+        el.querySelector('input').disabled=true;
+        if(q.a.indexOf(k)>-1) el.classList.add('right');
+        else if(picked.indexOf(k)>-1) el.classList.add('wrong');
+      });
+    }
+    verdict.className='nx-verdict '+(ok?'ok':'no');
+    verdict.textContent = ok ? 'Correct'
+      : q.t==='fill' ? ('Not quite — the answer is ' + q.a + ' ' + q.unit)
+      : q.t==='sata' ? 'Not quite — the correct set is highlighted'
+      : 'Not quite — the correct answer is highlighted';
+    rat.innerHTML='<strong>Rationale.</strong> '+q.r;
+    result.hidden=false; submit.hidden=true; next.hidden=false;
+    document.getElementById('nx-right').textContent=nRight;
+    next.focus();
+  }
+
+  function advance(){
+    i++;
+    if(i>=deck.length){
+      card.hidden=true; actions.hidden=true; done.hidden=false;
+      var pct=Math.round(nRight/deck.length*100);
+      document.getElementById('nx-pct').textContent=pct+'%';
+      document.getElementById('nx-summary').innerHTML=
+        nRight+' of '+deck.length+' correct.'+(pct>=75?' Solid — that is around passing standard for a practice set.':' Worth another pass, and check the rationales you missed.');
+      return;
+    }
+    render();
+  }
+
+  document.getElementById('nclex').addEventListener('click',open);
+  document.getElementById('nx-close').addEventListener('click',close);
+  document.getElementById('nx-restart').addEventListener('click',open);
+  document.getElementById('nx-again').addEventListener('click',open);
+  submit.addEventListener('click',grade);
+  next.addEventListener('click',advance);
+  document.addEventListener('keydown',function(e){
+    if(nx.hidden) return;
+    if(e.key==='Escape'){ close(); }
+    else if(e.key==='Enter'){ e.preventDefault(); if(next.hidden) grade(); else advance(); }
+    else if(/^[1-9]$/.test(e.key) && deck[i] && deck[i].t!=='fill'){
+      var el=opts.querySelector('.nx-opt[data-k="'+(+e.key-1)+'"] input');
+      if(el && !el.disabled){ el.checked = el.type==='checkbox' ? !el.checked : true; }
+    }
+  });
+})();
+</script>
+
+<script>
+/* ---- toolbar panels: side drawer + settings dropdown ---- */
+(function(){
+  var secBtn=document.getElementById('secbtn'), setBtn=document.getElementById('setbtn'),
+      setPnl=document.getElementById('setpanel'), scrim=document.getElementById('scrim');
+
+  function openDrawer(on){
+    document.body.classList.toggle('drawer-open',on);
+    secBtn.setAttribute('aria-expanded',on?'true':'false');
+    if(on){ closeSet(); }
+  }
+  function closeSet(){ setPnl.classList.remove('open'); setBtn.setAttribute('aria-expanded','false'); }
+
+  secBtn.addEventListener('click',function(e){
+    e.stopPropagation();
+    openDrawer(!document.body.classList.contains('drawer-open'));
+  });
+  document.getElementById('secclose').addEventListener('click',function(){ openDrawer(false); });
+  scrim.addEventListener('click',function(){ openDrawer(false); });
+  document.getElementById('secpanel').addEventListener('click',function(e){ e.stopPropagation(); });
+
+  setBtn.addEventListener('click',function(e){
+    e.stopPropagation();
+    var willOpen=!setPnl.classList.contains('open');
+    openDrawer(false);
+    setPnl.classList.toggle('open',willOpen);
+    setBtn.setAttribute('aria-expanded',willOpen?'true':'false');
+  });
+  setPnl.addEventListener('click',function(e){ e.stopPropagation(); });
+
+  /* a section link closes the drawer; a chapter chip keeps it open to browse */
+  document.querySelectorAll('#secpanel nav a').forEach(function(a){
+    a.addEventListener('click',function(){ openDrawer(false); });
+  });
+  document.addEventListener('click',function(){ closeSet(); });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){ openDrawer(false); closeSet(); }
+  });
+
+  var quiz=document.getElementById('quiz'), hint=document.getElementById('hint');
+  quiz.addEventListener('click',function(){
+    hint.hidden = quiz.getAttribute('aria-pressed')!=='true';
+  });
+})();
+</script>
+
+<script>
+/* ---- dosage practice generator ---- */
+(function(){
+  var TYPES=5, cur=0, prob=null, right=0, total=0, streak=0;
+  var P=document.getElementById('dc-prompt'), I=document.getElementById('dc-inp'),
+      U=document.getElementById('dc-unit'), V=document.getElementById('dc-verdict'),
+      B=document.getElementById('dc-banner'), S=document.getElementById('dc-steps');
+
+  function ri(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+  function pick(a){return a[Math.floor(Math.random()*a.length)];}
+  function fmt(n){
+    var r=Math.round(n*100)/100;
+    return (Math.abs(r-Math.round(r))<1e-9) ? String(Math.round(r)) : String(r);
+  }
+  function v(x){return '<span class="v">'+x+'</span>';}
+
+  // ---- generators -------------------------------------------------
+  function gDose(){
+    var have=pick([5,10,25,50,100,125,250,500]);
+    var qty=pick([1,1,2,5,10]);
+    var mult=pick([0.5,1.5,2,2.5,3,4]);
+    var desired=have*mult;
+    var tablet=qty===1&&pick([true,false]);
+    var unitTxt=tablet?'tablets':'mL';
+    var per=tablet?('per tablet'):('per '+qty+' mL');
+    var useG=(have>=250)&&(desired%1000===0)&&pick([true,false]);
+    var shown=useG?(desired/1000)+' g':desired+' mg';
+    return {
+      html:'<strong>Order:</strong> '+v(shown)+'. <strong>On hand:</strong> '+v(have+' mg '+per)+'.<br>How many '+unitTxt+' will you give?',
+      unit:unitTxt, ans:mult*qty,
+      steps:(useG?['<strong>Convert.</strong> The order is in grams and the label is in mg: <span class="mono">'+(desired/1000)+' g &times; 1000 = '+desired+' mg</span>']:[])
+        .concat([
+        '<strong>Identify the parts.</strong> Desired = <span class="mono">'+desired+' mg</span>, Have = <span class="mono">'+have+' mg</span>, Quantity = <span class="mono">'+qty+(tablet?' tablet':' mL')+'</span>',
+        '<strong>Apply the formula.</strong> <span class="mono">('+desired+' &divide; '+have+') &times; '+qty+'</span>',
+        '<strong>Answer.</strong> <span class="mono">'+fmt(mult)+' &times; '+qty+' = '+fmt(mult*qty)+' '+unitTxt+'</span>'
+      ])
+    };
+  }
+
+  function gWeight(){
+    var kg=pick([8,10,12,15,18,20,24,25,30,35,40,50,60,70,80]);
+    var lb=Math.round(kg*2.2*10)/10;
+    var perKg=pick([0.5,1,2,2.5,3,5,10,12,15,20]);
+    var freq=pick([2,3,4]);            // doses per day
+    var hrs={2:12,3:8,4:6}[freq];
+    var daily=kg*perKg;
+    var inLb=pick([true,true,false]);
+    return {
+      html:'<strong>Order:</strong> '+v(perKg+' mg/kg/day')+' divided every '+v(hrs+' hours')+'.<br><strong>Patient weighs:</strong> '+v(inLb?(lb+' lb'):(kg+' kg'))+'.<br>How many mg will you give <em>per dose</em>?',
+      unit:'mg', ans:daily/freq,
+      steps:(inLb?['<strong>Convert weight.</strong> <span class="mono">'+lb+' &divide; 2.2 = '+kg+' kg</span>']:[])
+        .concat([
+        '<strong>Total daily dose.</strong> <span class="mono">'+kg+' kg &times; '+perKg+' mg/kg = '+fmt(daily)+' mg/day</span>',
+        '<strong>Doses per day.</strong> Every '+hrs+' hours &rarr; <span class="mono">24 &divide; '+hrs+' = '+freq+' doses</span>',
+        '<strong>Per dose.</strong> <span class="mono">'+fmt(daily)+' &divide; '+freq+' = '+fmt(daily/freq)+' mg</span>'
+      ])
+    };
+  }
+
+  function gPump(){
+    var CLEAN={250:[2,5,10],500:[2,4,5,10],1000:[4,5,8,10]};
+    var vol=pick([250,500,1000]);
+    var hr=pick(CLEAN[vol]);
+    return {
+      html:'<strong>Order:</strong> infuse '+v(vol+' mL')+' of normal saline over '+v(hr+' hours')+'.<br>Set the pump to how many mL/hr?',
+      unit:'mL/hr', ans:vol/hr,
+      steps:[
+        '<strong>Formula.</strong> <span class="mono">mL/hr = total volume &divide; time in hours</span>',
+        '<strong>Compute.</strong> <span class="mono">'+vol+' mL &divide; '+hr+' hr = '+fmt(vol/hr)+' mL/hr</span>',
+        '<strong>Verify</strong> the programmed rate against the order before starting the infusion.'
+      ]
+    };
+  }
+
+  function gDrip(){
+    var vol=pick([250,500,1000]);
+    var hr=pick([2,4,5,6,8,10,12]);
+    var df=pick([10,15,20,60]);
+    var g=(vol*df)/(hr*60);
+    return {
+      html:'<strong>Order:</strong> infuse '+v(vol+' mL')+' over '+v(hr+' hours')+'.<br><strong>Drop factor:</strong> '+v(df+' gtt/mL')+'.<br>How many gtt/min? <em>(whole number)</em>',
+      unit:'gtt/min', ans:Math.round(g),
+      steps:[
+        '<strong>Convert time to minutes.</strong> <span class="mono">'+hr+' hr &times; 60 = '+(hr*60)+' min</span>',
+        '<strong>Formula.</strong> <span class="mono">(volume &times; drop factor) &divide; time in minutes</span>',
+        '<strong>Compute.</strong> <span class="mono">('+vol+' &times; '+df+') &divide; '+(hr*60)+' = '+fmt(g)+'</span>',
+        '<strong>Round to a whole drop.</strong> <span class="mono">'+Math.round(g)+' gtt/min</span>'
+      ]
+    };
+  }
+
+  function gWeightRate(){
+    var kg=pick([50,60,65,70,75,80,90,100]);
+    var dose=pick([2,3,5,10]);
+    var mg=pick([200,400,500,800]);
+    var ml=pick([250,500]);
+    var conc=(mg*1000)/ml;
+    var mlhr=(dose*kg*60)/conc;
+    return {
+      html:'<strong>Order:</strong> '+v(dose+' mcg/kg/min')+'. <strong>Patient:</strong> '+v(kg+' kg')+'.<br><strong>Bag:</strong> '+v(mg+' mg in '+ml+' mL')+'.<br>Set the pump to how many mL/hr? <em>(1 decimal)</em>',
+      unit:'mL/hr', ans:Math.round(mlhr*10)/10,
+      steps:[
+        '<strong>Bag concentration.</strong> <span class="mono">'+mg+' mg &times; 1000 = '+(mg*1000).toLocaleString()+' mcg</span>, then <span class="mono">&divide; '+ml+' mL = '+fmt(conc)+' mcg/mL</span>',
+        '<strong>Dose per minute.</strong> <span class="mono">'+dose+' mcg/kg/min &times; '+kg+' kg = '+fmt(dose*kg)+' mcg/min</span>',
+        '<strong>Dose per hour.</strong> <span class="mono">'+fmt(dose*kg)+' &times; 60 = '+(dose*kg*60).toLocaleString()+' mcg/hr</span>',
+        '<strong>Convert to volume.</strong> <span class="mono">'+(dose*kg*60).toLocaleString()+' &divide; '+fmt(conc)+' = '+fmt(mlhr)+'</span> &rarr; <span class="mono">'+fmt(Math.round(mlhr*10)/10)+' mL/hr</span>'
+      ]
+    };
+  }
+
+  var GEN=[gDose,gWeight,gPump,gWeightRate,gDrip];
+
+  function make(){
+    var t = (cur===5) ? pick([0,1,2]) : cur;
+    prob = GEN[t]();
+    P.innerHTML = prob.html;
+    U.textContent = prob.unit;
+    I.value=''; V.className=''; V.classList.remove('on');
+    I.focus();
+  }
+
+  function reveal(ok){
+    V.className = 'on ' + (ok===true?'right':ok===false?'wrong':'neutral');
+    B.textContent = ok===true ? 'Correct \u2014 ' + fmt(prob.ans) + ' ' + prob.unit
+                  : ok===false ? 'Not quite \u2014 the answer is ' + fmt(prob.ans) + ' ' + prob.unit
+                  : 'Answer: ' + fmt(prob.ans) + ' ' + prob.unit;
+    S.innerHTML = prob.steps.map(function(x){return '<li>'+x+'</li>';}).join('');
+  }
+
+  document.getElementById('dc-check').addEventListener('click',function(){
+    var raw=I.value.trim().replace(/,/g,'');
+    if(raw==='') { I.focus(); return; }
+    var n=parseFloat(raw);
+    if(isNaN(n)){ I.focus(); return; }
+    var ok = Math.abs(n - prob.ans) < 0.051;
+    total++; if(ok){right++; streak++;} else {streak=0;}
+    document.getElementById('dc-right').textContent=right;
+    document.getElementById('dc-total').textContent=total;
+    document.getElementById('dc-streak').textContent=streak;
+    reveal(ok);
+  });
+
+  document.getElementById('dc-show').addEventListener('click',function(){reveal(null);});
+  document.getElementById('dc-next').addEventListener('click',make);
+  I.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){ e.preventDefault(); document.getElementById(V.classList.contains('on')?'next':'check').click(); }
+  });
+
+  document.querySelectorAll('.types button').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.types button').forEach(function(x){x.setAttribute('aria-pressed','false');});
+      b.setAttribute('aria-pressed','true');
+      cur=parseInt(b.dataset.t,10);
+      make();
+    });
+  });
+
+  document.querySelectorAll('#drill [data-go]').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelector(b.dataset.go).scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
+
+  document.getElementById('theme').addEventListener('click',function(){
+    var r=document.documentElement, c=r.getAttribute('data-theme');
+    if(!c) c=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+    r.setAttribute('data-theme', c==='dark'?'light':'dark');
+  });
+
+  window.__drill={GEN:GEN,set:function(i){cur=i;},make:make,get:function(){return prob;}};
+  make();
+})();
+</script>
+</body>
+</html>
