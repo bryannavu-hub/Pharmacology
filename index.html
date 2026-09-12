@@ -566,6 +566,38 @@ body.drawer-open .drawer{
 #medchart .proto{font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--accent-ink); white-space:nowrap}
 #medchart .also{display:block; font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--faint); font-weight:400; margin-top:3px; white-space:normal}
 @media print{#medchart table{min-width:0; font-size:8.5px} #medchart td,#medchart th{padding:4px 5px}}
+
+.seq{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:22px; height:22px; margin-right:9px; vertical-align:2px;
+  font-family:"IBM Plex Mono",monospace; font-size:11.5px; font-weight:600;
+  color:var(--on-accent); background:var(--accent); border-radius:50%;
+}
+@media print{.seq{color:#000; background:none; border:1px solid #999}}
+
+/* ---- collapsible reference tables ---- */
+.fold{border:1px solid var(--border); border-radius:9px; margin:0 20px 12px; overflow:hidden}
+.fold + .fold{margin-top:0}
+.fold > summary{
+  cursor:pointer; list-style:none; padding:11px 14px;
+  background:var(--surface-2); font-size:13.5px; font-weight:600;
+  display:flex; align-items:center; gap:10px;
+}
+.fold > summary::-webkit-details-marker{display:none}
+.fold > summary::before{
+  content:"\25B8"; display:inline-block; color:var(--accent);
+  transition:transform .15s ease; flex:0 0 auto;
+}
+.fold[open] > summary::before{transform:rotate(90deg)}
+.fold > summary:hover{color:var(--accent)}
+.fold > summary:focus-visible{outline:2px solid var(--accent); outline-offset:-2px}
+.fold .cnt{
+  margin-left:auto; font-family:"IBM Plex Mono",monospace; font-size:11px;
+  font-weight:500; color:var(--faint); letter-spacing:.04em;
+}
+.fold > .wrap{border-top:1px solid var(--border)}
+@media (prefers-reduced-motion:reduce){.fold > summary::before{transition:none}}
+@media print{.fold{border:none; margin:0} .fold > summary{display:none}}
 </style>
 <style>
 :root{color-scheme:light dark}
@@ -606,13 +638,23 @@ img{max-width:100%}
       <p class="panel-lbl">Filter by chapter</p>
       <span class="chips" role="group" aria-label="Filter by chapter">
       <button class="chip" data-ch="all" aria-pressed="true">All</button>
+    </span>
+      <p class="panel-lbl" style="margin-top:14px">Unit 1 &middot; foundations</p>
+      <span class="chips" role="group" aria-label="Unit 1 chapters">
       <button class="chip" data-ch="01" aria-pressed="false">Ch 01</button>
       <button class="chip" data-ch="02" aria-pressed="false">Ch 02</button>
       <button class="chip" data-ch="03" aria-pressed="false">Ch 03</button>
       <button class="chip" data-ch="04" aria-pressed="false">Ch 04</button>
       <button class="chip" data-ch="05" aria-pressed="false">Ch 05</button>
       <button class="chip" data-ch="06" aria-pressed="false">Ch 06</button>
-      <button class="chip" data-ch="ans" aria-pressed="false">ANS 29&ndash;33</button>
+    </span>
+      <p class="panel-lbl" style="margin-top:14px">Unit 5 &middot; autonomic</p>
+      <span class="chips" role="group" aria-label="Unit 5 chapters">
+      <button class="chip" data-ch="29" aria-pressed="false">Ch 29</button>
+      <button class="chip" data-ch="30" aria-pressed="false">Ch 30</button>
+      <button class="chip" data-ch="31" aria-pressed="false">Ch 31</button>
+      <button class="chip" data-ch="32" aria-pressed="false">Ch 32</button>
+      <button class="chip" data-ch="33" aria-pressed="false">Ch 33</button>
     </span>
       <p class="panel-lbl">Jump to a section</p>
       <nav aria-label="Sections">
@@ -655,16 +697,21 @@ img{max-width:100%}
     <a href="#challenges" data-ch="06">Challenges to therapy</a>
     <a href="#barriers" data-ch="06">Real-world barriers</a>
     <a href="#otc2" data-ch="06">OTC &amp; online info</a>
-    <p class="navgroup" data-ch="ans">Ch 29&ndash;33 · Autonomic Nervous System</p>
-    <a href="#medchart" data-ch="ans">Med chart</a>
-    <a href="#drugindex" data-ch="ans">Medication index</a>
-    <a href="#ans-map" data-ch="ans">The ANS map</a>
-    <a href="#receptors" data-ch="ans">Four receptors</a>
-    <a href="#adren-ag" data-ch="ans">Adrenergic agonists</a>
-    <a href="#adren-blk" data-ch="ans">Adrenergic blockers</a>
-    <a href="#chol-ag" data-ch="ans">Cholinergic agonists</a>
-    <a href="#anticho" data-ch="ans">Anticholinergics</a>
-    <a href="#ans-compare" data-ch="ans">Side by side</a>
+    <p class="navgroup" data-ch="29">Ch 29 · Introduction to the ANS</p>
+    <a href="#ans-map" data-ch="29">1 · What the ANS is</a>
+    <a href="#receptors" data-ch="29">2 · &alpha;1 &beta;1 &beta;2 M</a>
+    <p class="navgroup" data-ch="30">Ch 30 · Adrenergic Agonists</p>
+    <a href="#adren-ag" data-ch="30">3 · Adrenergic agonists</a>
+    <p class="navgroup" data-ch="31">Ch 31 · Adrenergic Antagonists</p>
+    <a href="#adren-blk" data-ch="31">4 · Adrenergic blockers</a>
+    <p class="navgroup" data-ch="32">Ch 32 · Cholinergic Agonists</p>
+    <a href="#chol-ag" data-ch="32">5 · Cholinergic agonists</a>
+    <p class="navgroup" data-ch="33">Ch 33 · Anticholinergic Agents</p>
+    <a href="#anticho" data-ch="33">6 · Anticholinergics</a>
+    <p class="navgroup" data-ch="32">Autonomic · review &amp; reference</p>
+    <a href="#ans-compare" data-ch="32">7 · Side by side</a>
+    <a href="#medchart" data-ch="29">Med chart</a>
+    <a href="#drugindex" data-ch="29">Medication index</a>
     <p class="navgroup" data-ch="test">Self-test</p>
     <a href="#test" data-ch="test">Self-test</a></nav>
     </div>
@@ -1524,149 +1571,19 @@ img{max-width:100%}
       </tbody>
     </table></div>
   </section>
-  <section id="drugindex" data-ch="ans 01 02 03 04 05 06">
-    <div class="head"><span class="slide">All lectures + Karch Ch 01&ndash;06, 29&ndash;33</span>
-      <h2>Medication index &mdash; every drug named so far</h2>
-      <p>Every medication from Dr. Kaur&rsquo;s three decks and from the textbook chapters covered, in one place. The <strong>source</strong> column shows where each came from &mdash; her slides, the textbook, or both. Her exam weights the lecture drugs, so <span class="pill p1">lecture</span> and <span class="pill p3">both</span> are the priority; <span class="pill p2">textbook</span> rows are the long tail. Anything marked <span class="pill p2">not required</span> is confirmed outside her scope &mdash; skip it.</p></div>
-    <p class="panel-lbl" style="padding:14px 20px 0">Adrenergic agonists &mdash; Ch 30</p>
-    <div class="wrap"><table>
-      <thead><tr><th>Generic</th><th>Brand</th><th>Class / receptor</th><th>What to know</th><th>Source</th></tr></thead>
-      <tbody>
-        <tr><td class="term">epinephrine</td><td class="a mono">Adrenalin · EpiPen · Auvi-Q · Symjepi</td><td class="a">&alpha;1 &beta;1 &beta;2 agonist</td><td class="a"><strong>First choice in anaphylactic shock.</strong></td><td class="a"><span class="pill p3">both</span></td></tr>
-        <tr><td class="term">norepinephrine</td><td class="a mono">Levophed</td><td class="a">mainly &alpha;1, some &beta;1</td><td class="a"><strong>Often the drug of choice in septic, cardiogenic and hypovolemic shock.</strong></td><td class="a"><span class="pill p3">both</span></td></tr>
-        <tr><td class="term">dopamine</td><td class="a mono">generic</td><td class="a">&alpha; + &beta; agonist</td><td class="a">Dilates renal and splanchnic arterioles, <strong>preserving kidney blood flow</strong> that epinephrine or norepinephrine can compromise.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">dobutamine</td><td class="a mono">generic</td><td class="a">&alpha; + &beta;, slight &beta;1 preference</td><td class="a">Synthetic catecholamine. <strong>Preferred in heart failure and cardiogenic shock</strong> &mdash; raises rate but lowers BP.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">ephedrine</td><td class="a mono">Akovaz · Corphedra · Emerphed</td><td class="a">&alpha; + &beta; agonist</td><td class="a">Synthetic catecholamine.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">pseudoephedrine</td><td class="a mono">Sudafed 24</td><td class="a">&alpha; + &beta; agonist</td><td class="a">Oral decongestant &mdash; the behind-the-counter one.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">phenylephrine</td><td class="a mono">Biorphen · Imphentiv · Vazculep</td><td class="a">&alpha;1 selective</td><td class="a">Potent vasoconstrictor, little effect on heart or bronchi. <strong>The FDA has proposed removing oral phenylephrine from OTC products</strong> over disputed effectiveness for congestion.</td><td class="a"><span class="pill p3">both</span></td></tr>
-        <tr><td class="term">midodrine</td><td class="a mono">Orvaten</td><td class="a">&alpha;1 selective</td><td class="a">Raises blood pressure.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">clonidine</td><td class="a mono">Nexiclon XR · Onyda XR</td><td class="a">&alpha;2 selective <span class="pill p2">not required</span></td><td class="a"><em>Outside Dr. Kaur&rsquo;s scope &mdash; she teaches &alpha;1, &beta;1, &beta;2 and muscarinic only.</em> Essential hypertension, chronic pain, easing opiate withdrawal.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">dexmedetomidine</td><td class="a mono">Precedex</td><td class="a">&alpha;2 selective <span class="pill p2">not required</span></td><td class="a"><em>Outside Dr. Kaur&rsquo;s scope &mdash; she teaches &alpha;1, &beta;1, &beta;2 and muscarinic only.</em> Sedation.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">guanfacine</td><td class="a mono">Intuniv</td><td class="a">&alpha;2 selective <span class="pill p2">not required</span></td><td class="a"><em>Outside Dr. Kaur&rsquo;s scope &mdash; she teaches &alpha;1, &beta;1, &beta;2 and muscarinic only.</em> ADHD.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">albuterol</td><td class="a mono">ProAir · Proventil HFA · Ventolin HFA</td><td class="a">&beta;2 selective</td><td class="a">Short-acting rescue bronchodilator.</td><td class="a"><span class="pill p3">both</span></td></tr>
-        <tr><td class="term">levalbuterol</td><td class="a mono">Xopenex HFA</td><td class="a">&beta;2 selective</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">salmeterol</td><td class="a mono">Serevent Diskus</td><td class="a">&beta;2 selective, long-acting</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">formoterol</td><td class="a mono">Perforomist</td><td class="a">&beta;2 selective, long-acting</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">arformoterol</td><td class="a mono">Brovana</td><td class="a">&beta;2 selective, long-acting</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">olodaterol</td><td class="a mono">Striverdi Respimat</td><td class="a">&beta;2 selective, long-acting</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">terbutaline</td><td class="a mono">generic</td><td class="a">&beta;2 selective</td><td class="a">Also relaxes the uterus.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">isoproterenol</td><td class="a mono">generic</td><td class="a">all &beta; receptors</td><td class="a">Use has fallen because of the <strong>&ldquo;coronary steal&rdquo; effect</strong> &mdash; it can divert blood from injured heart muscle and enlarge an evolving MI.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-      </tbody>
-    </table></div>
-    <p class="panel-lbl" style="padding:14px 20px 0">Adrenergic antagonists &mdash; Ch 31</p>
-    <div class="wrap"><table>
-      <thead><tr><th>Generic</th><th>Brand</th><th>Class / receptor</th><th>What to know</th><th>Source</th></tr></thead>
-      <tbody>
-        <tr><td class="term">metoprolol</td><td class="a mono">Lopressor · Toprol XL · Kapspargo</td><td class="a">&beta;1 selective</td><td class="a"><strong>Bioavailability increases when taken with food.</strong></td><td class="a"><span class="pill p3">both</span></td></tr>
-        <tr><td class="term">atenolol</td><td class="a mono">Tenormin</td><td class="a">&beta;1 selective</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">bisoprolol</td><td class="a mono">generic</td><td class="a">&beta;1 selective</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">acebutolol</td><td class="a mono">generic</td><td class="a">&beta;1 selective</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">esmolol</td><td class="a mono">Brevibloc</td><td class="a">&beta;1 selective</td><td class="a">Very short acting, IV.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">betaxolol</td><td class="a mono">Betoptic</td><td class="a">&beta;1 selective</td><td class="a">Ophthalmic &mdash; lowers intraocular pressure in open-angle glaucoma.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">propranolol</td><td class="a mono">generic</td><td class="a">nonselective &beta;</td><td class="a"><strong>Blocks &beta;2 as well &mdash; bronchospasm risk in asthma and COPD.</strong></td><td class="a"><span class="pill p3">both</span></td></tr>
-        <tr><td class="term">carvedilol</td><td class="a mono">Coreg</td><td class="a">nonselective &alpha; + &beta;</td><td class="a">Oral only. Hypertension, heart failure, LV dysfunction after MI.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">labetalol</td><td class="a mono">Trandate</td><td class="a">nonselective &alpha; + &beta;</td><td class="a">Hypertensive emergency, including <strong>in pregnancy</strong>.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">amiodarone</td><td class="a mono">Nexterone · Pacerone</td><td class="a">nonselective &alpha; + &beta;</td><td class="a">Life-threatening ventricular arrhythmias. <strong>Half-life of days to months</strong> &mdash; hard to know when it is cleared.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">phentolamine</td><td class="a mono">OraVerse · Regitine</td><td class="a">nonselective &alpha;</td><td class="a">Pheochromocytoma. <strong>Also the antidote that prevents tissue death after norepinephrine or dopamine infiltration.</strong></td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">phenoxybenzamine</td><td class="a mono">Dibenzyline</td><td class="a">nonselective &alpha;</td><td class="a">Pheochromocytoma.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">prazosin</td><td class="a mono">generic</td><td class="a">&alpha;1 selective</td><td class="a">Hypertension. <strong>First-dose orthostatic syncope.</strong></td><td class="a"><span class="pill p3">both</span></td></tr>
-        <tr><td class="term">tamsulosin</td><td class="a mono">generic</td><td class="a">&alpha;1, uroselective</td><td class="a">BPH. <strong>Intraoperative floppy iris syndrome</strong> &mdash; warn the eye surgeon.</td><td class="a"><span class="pill p1">lecture</span></td></tr>
-      </tbody>
-    </table></div>
-    <p class="panel-lbl" style="padding:14px 20px 0">Cholinergic agonists &mdash; Ch 32</p>
-    <div class="wrap"><table>
-      <thead><tr><th>Generic</th><th>Brand</th><th>Class / receptor</th><th>What to know</th><th>Source</th></tr></thead>
-      <tbody>
-        <tr><td class="term">bethanechol</td><td class="a mono">generic</td><td class="a">direct muscarinic agonist</td><td class="a"><strong>Nonobstructive</strong> urinary retention.</td><td class="a"><span class="pill p3">both</span></td></tr>
-        <tr><td class="term">pyridostigmine</td><td class="a mono">Mestinon · Regonol</td><td class="a">reversible cholinesterase inhibitor</td><td class="a">Myasthenia gravis.</td><td class="a"><span class="pill p3">both</span></td></tr>
-        <tr><td class="term">neostigmine</td><td class="a mono">Bloxiverz</td><td class="a">reversible cholinesterase inhibitor</td><td class="a">Also reverses neuromuscular blocking agents.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">donepezil</td><td class="a mono">Aricept</td><td class="a">central cholinesterase inhibitor</td><td class="a">Alzheimer disease. <strong>Does not cure.</strong></td><td class="a"><span class="pill p3">both</span></td></tr>
-        <tr><td class="term">galantamine</td><td class="a mono">Razadyne</td><td class="a">central cholinesterase inhibitor</td><td class="a">Alzheimer disease.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">rivastigmine</td><td class="a mono">Exelon</td><td class="a">central cholinesterase inhibitor</td><td class="a">Alzheimer, and dementia related to Parkinson disease.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">benzgalantamine</td><td class="a mono">Zunveyl</td><td class="a">central cholinesterase inhibitor</td><td class="a">Alzheimer disease.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">echothiophate iodide</td><td class="a mono">Phospholine Iodide</td><td class="a"><strong>irreversible</strong> cholinesterase inhibitor</td><td class="a">The only irreversible agent in clinical use &mdash; topical, in the eye.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-      </tbody>
-    </table></div>
-    <p class="panel-lbl" style="padding:14px 20px 0">Anticholinergics &mdash; Ch 33</p>
-    <div class="wrap"><table>
-      <thead><tr><th>Generic</th><th>Brand</th><th>Class / receptor</th><th>What to know</th><th>Source</th></tr></thead>
-      <tbody>
-        <tr><td class="term">atropine</td><td class="a mono">generic</td><td class="a">muscarinic antagonist &mdash; <strong>the prototype</strong></td><td class="a">From <em>Atropa belladonna</em>, &ldquo;deadly nightshade.&rdquo; Symptomatic bradycardia; also the antidote for cholinergic drugs and <strong>certain mushroom poisonings</strong>.</td><td class="a"><span class="pill p3">both</span></td></tr>
-        <tr><td class="term">ipratropium</td><td class="a mono">Atrovent HFA</td><td class="a">muscarinic antagonist</td><td class="a">COPD bronchodilation.</td><td class="a"><span class="pill p3">both</span></td></tr>
-        <tr><td class="term">tiotropium</td><td class="a mono">Spiriva</td><td class="a">muscarinic antagonist</td><td class="a">Long-acting COPD.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">aclidinium</td><td class="a mono">Tudorza Pressair</td><td class="a">muscarinic antagonist</td><td class="a">COPD.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">umeclidinium</td><td class="a mono">Incruse Ellipta</td><td class="a">muscarinic antagonist</td><td class="a">COPD.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">revefenacin</td><td class="a mono">Yupelri</td><td class="a">muscarinic antagonist</td><td class="a">COPD.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">oxybutynin</td><td class="a mono">Oxytrol</td><td class="a">muscarinic antagonist</td><td class="a">Overactive bladder.</td><td class="a"><span class="pill p3">both</span></td></tr>
-        <tr><td class="term">tolterodine</td><td class="a mono">Detrol</td><td class="a">muscarinic antagonist</td><td class="a">Overactive bladder.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">solifenacin</td><td class="a mono">Vesicare</td><td class="a">muscarinic antagonist</td><td class="a">Overactive bladder.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">darifenacin</td><td class="a mono">Enablex</td><td class="a">muscarinic antagonist</td><td class="a">Overactive bladder.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">fesoterodine</td><td class="a mono">Toviaz</td><td class="a">muscarinic antagonist</td><td class="a">Overactive bladder.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">trospium</td><td class="a mono">generic</td><td class="a">muscarinic antagonist</td><td class="a">Overactive bladder.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">flavoxate</td><td class="a mono">generic</td><td class="a">muscarinic antagonist</td><td class="a">Urinary antispasmodic.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">scopolamine</td><td class="a mono">Transderm Scop</td><td class="a">muscarinic antagonist</td><td class="a">Motion sickness patch.</td><td class="a"><span class="pill p3">both</span></td></tr>
-        <tr><td class="term">methscopolamine</td><td class="a mono">generic</td><td class="a">muscarinic antagonist</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">hyoscyamine</td><td class="a mono">Symax</td><td class="a">muscarinic antagonist</td><td class="a">GI antispasmodic.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">dicyclomine</td><td class="a mono">Bentyl</td><td class="a">muscarinic antagonist</td><td class="a">GI antispasmodic.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">glycopyrrolate</td><td class="a mono">Robinul · Cuvposa</td><td class="a">muscarinic antagonist</td><td class="a">Dries secretions before anesthesia.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-      </tbody>
-    </table></div>
-    <p class="panel-lbl" style="padding:14px 20px 0">Named elsewhere in the course &mdash; Ch 01&ndash;06 and dosage examples</p>
-    <div class="wrap"><table>
-      <thead><tr><th>Generic</th><th>Brand</th><th>Class / receptor</th><th>What to know</th><th>Source</th></tr></thead>
-      <tbody>
-        <tr><td class="term">digoxin</td><td class="a mono">generic</td><td class="a">cardiac glycoside</td><td class="a">Named in lecture as a <strong>plant-derived</strong> drug.</td><td class="a"><span class="pill p3">both</span></td></tr>
-        <tr><td class="term">insulin</td><td class="a mono">&mdash;</td><td class="a">hormone</td><td class="a">Named as an <strong>animal-source</strong> drug, and the pattern for &ldquo;replace a missing chemical.&rdquo;</td><td class="a"><span class="pill p3">both</span></td></tr>
-        <tr><td class="term">dronabinol</td><td class="a mono">Marinol</td><td class="a">synthetic THC</td><td class="a">Chemotherapy nausea, AIDS-related weight loss. Cannabis itself is <strong>Schedule I</strong>.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">isotretinoin</td><td class="a mono">&mdash;</td><td class="a">retinoid</td><td class="a">Lecture example of a <strong>teratogen</strong>.</td><td class="a"><span class="pill p1">lecture</span></td></tr>
-        <tr><td class="term">thalidomide</td><td class="a mono">Thalomid</td><td class="a">&mdash;</td><td class="a">The 1960s disaster that produced the Kefauver&ndash;Harris Act.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">acetaminophen</td><td class="a mono">Tylenol</td><td class="a">analgesic / antipyretic</td><td class="a">Dosage examples, and the OTC duplicate-ingredient overdose risk.</td><td class="a"><span class="pill p3">both</span></td></tr>
-        <tr><td class="term">omeprazole</td><td class="a mono">Prilosec</td><td class="a">proton pump inhibitor</td><td class="a">OTC example.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">famotidine</td><td class="a mono">Pepcid</td><td class="a">H2 blocker</td><td class="a">OTC example.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">lovastatin</td><td class="a mono">&mdash;</td><td class="a">statin</td><td class="a">Considered for OTC status in 2009&ndash;2010; <strong>the FDA declined</strong> &mdash; high lipids have no symptoms and need a blood test.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">ipecac</td><td class="a mono">&mdash;</td><td class="a">emetic</td><td class="a">Former OTC standard; FDA found it <strong>not effective</strong> for its intended use in 2003.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">amoxicillin</td><td class="a mono">&mdash;</td><td class="a">penicillin-class antibiotic</td><td class="a">Dosage examples; the penicillin cross-allergy case.</td><td class="a"><span class="pill p1">lecture</span></td></tr>
-        <tr><td class="term">cefazolin</td><td class="a mono">&mdash;</td><td class="a">cephalosporin</td><td class="a">Weight-based dosing example.</td><td class="a"><span class="pill p1">lecture</span></td></tr>
-        <tr><td class="term">levothyroxine</td><td class="a mono">&mdash;</td><td class="a">thyroid hormone</td><td class="a">Tablet calculation example.</td><td class="a"><span class="pill p1">lecture</span></td></tr>
-        <tr><td class="term">furosemide</td><td class="a mono">&mdash;</td><td class="a">loop diuretic</td><td class="a">Paediatric mg/kg to mL example.</td><td class="a"><span class="pill p1">lecture</span></td></tr>
-        <tr><td class="term">propofol</td><td class="a mono">&mdash;</td><td class="a">sedative-hypnotic</td><td class="a">Critical-care drip example, mcg/kg/min.</td><td class="a"><span class="pill p1">lecture</span></td></tr>
-        <tr><td class="term">cisplatin</td><td class="a mono">&mdash;</td><td class="a">antineoplastic</td><td class="a">BSA dosing example, mg/m&sup2;.</td><td class="a"><span class="pill p1">lecture</span></td></tr>
-        <tr><td class="term">naloxone</td><td class="a mono">&mdash;</td><td class="a">opioid antagonist</td><td class="a">Named in the opioid-crisis response &mdash; harm reduction.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
-        <tr><td class="term">pralidoxime</td><td class="a mono">&mdash;</td><td class="a">cholinesterase reactivator</td><td class="a"><strong>Antidote for organophosphate pesticides and nerve agents.</strong></td><td class="a"><span class="pill p2">textbook</span></td></tr>
-      </tbody>
-    </table></div>
-    <p class="note"><strong>How to use this.</strong> Study the <span class="pill p3">both</span> rows first &mdash; a drug her slides <em>and</em> the textbook name is the most likely to be tested. Then <span class="pill p1">lecture</span>. The <span class="pill p2">textbook</span> rows are worth recognising by class rather than memorising individually.</p>
-  </section>
 
-  <section id="medchart" data-ch="ans">
-    <div class="head"><span class="slide">Ch 29&ndash;33 &middot; med chart</span>
-      <h2>Medication chart &mdash; autonomic drugs</h2>
-      <p>Nine drug classes in the eight-column format, one row per class with its prototype. <strong>Scrolls sideways</strong> &mdash; drag inside the table. Learn the prototype and the class follows.</p></div>
-    <div class="wrap"><table>
-      <thead><tr>
-        <th>Drug class</th><th>Prototype</th><th>Mechanism of action</th>
-        <th>Therapeutic effects</th><th>Common side effects</th><th>Adverse effects</th>
-        <th>Nursing considerations</th><th>Special populations</th>
-      </tr></thead>
-      <tbody>
-        <tr><td class="cls">Nonselective adrenergic agonist</td><td class="proto">epinephrine</td><td class="a">Stimulates <strong>&alpha;1, &beta;1 and &beta;2</strong> &mdash; vasoconstriction, increased rate and contractility, bronchodilation.</td><td class="a">Reverses anaphylaxis: airway opens, BP and perfusion rise. Restores circulation in cardiac arrest.</td><td class="a">Tachycardia, palpitations, anxiety, tremor, headache.</td><td class="a">Hypertensive crisis, dysrhythmias, myocardial ischemia; tissue necrosis if it extravasates.</td><td class="a"><strong>Verify route and concentration</strong> &mdash; they differ by indication and mixing them up is a classic serious error. Continuous HR, rhythm, BP. Reassess the airway after giving.</td><td class="a">Caution in cardiac disease, hypertension and older adults. Used in pregnancy for anaphylaxis when benefit outweighs risk &mdash; untreated anaphylaxis is the greater danger.</td></tr>
-        <tr><td class="cls">Alpha-1 adrenergic agonist</td><td class="proto">phenylephrine<span class="also">also: norepinephrine</span></td><td class="a">Selective <strong>&alpha;1</strong> stimulation &rarr; peripheral vasoconstriction &rarr; systemic vascular resistance and BP rise.</td><td class="a">Raises blood pressure in hypotension and shock. Topically, nasal decongestion.</td><td class="a"><strong>Reflex bradycardia</strong>, headache, restlessness.</td><td class="a">Severe hypertension, reduced organ perfusion; <strong>extravasation can injure tissue</strong> (norepinephrine especially).</td><td class="a">Continuous BP and perfusion monitoring. <strong>Monitor the IV site closely</strong> &mdash; <strong>phentolamine</strong> is the antidote for norepinephrine or dopamine infiltration. Address volume status &mdash; a vasopressor does not fix hypovolemia.</td><td class="a">Caution in hypertension and vascular disease. Older adults are more sensitive. Ask about OTC decongestants to avoid duplication.</td></tr>
-        <tr><td class="cls">Beta-2 adrenergic agonist<br><span style="font-weight:400"><em>short-acting</em></span></td><td class="proto">albuterol</td><td class="a">Selective <strong>&beta;2</strong> stimulation &rarr; bronchial smooth muscle relaxes.</td><td class="a">Bronchodilation &mdash; <strong>less wheezing, improved air movement</strong>, easier breathing.</td><td class="a">Tremor, jitteriness, tachycardia, palpitations.</td><td class="a">Paradoxical bronchospasm, <strong>hypokalemia</strong>, chest pain, dysrhythmia.</td><td class="a">Breath sounds, respiratory effort, HR and oxygenation <strong>before and after</strong>. Increasing use signals worsening control &mdash; escalate rather than simply repeating doses.</td><td class="a">Cardiac disease (tachycardia) and diabetes (may raise glucose). Considered appropriate in pregnancy &mdash; uncontrolled asthma harms the fetus more.</td></tr>
-        <tr><td class="cls">Beta-1 selective blocker<br><span style="font-weight:400"><em>cardioselective</em></span></td><td class="proto">metoprolol<span class="also">also: atenolol</span></td><td class="a">Blocks <strong>&beta;1</strong> &rarr; heart rate, contractility and conduction fall; renin release decreases.</td><td class="a">BP lowered, rate controlled, <strong>cardiac workload reduced</strong>.</td><td class="a">Bradycardia, fatigue, dizziness, cold extremities.</td><td class="a">Symptomatic bradycardia or heart block, hypotension, heart failure exacerbation; <strong>rebound tachycardia and ischemia if stopped abruptly</strong>.</td><td class="a">HR and BP before <em>each</em> dose against the <strong>ordered hold parameters</strong> &mdash; not a memorised number. Teach never to stop abruptly or skip doses.</td><td class="a"><strong>Diabetes: masks the tachycardia that warns of hypoglycemia.</strong> Older adults &mdash; falls. Safer than nonselective in asthma but still requires caution.</td></tr>
-        <tr><td class="cls">Nonselective beta blocker</td><td class="proto">propranolol</td><td class="a">Blocks <strong>&beta;1 and &beta;2</strong> &mdash; cardiac effects plus loss of bronchodilation.</td><td class="a">Cardiac conditions, migraine prophylaxis, essential tremor.</td><td class="a">Bradycardia, fatigue, dizziness, cold extremities.</td><td class="a"><strong>Bronchospasm</strong> from &beta;2 blockade, masked hypoglycemia, rebound on abrupt withdrawal.</td><td class="a"><strong>Screen respiratory history before giving.</strong> Same HR/BP hold parameters as any beta blocker. Never stop abruptly.</td><td class="a"><strong>High caution or avoided in asthma and COPD.</strong> Diabetes &mdash; masks hypoglycemia. Older adults &mdash; falls, fatigue.</td></tr>
-        <tr><td class="cls">Alpha-1 adrenergic blocker</td><td class="proto">prazosin<span class="also">also: tamsulosin (uroselective)</span></td><td class="a">Blocks <strong>&alpha;1</strong>: on vessels &rarr; vasodilation; on prostate and bladder neck &rarr; smooth muscle relaxes.</td><td class="a">BP falls. In BPH, <strong>urine flow improves</strong>.</td><td class="a">Dizziness, <strong>orthostatic hypotension</strong>, headache, nasal congestion, fatigue.</td><td class="a"><strong>First-dose syncope</strong>, falls and injury.</td><td class="a">Give the first dose at bedtime. Teach slow position changes; check BP lying and standing. Fall precautions. Report severe dizziness or fainting.</td><td class="a"><strong>Older adults &mdash; substantial fall risk.</strong> Tamsulosin is associated with <strong>intraoperative floppy iris syndrome</strong>: tell the ophthalmologist before cataract surgery.</td></tr>
-        <tr><td class="cls">Direct-acting cholinergic agonist<br><span style="font-weight:400"><em>muscarinic</em></span></td><td class="proto">bethanechol</td><td class="a">Directly stimulates <strong>muscarinic</strong> receptors &rarr; detrusor contracts, GI motility increases.</td><td class="a"><strong>Nonobstructive</strong> urinary retention &mdash; voiding restored.</td><td class="a">Salivation, sweating, abdominal cramping, urinary urgency.</td><td class="a">Bradycardia, hypotension, bronchospasm; <strong>cholinergic crisis (SLUDGE)</strong>.</td><td class="a"><strong>Rule out obstruction before giving.</strong> Keep a bedpan or commode within reach &mdash; it works quickly. Monitor HR and BP. <strong>Atropine is the antidote.</strong></td><td class="a">Contraindicated or high risk in <strong>asthma, bradycardia, peptic ulcer disease, GI or GU obstruction</strong>, and hyperthyroidism.</td></tr>
-        <tr><td class="cls">Indirect-acting cholinergic<br><span style="font-weight:400"><em>cholinesterase inhibitor</em></span></td><td class="proto">pyridostigmine<span class="also">also: donepezil (central, Alzheimer)</span></td><td class="a">Inhibits <strong>acetylcholinesterase</strong> so ACh is not broken down and accumulates at the synapse.</td><td class="a">Improved skeletal muscle strength in <strong>myasthenia gravis</strong>. Donepezil may support cognition or slow decline &mdash; <strong>it does not cure</strong>.</td><td class="a">GI upset, nausea, diarrhea, increased secretions, muscle cramps.</td><td class="a"><strong>Cholinergic crisis</strong> (too much) versus <strong>myasthenic crisis</strong> (too little) &mdash; both cause weakness, and telling them apart is the clinical problem. Bradycardia.</td><td class="a">Time doses <strong>before meals</strong> so swallowing strength peaks when eating. Monitor respiratory effort and strength. Document response carefully to distinguish the two crises.</td><td class="a">Older adults &mdash; bradycardia and GI effects. Caution in asthma, bradycardia and peptic ulcer disease.</td></tr>
-        <tr><td class="cls">Muscarinic antagonist<br><span style="font-weight:400"><em>anticholinergic</em></span></td><td class="proto">atropine<span class="also">also: ipratropium &middot; oxybutynin &middot; scopolamine</span></td><td class="a">Competitively <strong>blocks muscarinic</strong> receptors &rarr; parasympathetic tone falls, leaving a sympathetic-like picture.</td><td class="a">Atropine: HR rises in <strong>symptomatic bradycardia</strong>. Ipratropium: bronchodilation with drier airways in COPD. Oxybutynin: bladder relaxes in urgency. Scopolamine: prevents motion sickness.</td><td class="a">Dry mouth, blurred vision, constipation, urinary hesitancy, reduced sweating.</td><td class="a"><strong>Urinary retention</strong>, paralytic ileus, <strong>confusion and delirium</strong>, tachydysrhythmia, hyperthermia from impaired sweating.</td><td class="a">Monitor voiding and bowel pattern. Oral care for dryness. Fall precautions. <strong>Review the whole medication list for anticholinergic burden</strong> &mdash; several drugs together compound the effect.</td><td class="a"><strong>Older adults: flagged on the Beers criteria</strong> &mdash; new confusion, retention, constipation or falls may be the drug. Cautions include narrow-angle glaucoma and BPH. Heat intolerance in hot weather.</td></tr>
-      </tbody>
-    </table></div>
-    <p class="note"><strong>Why it is built by class, not by drug.</strong> Karch teaches <em>prototypes</em> &mdash; the model drug its class is compared against. Learn epinephrine and you can reason about any adrenergic agonist; learn atropine and every anticholinergic follows the same dry-dilated-retained-confused pattern.</p>
-  </section>
 
-  <section id="ans-map" data-ch="ans">
+
+
+
+
+
+
+
+  <section id="ans-map" data-ch="29">
     <div class="head"><span class="slide">Ch 29 &middot; Wk slides 5&ndash;6</span>
-      <h2>The autonomic nervous system &mdash; the map</h2>
-      <p>Two branches constantly balancing each other. Dr. Kaur&rsquo;s framing: <strong>learn the patterns first, then the drugs make sense.</strong> Every drug in this unit either turns one branch up or turns it down.</p></div>
+      <h2><span class="seq">1</span>The autonomic nervous system &mdash; the map</h2>
+      <p><strong>Start here.</strong> This unit runs in seven steps: what the ANS is &rarr; the four receptors &rarr; drugs that turn the sympathetic side up, then down &rarr; the parasympathetic side up, then down &rarr; a side-by-side review. The med chart and medication index sit at the end as reference, not reading. <br><br>Two branches constantly balancing each other. Dr. Kaur&rsquo;s framing: <strong>learn the patterns first, then the drugs make sense.</strong> Every drug in this unit either turns one branch up or turns it down.</p></div>
     <div class="wrap"><table>
       <thead><tr><th>Organ / function</th><th>Sympathetic &mdash; fight or flight <em>(the accelerator)</em></th><th>Parasympathetic &mdash; rest and digest <em>(the brake)</em></th></tr></thead>
       <tbody>
@@ -1700,10 +1617,9 @@ img{max-width:100%}
       </tbody>
     </table></div>
   </section>
-
-  <section id="receptors" data-ch="ans">
+  <section id="receptors" data-ch="29">
     <div class="head"><span class="slide">Ch 29 &middot; Wk slides 7&ndash;8, 38</span>
-      <h2>The four receptors &mdash; the whole unit in one table</h2>
+      <h2><span class="seq">2</span>The four receptors &mdash; the whole unit in one table</h2>
       <p>Her stated study question: <em>&ldquo;If this receptor is stimulated or blocked, what happens to the patient?&rdquo;</em> Learn this table and you can rebuild every drug effect below it.</p></div>
     <div class="wrap"><table>
       <thead><tr><th>Receptor</th><th>Anchor</th><th>Main location</th><th>Stimulate &rarr;</th><th>Block &rarr;</th></tr></thead>
@@ -1728,10 +1644,9 @@ img{max-width:100%}
     <p class="note warn"><strong>Alpha-2 is not on your list.</strong> Dr. Kaur teaches <strong>four</strong> receptors &mdash; &alpha;1, &beta;1, &beta;2 and muscarinic. The textbook also covers &alpha;2 agonists (clonidine, dexmedetomidine, guanfacine); those are flagged <span class="pill p2">not required</span> in the medication index so you can skip them.</p>
     <p class="note"><strong>Then reverse it.</strong> Blockers produce the opposite of stimulation &mdash; which is how you predict a drug&rsquo;s adverse effects without memorising them.</p>
   </section>
-
-  <section id="adren-ag" data-ch="ans">
+  <section id="adren-ag" data-ch="30">
     <div class="head"><span class="slide">Ch 30 &middot; Wk slides 9&ndash;13</span>
-      <h2>Adrenergic agonists &mdash; turning the sympathetic system up</h2>
+      <h2><span class="seq">3</span>Adrenergic agonists &mdash; turning the sympathetic system up</h2>
       <p>Also called <strong>sympathomimetics</strong>. Laid out in Dr. Kaur&rsquo;s own six-box reference format from slide 29: what it is, why it&rsquo;s given, what it does, how you know it worked, what to watch for, and what you assess.</p></div>
     <div class="wrap"><table>
       <thead><tr><th>Medication</th><th>Receptors</th><th>Why given</th><th>Expected response</th><th>Adverse effects</th><th>Nursing safety</th></tr></thead>
@@ -1754,10 +1669,9 @@ img{max-width:100%}
     </table></div>
     <p class="note"><strong>The pattern to hold on to:</strong> almost every adverse effect of this class looks like <em>too much fight-or-flight</em>. And her closing question after any drug &mdash; <strong>&ldquo;what evidence tells me it worked, and what tells me it harmed?&rdquo;</strong></p>
   </section>
-
-  <section id="adren-blk" data-ch="ans">
+  <section id="adren-blk" data-ch="31">
     <div class="head"><span class="slide">Ch 31 &middot; Wk slides 17&ndash;20</span>
-      <h2>Adrenergic antagonists &mdash; turning the sympathetic system down</h2>
+      <h2><span class="seq">4</span>Adrenergic antagonists &mdash; turning the sympathetic system down</h2>
       <p>Blockers produce the <strong>opposite</strong> of stimulation. Predict the adverse effects from that alone.</p></div>
     <div class="wrap"><table>
       <thead><tr><th>Medication</th><th>Receptors</th><th>Why given</th><th>Expected response</th><th>Adverse effects</th><th>Nursing safety</th></tr></thead>
@@ -1781,10 +1695,9 @@ img{max-width:100%}
     </table></div>
     <p class="note warn"><strong>Her emphasis:</strong> <em>clinical judgment beats a memorised cutoff.</em> Do not rely on a single remembered &ldquo;hold number&rdquo; &mdash; assess the patient, verify the ordered parameters, then act.</p>
   </section>
-
-  <section id="chol-ag" data-ch="ans">
+  <section id="chol-ag" data-ch="32">
     <div class="head"><span class="slide">Ch 32 &middot; Wk slides 23&ndash;25</span>
-      <h2>Cholinergic agonists &mdash; increasing acetylcholine effects</h2>
+      <h2><span class="seq">5</span>Cholinergic agonists &mdash; increasing acetylcholine effects</h2>
       <p><strong>Direct</strong> agonists mimic ACh. <strong>Indirect</strong> agents block the enzyme that breaks it down, so ACh sticks around longer. Different indications, same underlying idea.</p></div>
     <div class="wrap"><table>
       <thead><tr><th>Medication</th><th>Type</th><th>Why given</th><th>Expected response</th><th>Nursing safety</th></tr></thead>
@@ -1815,10 +1728,9 @@ img{max-width:100%}
     <p class="note warn"><strong>Irreversible cholinesterase inhibitors are not therapeutic drugs.</strong> Karch covers them because they are <strong>nerve agents</strong>: absorbed by inhalation or through skin, they bind acetylcholinesterase permanently. ACh floods the system &mdash; the heart slows and becomes ineffective, pupils and bronchi constrict, secretions pour, and sustained muscle contraction <strong>immobilises the diaphragm so breathing stops</strong>. The one exception in clinical use is echothiophate iodide, applied topically to the eye.</p>
     <p class="note warn"><strong>Beyond SLUDGE, cholinergic toxicity also brings</strong> bradycardia, hypotension, bronchospasm with secretions, and severe weakness. Higher-risk patients: <strong>asthma, bradycardia, peptic ulcer disease, and GI or GU obstruction.</strong></p>
   </section>
-
-  <section id="anticho" data-ch="ans">
+  <section id="anticho" data-ch="33">
     <div class="head"><span class="slide">Ch 33 &middot; Wk slides 26&ndash;27</span>
-      <h2>Anticholinergics &mdash; blocking rest-and-digest</h2>
+      <h2><span class="seq">6</span>Anticholinergics &mdash; blocking rest-and-digest</h2>
       <p>Blocking muscarinic receptors shifts the body toward a sympathetic-like pattern. Same blockade, different target organs &mdash; always connect the drug to the reason it was prescribed.</p></div>
     <div class="wrap"><table>
       <thead><tr><th>Medication</th><th>Route / target</th><th>Why given</th><th>Expected response</th><th>Nursing safety</th></tr></thead>
@@ -1840,10 +1752,9 @@ img{max-width:100%}
     </table></div>
     <p class="note warn"><strong>Older adults especially:</strong> new confusion, constipation, urinary retention or falls may be <em>medication-related</em>. Reduced sweating causes heat intolerance, and several anticholinergic drugs together produce additive <strong>&ldquo;anticholinergic burden.&rdquo;</strong></p>
   </section>
-
-  <section id="ans-compare" data-ch="ans">
+  <section id="ans-compare" data-ch="32 33">
     <div class="head"><span class="slide">Ch 32&ndash;33 &middot; Wk slides 22, 28</span>
-      <h2>Cholinergic vs. anticholinergic &mdash; side by side</h2>
+      <h2><span class="seq">7</span>Cholinergic vs. anticholinergic &mdash; side by side</h2>
       <p>Her exam strategy, verbatim: <em>if you forget a side effect, go back to the parasympathetic pattern and reverse it.</em></p></div>
     <div class="wrap"><table>
       <thead><tr><th>Body system</th><th>Cholinergic agonist</th><th>Anticholinergic</th></tr></thead>
@@ -1866,8 +1777,157 @@ img{max-width:100%}
     </table></div>
     <p class="note"><strong>Take-home anchors.</strong> <span class="mono">&alpha;1</span> squeeze &middot; <span class="mono">&beta;1</span> one heart &middot; <span class="mono">&beta;2</span> two lungs &middot; <span class="mono">M</span> moist and moving. For every medication: <strong>why &rarr; how &rarr; expected response &rarr; safety.</strong></p>
   </section>
-
-  <section id="test" data-ch="01 02 03 04 05 06 ans">
+  <section id="medchart" data-ch="29 30 31 32 33">
+    <div class="head"><span class="slide">Ch 29&ndash;33 &middot; med chart</span>
+      <h2>Medication chart &mdash; autonomic drugs</h2>
+      <p>Nine drug classes in the eight-column format, one row per class with its prototype. <strong>Scrolls sideways</strong> &mdash; drag inside the table. Learn the prototype and the class follows.</p></div>
+    <details class="fold" open>
+      <summary>All nine drug classes<span class="cnt">9 classes &middot; 8 columns</span></summary>
+      <div class="wrap"><table>
+      <thead><tr>
+        <th>Drug class</th><th>Prototype</th><th>Mechanism of action</th>
+        <th>Therapeutic effects</th><th>Common side effects</th><th>Adverse effects</th>
+        <th>Nursing considerations</th><th>Special populations</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="cls">Nonselective adrenergic agonist</td><td class="proto">epinephrine</td><td class="a">Stimulates <strong>&alpha;1, &beta;1 and &beta;2</strong> &mdash; vasoconstriction, increased rate and contractility, bronchodilation.</td><td class="a">Reverses anaphylaxis: airway opens, BP and perfusion rise. Restores circulation in cardiac arrest.</td><td class="a">Tachycardia, palpitations, anxiety, tremor, headache.</td><td class="a">Hypertensive crisis, dysrhythmias, myocardial ischemia; tissue necrosis if it extravasates.</td><td class="a"><strong>Verify route and concentration</strong> &mdash; they differ by indication and mixing them up is a classic serious error. Continuous HR, rhythm, BP. Reassess the airway after giving.</td><td class="a">Caution in cardiac disease, hypertension and older adults. Used in pregnancy for anaphylaxis when benefit outweighs risk &mdash; untreated anaphylaxis is the greater danger.</td></tr>
+        <tr><td class="cls">Alpha-1 adrenergic agonist</td><td class="proto">phenylephrine<span class="also">also: norepinephrine</span></td><td class="a">Selective <strong>&alpha;1</strong> stimulation &rarr; peripheral vasoconstriction &rarr; systemic vascular resistance and BP rise.</td><td class="a">Raises blood pressure in hypotension and shock. Topically, nasal decongestion.</td><td class="a"><strong>Reflex bradycardia</strong>, headache, restlessness.</td><td class="a">Severe hypertension, reduced organ perfusion; <strong>extravasation can injure tissue</strong> (norepinephrine especially).</td><td class="a">Continuous BP and perfusion monitoring. <strong>Monitor the IV site closely</strong> &mdash; <strong>phentolamine</strong> is the antidote for norepinephrine or dopamine infiltration. Address volume status &mdash; a vasopressor does not fix hypovolemia.</td><td class="a">Caution in hypertension and vascular disease. Older adults are more sensitive. Ask about OTC decongestants to avoid duplication.</td></tr>
+        <tr><td class="cls">Beta-2 adrenergic agonist<br><span style="font-weight:400"><em>short-acting</em></span></td><td class="proto">albuterol</td><td class="a">Selective <strong>&beta;2</strong> stimulation &rarr; bronchial smooth muscle relaxes.</td><td class="a">Bronchodilation &mdash; <strong>less wheezing, improved air movement</strong>, easier breathing.</td><td class="a">Tremor, jitteriness, tachycardia, palpitations.</td><td class="a">Paradoxical bronchospasm, <strong>hypokalemia</strong>, chest pain, dysrhythmia.</td><td class="a">Breath sounds, respiratory effort, HR and oxygenation <strong>before and after</strong>. Increasing use signals worsening control &mdash; escalate rather than simply repeating doses.</td><td class="a">Cardiac disease (tachycardia) and diabetes (may raise glucose). Considered appropriate in pregnancy &mdash; uncontrolled asthma harms the fetus more.</td></tr>
+        <tr><td class="cls">Beta-1 selective blocker<br><span style="font-weight:400"><em>cardioselective</em></span></td><td class="proto">metoprolol<span class="also">also: atenolol</span></td><td class="a">Blocks <strong>&beta;1</strong> &rarr; heart rate, contractility and conduction fall; renin release decreases.</td><td class="a">BP lowered, rate controlled, <strong>cardiac workload reduced</strong>.</td><td class="a">Bradycardia, fatigue, dizziness, cold extremities.</td><td class="a">Symptomatic bradycardia or heart block, hypotension, heart failure exacerbation; <strong>rebound tachycardia and ischemia if stopped abruptly</strong>.</td><td class="a">HR and BP before <em>each</em> dose against the <strong>ordered hold parameters</strong> &mdash; not a memorised number. Teach never to stop abruptly or skip doses.</td><td class="a"><strong>Diabetes: masks the tachycardia that warns of hypoglycemia.</strong> Older adults &mdash; falls. Safer than nonselective in asthma but still requires caution.</td></tr>
+        <tr><td class="cls">Nonselective beta blocker</td><td class="proto">propranolol</td><td class="a">Blocks <strong>&beta;1 and &beta;2</strong> &mdash; cardiac effects plus loss of bronchodilation.</td><td class="a">Cardiac conditions, migraine prophylaxis, essential tremor.</td><td class="a">Bradycardia, fatigue, dizziness, cold extremities.</td><td class="a"><strong>Bronchospasm</strong> from &beta;2 blockade, masked hypoglycemia, rebound on abrupt withdrawal.</td><td class="a"><strong>Screen respiratory history before giving.</strong> Same HR/BP hold parameters as any beta blocker. Never stop abruptly.</td><td class="a"><strong>High caution or avoided in asthma and COPD.</strong> Diabetes &mdash; masks hypoglycemia. Older adults &mdash; falls, fatigue.</td></tr>
+        <tr><td class="cls">Alpha-1 adrenergic blocker</td><td class="proto">prazosin<span class="also">also: tamsulosin (uroselective)</span></td><td class="a">Blocks <strong>&alpha;1</strong>: on vessels &rarr; vasodilation; on prostate and bladder neck &rarr; smooth muscle relaxes.</td><td class="a">BP falls. In BPH, <strong>urine flow improves</strong>.</td><td class="a">Dizziness, <strong>orthostatic hypotension</strong>, headache, nasal congestion, fatigue.</td><td class="a"><strong>First-dose syncope</strong>, falls and injury.</td><td class="a">Give the first dose at bedtime. Teach slow position changes; check BP lying and standing. Fall precautions. Report severe dizziness or fainting.</td><td class="a"><strong>Older adults &mdash; substantial fall risk.</strong> Tamsulosin is associated with <strong>intraoperative floppy iris syndrome</strong>: tell the ophthalmologist before cataract surgery.</td></tr>
+        <tr><td class="cls">Direct-acting cholinergic agonist<br><span style="font-weight:400"><em>muscarinic</em></span></td><td class="proto">bethanechol</td><td class="a">Directly stimulates <strong>muscarinic</strong> receptors &rarr; detrusor contracts, GI motility increases.</td><td class="a"><strong>Nonobstructive</strong> urinary retention &mdash; voiding restored.</td><td class="a">Salivation, sweating, abdominal cramping, urinary urgency.</td><td class="a">Bradycardia, hypotension, bronchospasm; <strong>cholinergic crisis (SLUDGE)</strong>.</td><td class="a"><strong>Rule out obstruction before giving.</strong> Keep a bedpan or commode within reach &mdash; it works quickly. Monitor HR and BP. <strong>Atropine is the antidote.</strong></td><td class="a">Contraindicated or high risk in <strong>asthma, bradycardia, peptic ulcer disease, GI or GU obstruction</strong>, and hyperthyroidism.</td></tr>
+        <tr><td class="cls">Indirect-acting cholinergic<br><span style="font-weight:400"><em>cholinesterase inhibitor</em></span></td><td class="proto">pyridostigmine<span class="also">also: donepezil (central, Alzheimer)</span></td><td class="a">Inhibits <strong>acetylcholinesterase</strong> so ACh is not broken down and accumulates at the synapse.</td><td class="a">Improved skeletal muscle strength in <strong>myasthenia gravis</strong>. Donepezil may support cognition or slow decline &mdash; <strong>it does not cure</strong>.</td><td class="a">GI upset, nausea, diarrhea, increased secretions, muscle cramps.</td><td class="a"><strong>Cholinergic crisis</strong> (too much) versus <strong>myasthenic crisis</strong> (too little) &mdash; both cause weakness, and telling them apart is the clinical problem. Bradycardia.</td><td class="a">Time doses <strong>before meals</strong> so swallowing strength peaks when eating. Monitor respiratory effort and strength. Document response carefully to distinguish the two crises.</td><td class="a">Older adults &mdash; bradycardia and GI effects. Caution in asthma, bradycardia and peptic ulcer disease.</td></tr>
+        <tr><td class="cls">Muscarinic antagonist<br><span style="font-weight:400"><em>anticholinergic</em></span></td><td class="proto">atropine<span class="also">also: ipratropium &middot; oxybutynin &middot; scopolamine</span></td><td class="a">Competitively <strong>blocks muscarinic</strong> receptors &rarr; parasympathetic tone falls, leaving a sympathetic-like picture.</td><td class="a">Atropine: HR rises in <strong>symptomatic bradycardia</strong>. Ipratropium: bronchodilation with drier airways in COPD. Oxybutynin: bladder relaxes in urgency. Scopolamine: prevents motion sickness.</td><td class="a">Dry mouth, blurred vision, constipation, urinary hesitancy, reduced sweating.</td><td class="a"><strong>Urinary retention</strong>, paralytic ileus, <strong>confusion and delirium</strong>, tachydysrhythmia, hyperthermia from impaired sweating.</td><td class="a">Monitor voiding and bowel pattern. Oral care for dryness. Fall precautions. <strong>Review the whole medication list for anticholinergic burden</strong> &mdash; several drugs together compound the effect.</td><td class="a"><strong>Older adults: flagged on the Beers criteria</strong> &mdash; new confusion, retention, constipation or falls may be the drug. Cautions include narrow-angle glaucoma and BPH. Heat intolerance in hot weather.</td></tr>
+      </tbody>
+    </table></div>
+    </details>
+    <p class="note"><strong>Why it is built by class, not by drug.</strong> Karch teaches <em>prototypes</em> &mdash; the model drug its class is compared against. Learn epinephrine and you can reason about any adrenergic agonist; learn atropine and every anticholinergic follows the same dry-dilated-retained-confused pattern.</p>
+  </section>
+  <section id="drugindex" data-ch="29 30 31 32 33 01 02 03 04 05 06">
+    <div class="head"><span class="slide">All lectures + Karch Ch 01&ndash;06, 29&ndash;33</span>
+      <h2>Medication index &mdash; every drug named so far</h2>
+      <p>Every medication from Dr. Kaur&rsquo;s three decks and from the textbook chapters covered, in one place. The <strong>source</strong> column shows where each came from &mdash; her slides, the textbook, or both. Her exam weights the lecture drugs, so <span class="pill p1">lecture</span> and <span class="pill p3">both</span> are the priority; <span class="pill p2">textbook</span> rows are the long tail. Anything marked <span class="pill p2">not required</span> is confirmed outside her scope &mdash; skip it.</p></div>
+    <details class="fold">
+      <summary>Adrenergic agonists &mdash; Ch 30<span class="cnt">19 drugs</span></summary>
+      <div class="wrap"><table>
+      <thead><tr><th>Generic</th><th>Brand</th><th>Class / receptor</th><th>What to know</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td class="term">epinephrine</td><td class="a mono">Adrenalin · EpiPen · Auvi-Q · Symjepi</td><td class="a">&alpha;1 &beta;1 &beta;2 agonist</td><td class="a"><strong>First choice in anaphylactic shock.</strong></td><td class="a"><span class="pill p3">both</span></td></tr>
+        <tr><td class="term">norepinephrine</td><td class="a mono">Levophed</td><td class="a">mainly &alpha;1, some &beta;1</td><td class="a"><strong>Often the drug of choice in septic, cardiogenic and hypovolemic shock.</strong></td><td class="a"><span class="pill p3">both</span></td></tr>
+        <tr><td class="term">dopamine</td><td class="a mono">generic</td><td class="a">&alpha; + &beta; agonist</td><td class="a">Dilates renal and splanchnic arterioles, <strong>preserving kidney blood flow</strong> that epinephrine or norepinephrine can compromise.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">dobutamine</td><td class="a mono">generic</td><td class="a">&alpha; + &beta;, slight &beta;1 preference</td><td class="a">Synthetic catecholamine. <strong>Preferred in heart failure and cardiogenic shock</strong> &mdash; raises rate but lowers BP.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">ephedrine</td><td class="a mono">Akovaz · Corphedra · Emerphed</td><td class="a">&alpha; + &beta; agonist</td><td class="a">Synthetic catecholamine.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">pseudoephedrine</td><td class="a mono">Sudafed 24</td><td class="a">&alpha; + &beta; agonist</td><td class="a">Oral decongestant &mdash; the behind-the-counter one.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">phenylephrine</td><td class="a mono">Biorphen · Imphentiv · Vazculep</td><td class="a">&alpha;1 selective</td><td class="a">Potent vasoconstrictor, little effect on heart or bronchi. <strong>The FDA has proposed removing oral phenylephrine from OTC products</strong> over disputed effectiveness for congestion.</td><td class="a"><span class="pill p3">both</span></td></tr>
+        <tr><td class="term">midodrine</td><td class="a mono">Orvaten</td><td class="a">&alpha;1 selective</td><td class="a">Raises blood pressure.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">clonidine</td><td class="a mono">Nexiclon XR · Onyda XR</td><td class="a">&alpha;2 selective <span class="pill p2">not required</span></td><td class="a"><em>Outside Dr. Kaur&rsquo;s scope &mdash; she teaches &alpha;1, &beta;1, &beta;2 and muscarinic only.</em> Essential hypertension, chronic pain, easing opiate withdrawal.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">dexmedetomidine</td><td class="a mono">Precedex</td><td class="a">&alpha;2 selective <span class="pill p2">not required</span></td><td class="a"><em>Outside Dr. Kaur&rsquo;s scope &mdash; she teaches &alpha;1, &beta;1, &beta;2 and muscarinic only.</em> Sedation.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">guanfacine</td><td class="a mono">Intuniv</td><td class="a">&alpha;2 selective <span class="pill p2">not required</span></td><td class="a"><em>Outside Dr. Kaur&rsquo;s scope &mdash; she teaches &alpha;1, &beta;1, &beta;2 and muscarinic only.</em> ADHD.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">albuterol</td><td class="a mono">ProAir · Proventil HFA · Ventolin HFA</td><td class="a">&beta;2 selective</td><td class="a">Short-acting rescue bronchodilator.</td><td class="a"><span class="pill p3">both</span></td></tr>
+        <tr><td class="term">levalbuterol</td><td class="a mono">Xopenex HFA</td><td class="a">&beta;2 selective</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">salmeterol</td><td class="a mono">Serevent Diskus</td><td class="a">&beta;2 selective, long-acting</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">formoterol</td><td class="a mono">Perforomist</td><td class="a">&beta;2 selective, long-acting</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">arformoterol</td><td class="a mono">Brovana</td><td class="a">&beta;2 selective, long-acting</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">olodaterol</td><td class="a mono">Striverdi Respimat</td><td class="a">&beta;2 selective, long-acting</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">terbutaline</td><td class="a mono">generic</td><td class="a">&beta;2 selective</td><td class="a">Also relaxes the uterus.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">isoproterenol</td><td class="a mono">generic</td><td class="a">all &beta; receptors</td><td class="a">Use has fallen because of the <strong>&ldquo;coronary steal&rdquo; effect</strong> &mdash; it can divert blood from injured heart muscle and enlarge an evolving MI.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+      </tbody>
+    </table></div>
+    </details>
+    <details class="fold">
+      <summary>Adrenergic antagonists &mdash; Ch 31<span class="cnt">14 drugs</span></summary>
+      <div class="wrap"><table>
+      <thead><tr><th>Generic</th><th>Brand</th><th>Class / receptor</th><th>What to know</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td class="term">metoprolol</td><td class="a mono">Lopressor · Toprol XL · Kapspargo</td><td class="a">&beta;1 selective</td><td class="a"><strong>Bioavailability increases when taken with food.</strong></td><td class="a"><span class="pill p3">both</span></td></tr>
+        <tr><td class="term">atenolol</td><td class="a mono">Tenormin</td><td class="a">&beta;1 selective</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">bisoprolol</td><td class="a mono">generic</td><td class="a">&beta;1 selective</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">acebutolol</td><td class="a mono">generic</td><td class="a">&beta;1 selective</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">esmolol</td><td class="a mono">Brevibloc</td><td class="a">&beta;1 selective</td><td class="a">Very short acting, IV.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">betaxolol</td><td class="a mono">Betoptic</td><td class="a">&beta;1 selective</td><td class="a">Ophthalmic &mdash; lowers intraocular pressure in open-angle glaucoma.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">propranolol</td><td class="a mono">generic</td><td class="a">nonselective &beta;</td><td class="a"><strong>Blocks &beta;2 as well &mdash; bronchospasm risk in asthma and COPD.</strong></td><td class="a"><span class="pill p3">both</span></td></tr>
+        <tr><td class="term">carvedilol</td><td class="a mono">Coreg</td><td class="a">nonselective &alpha; + &beta;</td><td class="a">Oral only. Hypertension, heart failure, LV dysfunction after MI.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">labetalol</td><td class="a mono">Trandate</td><td class="a">nonselective &alpha; + &beta;</td><td class="a">Hypertensive emergency, including <strong>in pregnancy</strong>.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">amiodarone</td><td class="a mono">Nexterone · Pacerone</td><td class="a">nonselective &alpha; + &beta;</td><td class="a">Life-threatening ventricular arrhythmias. <strong>Half-life of days to months</strong> &mdash; hard to know when it is cleared.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">phentolamine</td><td class="a mono">OraVerse · Regitine</td><td class="a">nonselective &alpha;</td><td class="a">Pheochromocytoma. <strong>Also the antidote that prevents tissue death after norepinephrine or dopamine infiltration.</strong></td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">phenoxybenzamine</td><td class="a mono">Dibenzyline</td><td class="a">nonselective &alpha;</td><td class="a">Pheochromocytoma.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">prazosin</td><td class="a mono">generic</td><td class="a">&alpha;1 selective</td><td class="a">Hypertension. <strong>First-dose orthostatic syncope.</strong></td><td class="a"><span class="pill p3">both</span></td></tr>
+        <tr><td class="term">tamsulosin</td><td class="a mono">generic</td><td class="a">&alpha;1, uroselective</td><td class="a">BPH. <strong>Intraoperative floppy iris syndrome</strong> &mdash; warn the eye surgeon.</td><td class="a"><span class="pill p1">lecture</span></td></tr>
+      </tbody>
+    </table></div>
+    </details>
+    <details class="fold">
+      <summary>Cholinergic agonists &mdash; Ch 32<span class="cnt">8 drugs</span></summary>
+      <div class="wrap"><table>
+      <thead><tr><th>Generic</th><th>Brand</th><th>Class / receptor</th><th>What to know</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td class="term">bethanechol</td><td class="a mono">generic</td><td class="a">direct muscarinic agonist</td><td class="a"><strong>Nonobstructive</strong> urinary retention.</td><td class="a"><span class="pill p3">both</span></td></tr>
+        <tr><td class="term">pyridostigmine</td><td class="a mono">Mestinon · Regonol</td><td class="a">reversible cholinesterase inhibitor</td><td class="a">Myasthenia gravis.</td><td class="a"><span class="pill p3">both</span></td></tr>
+        <tr><td class="term">neostigmine</td><td class="a mono">Bloxiverz</td><td class="a">reversible cholinesterase inhibitor</td><td class="a">Also reverses neuromuscular blocking agents.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">donepezil</td><td class="a mono">Aricept</td><td class="a">central cholinesterase inhibitor</td><td class="a">Alzheimer disease. <strong>Does not cure.</strong></td><td class="a"><span class="pill p3">both</span></td></tr>
+        <tr><td class="term">galantamine</td><td class="a mono">Razadyne</td><td class="a">central cholinesterase inhibitor</td><td class="a">Alzheimer disease.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">rivastigmine</td><td class="a mono">Exelon</td><td class="a">central cholinesterase inhibitor</td><td class="a">Alzheimer, and dementia related to Parkinson disease.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">benzgalantamine</td><td class="a mono">Zunveyl</td><td class="a">central cholinesterase inhibitor</td><td class="a">Alzheimer disease.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">echothiophate iodide</td><td class="a mono">Phospholine Iodide</td><td class="a"><strong>irreversible</strong> cholinesterase inhibitor</td><td class="a">The only irreversible agent in clinical use &mdash; topical, in the eye.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+      </tbody>
+    </table></div>
+    </details>
+    <details class="fold">
+      <summary>Anticholinergics &mdash; Ch 33<span class="cnt">18 drugs</span></summary>
+      <div class="wrap"><table>
+      <thead><tr><th>Generic</th><th>Brand</th><th>Class / receptor</th><th>What to know</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td class="term">atropine</td><td class="a mono">generic</td><td class="a">muscarinic antagonist &mdash; <strong>the prototype</strong></td><td class="a">From <em>Atropa belladonna</em>, &ldquo;deadly nightshade.&rdquo; Symptomatic bradycardia; also the antidote for cholinergic drugs and <strong>certain mushroom poisonings</strong>.</td><td class="a"><span class="pill p3">both</span></td></tr>
+        <tr><td class="term">ipratropium</td><td class="a mono">Atrovent HFA</td><td class="a">muscarinic antagonist</td><td class="a">COPD bronchodilation.</td><td class="a"><span class="pill p3">both</span></td></tr>
+        <tr><td class="term">tiotropium</td><td class="a mono">Spiriva</td><td class="a">muscarinic antagonist</td><td class="a">Long-acting COPD.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">aclidinium</td><td class="a mono">Tudorza Pressair</td><td class="a">muscarinic antagonist</td><td class="a">COPD.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">umeclidinium</td><td class="a mono">Incruse Ellipta</td><td class="a">muscarinic antagonist</td><td class="a">COPD.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">revefenacin</td><td class="a mono">Yupelri</td><td class="a">muscarinic antagonist</td><td class="a">COPD.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">oxybutynin</td><td class="a mono">Oxytrol</td><td class="a">muscarinic antagonist</td><td class="a">Overactive bladder.</td><td class="a"><span class="pill p3">both</span></td></tr>
+        <tr><td class="term">tolterodine</td><td class="a mono">Detrol</td><td class="a">muscarinic antagonist</td><td class="a">Overactive bladder.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">solifenacin</td><td class="a mono">Vesicare</td><td class="a">muscarinic antagonist</td><td class="a">Overactive bladder.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">darifenacin</td><td class="a mono">Enablex</td><td class="a">muscarinic antagonist</td><td class="a">Overactive bladder.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">fesoterodine</td><td class="a mono">Toviaz</td><td class="a">muscarinic antagonist</td><td class="a">Overactive bladder.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">trospium</td><td class="a mono">generic</td><td class="a">muscarinic antagonist</td><td class="a">Overactive bladder.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">flavoxate</td><td class="a mono">generic</td><td class="a">muscarinic antagonist</td><td class="a">Urinary antispasmodic.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">scopolamine</td><td class="a mono">Transderm Scop</td><td class="a">muscarinic antagonist</td><td class="a">Motion sickness patch.</td><td class="a"><span class="pill p3">both</span></td></tr>
+        <tr><td class="term">methscopolamine</td><td class="a mono">generic</td><td class="a">muscarinic antagonist</td><td class="a"></td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">hyoscyamine</td><td class="a mono">Symax</td><td class="a">muscarinic antagonist</td><td class="a">GI antispasmodic.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">dicyclomine</td><td class="a mono">Bentyl</td><td class="a">muscarinic antagonist</td><td class="a">GI antispasmodic.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">glycopyrrolate</td><td class="a mono">Robinul · Cuvposa</td><td class="a">muscarinic antagonist</td><td class="a">Dries secretions before anesthesia.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+      </tbody>
+    </table></div>
+    </details>
+    <details class="fold">
+      <summary>Named elsewhere in the course &mdash; Ch 01&ndash;06 and dosage examples<span class="cnt">18 drugs</span></summary>
+      <div class="wrap"><table>
+      <thead><tr><th>Generic</th><th>Brand</th><th>Class / receptor</th><th>What to know</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td class="term">digoxin</td><td class="a mono">generic</td><td class="a">cardiac glycoside</td><td class="a">Named in lecture as a <strong>plant-derived</strong> drug.</td><td class="a"><span class="pill p3">both</span></td></tr>
+        <tr><td class="term">insulin</td><td class="a mono">&mdash;</td><td class="a">hormone</td><td class="a">Named as an <strong>animal-source</strong> drug, and the pattern for &ldquo;replace a missing chemical.&rdquo;</td><td class="a"><span class="pill p3">both</span></td></tr>
+        <tr><td class="term">dronabinol</td><td class="a mono">Marinol</td><td class="a">synthetic THC</td><td class="a">Chemotherapy nausea, AIDS-related weight loss. Cannabis itself is <strong>Schedule I</strong>.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">isotretinoin</td><td class="a mono">&mdash;</td><td class="a">retinoid</td><td class="a">Lecture example of a <strong>teratogen</strong>.</td><td class="a"><span class="pill p1">lecture</span></td></tr>
+        <tr><td class="term">thalidomide</td><td class="a mono">Thalomid</td><td class="a">&mdash;</td><td class="a">The 1960s disaster that produced the Kefauver&ndash;Harris Act.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">acetaminophen</td><td class="a mono">Tylenol</td><td class="a">analgesic / antipyretic</td><td class="a">Dosage examples, and the OTC duplicate-ingredient overdose risk.</td><td class="a"><span class="pill p3">both</span></td></tr>
+        <tr><td class="term">omeprazole</td><td class="a mono">Prilosec</td><td class="a">proton pump inhibitor</td><td class="a">OTC example.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">famotidine</td><td class="a mono">Pepcid</td><td class="a">H2 blocker</td><td class="a">OTC example.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">lovastatin</td><td class="a mono">&mdash;</td><td class="a">statin</td><td class="a">Considered for OTC status in 2009&ndash;2010; <strong>the FDA declined</strong> &mdash; high lipids have no symptoms and need a blood test.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">ipecac</td><td class="a mono">&mdash;</td><td class="a">emetic</td><td class="a">Former OTC standard; FDA found it <strong>not effective</strong> for its intended use in 2003.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">amoxicillin</td><td class="a mono">&mdash;</td><td class="a">penicillin-class antibiotic</td><td class="a">Dosage examples; the penicillin cross-allergy case.</td><td class="a"><span class="pill p1">lecture</span></td></tr>
+        <tr><td class="term">cefazolin</td><td class="a mono">&mdash;</td><td class="a">cephalosporin</td><td class="a">Weight-based dosing example.</td><td class="a"><span class="pill p1">lecture</span></td></tr>
+        <tr><td class="term">levothyroxine</td><td class="a mono">&mdash;</td><td class="a">thyroid hormone</td><td class="a">Tablet calculation example.</td><td class="a"><span class="pill p1">lecture</span></td></tr>
+        <tr><td class="term">furosemide</td><td class="a mono">&mdash;</td><td class="a">loop diuretic</td><td class="a">Paediatric mg/kg to mL example.</td><td class="a"><span class="pill p1">lecture</span></td></tr>
+        <tr><td class="term">propofol</td><td class="a mono">&mdash;</td><td class="a">sedative-hypnotic</td><td class="a">Critical-care drip example, mcg/kg/min.</td><td class="a"><span class="pill p1">lecture</span></td></tr>
+        <tr><td class="term">cisplatin</td><td class="a mono">&mdash;</td><td class="a">antineoplastic</td><td class="a">BSA dosing example, mg/m&sup2;.</td><td class="a"><span class="pill p1">lecture</span></td></tr>
+        <tr><td class="term">naloxone</td><td class="a mono">&mdash;</td><td class="a">opioid antagonist</td><td class="a">Named in the opioid-crisis response &mdash; harm reduction.</td><td class="a"><span class="pill p2">textbook</span></td></tr>
+        <tr><td class="term">pralidoxime</td><td class="a mono">&mdash;</td><td class="a">cholinesterase reactivator</td><td class="a"><strong>Antidote for organophosphate pesticides and nerve agents.</strong></td><td class="a"><span class="pill p2">textbook</span></td></tr>
+      </tbody>
+    </table></div>
+    </details>
+    <p class="note"><strong>How to use this.</strong> Study the <span class="pill p3">both</span> rows first &mdash; a drug her slides <em>and</em> the textbook name is the most likely to be tested. Then <span class="pill p1">lecture</span>. The <span class="pill p2">textbook</span> rows are worth recognising by class rather than memorising individually.</p>
+  </section>
+  <section id="test" data-ch="01 02 03 04 05 06 29 30 31 32 33">
     <div class="head"><span class="slide">Ch 01&ndash;06 &middot; Slides 15&ndash;16, 24&ndash;25</span>
       <h2>Self-test</h2>
       <p>Both questions from the lecture, plus four drawn from the material above. Turn on quiz mode and answer before revealing.</p></div>
@@ -2037,6 +2097,12 @@ img{max-width:100%}
   });
 
   document.getElementById('print').addEventListener('click',function(){
+    /* a closed <details> would print as just its summary */
+    document.querySelectorAll('details.fold').forEach(function(d){ d.dataset.was=d.open?'1':'0'; d.open=true; });
+    window.addEventListener('afterprint',function restore(){
+      document.querySelectorAll('details.fold').forEach(function(d){ d.open = d.dataset.was==='1'; });
+      window.removeEventListener('afterprint',restore);
+    });
     document.body.classList.remove('quiz');
     quizBtn.setAttribute('aria-pressed','false');
     window.print();
