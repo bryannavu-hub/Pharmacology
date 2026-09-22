@@ -4,6 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pharmacology</title>
+<script>
+/* Browsers restore the previous scroll position on reload (history.scrollRestoration
+   defaults to "auto"). Anyone who had scrolled to the dosage practice engine was being
+   dropped straight back there on every visit. Open at the top instead — unless the URL
+   names a section, which is how the nav links work. */
+try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(e){}
+window.addEventListener('load',function(){
+  var h=location.hash && location.hash.slice(1);
+  var el=h && document.getElementById(h);
+  if(el) el.scrollIntoView();
+  else window.scrollTo(0,0);
+});
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Spectral:ital,wght@0,500;0,600;1,500&display=swap">
@@ -645,9 +658,9 @@ img{max-width:100%}
 <header class="masthead">
   <div class="mast-in">
     <div>
-      <p class="eyebrow">NURS-11 &middot; Chapters 01&ndash;06 &amp; 29&ndash;33</p>
+      <p class="eyebrow">NURS-11 &middot; Chapters 01&ndash;06 &middot; 29&ndash;33 &middot; 42&ndash;44 &amp; 51</p>
       <h1>Introduction to Pharmacology</h1>
-      <p class="sub">Unit 1 of Karch&rsquo;s <em>Focus on Nursing Pharmacology</em> (10th ed.), combined with Dr. Kaur&rsquo;s lecture decks &mdash; Unit 1 foundations plus the autonomic drug unit. Every section is tagged with its chapter and, where it was lectured, its slide numbers. Where the lecture and the textbook differ, the lecture is flagged.</p>
+      <p class="sub">Karch&rsquo;s <em>Focus on Nursing Pharmacology</em> (10th ed.) combined with Dr. Kaur&rsquo;s lecture decks &mdash; <strong>Unit 1 foundations</strong>, the <strong>autonomic</strong> unit, and <strong>cardiovascular</strong> pharmacology. Every section is tagged with its chapter and, where it was lectured, its slide numbers. Where the lecture and the textbook differ, the lecture is flagged.</p>
     </div>
   </div>
 </header>
