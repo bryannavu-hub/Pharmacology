@@ -681,6 +681,57 @@ body:not(.lectonly) .focusnote.on{display:none}
 @media print{.focusbar{display:none} .dx.tb::after{content:""}}
 
 .nx-tag.txt{background:var(--surface-2); color:var(--faint); border:1px solid var(--border)}
+
+/* ---- revision notes: dense, two-column, printable ---- */
+.notesec .nbody{display:grid; grid-template-columns:1fr 1fr; gap:0 26px; padding:16px 20px 18px}
+.notesec .ncol{min-width:0}
+.notesec .nh{
+  font-family:"IBM Plex Mono",monospace; font-size:10px; font-weight:600;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--accent);
+  margin:14px 0 6px; padding-bottom:4px; border-bottom:1px solid var(--border);
+}
+.notesec .ncol > .nh:first-child{margin-top:0}
+.notesec ul.nl{margin:0 0 4px; padding-left:16px; list-style:none}
+.notesec ul.nl li{
+  position:relative; font-size:13px; line-height:1.48; margin:0 0 5px; color:var(--ink);
+}
+.notesec ul.nl li::before{
+  content:"\2022"; position:absolute; left:-13px; color:var(--border-strong);
+}
+.notesec ul.nl li b{font-weight:600; color:var(--accent-ink)}
+.notesec ul.nl li.nx{color:var(--mod)}
+.notesec ul.nl li.nx::before{content:"\26A0"; font-size:10px; left:-15px; color:var(--mod)}
+.notesec ul.nl li.nx b{color:var(--mod)}
+.notesec table.ntab{width:100%; min-width:0; border-collapse:collapse; font-size:12.3px; margin:2px 0 6px}
+.notesec table.ntab td{padding:4px 7px; border-bottom:1px solid var(--border); vertical-align:top}
+.notesec table.ntab td:nth-child(1),.notesec table.ntab td:nth-child(2){
+  font-family:"IBM Plex Mono",monospace; font-size:11.5px; white-space:nowrap; color:var(--accent-ink); font-weight:600}
+.notesec table.ntab td:nth-child(2)::before{content:"vs "; color:var(--faint); font-weight:400}
+.notesec table.ntab td:nth-child(3){color:var(--muted)}
+.notesec ul.nl.qz li{color:var(--muted)}
+.notesec .an{
+  display:inline-block; margin-left:6px; padding:1px 7px; border-radius:5px;
+  background:var(--accent-soft); color:var(--accent-ink); font-weight:600; font-size:12.5px;
+}
+body.notehide .notesec .an{
+  color:transparent; background:var(--surface-2); cursor:pointer; user-select:none;
+  border:1px dashed var(--border-strong); min-width:76px;
+}
+body.notehide .notesec .an.show{color:var(--accent-ink); background:var(--accent-soft); border-color:transparent; cursor:default}
+.notebar{display:flex; gap:8px; flex-wrap:wrap; align-items:center; padding:0 20px 2px}
+.notebar p{margin:0; font-size:12.5px; color:var(--muted); flex:1 1 160px}
+#notehide[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--on-accent)}
+@media (max-width:760px){ .notesec .nbody{grid-template-columns:1fr; gap:0} }
+@media print{
+  .notesec .nbody{grid-template-columns:1fr 1fr; gap:0 18px; padding:10px 12px}
+  .notesec .nh{font-size:8.5px; margin:9px 0 4px}
+  .notesec ul.nl li{font-size:9px; line-height:1.34; margin-bottom:2.5px}
+  .notesec table.ntab{font-size:8.5px}
+  .notesec table.ntab td{padding:2px 4px}
+  .notesec .an{background:none; color:#000; padding:0; font-size:9px}
+  .notebar{display:none}
+  .notesec{break-inside:auto}
+}
 </style>
 <style>
 :root{color-scheme:light dark}
@@ -707,6 +758,7 @@ img{max-width:100%}
     <button id="quiz" aria-pressed="false">Quiz</button>
     <button id="cards">Flashcards</button>
     <button id="nclex">NCLEX</button>
+    <button id="notes">Notes</button>
     <button id="setbtn" class="menubtn dots" aria-expanded="false" aria-controls="setpanel" aria-label="Display settings" title="Display settings">&#8943;</button>
     <p class="hint" id="hint" hidden>Quiz mode blanks the explanation column. Read the term, say the answer, then tap the cell to check.</p>
   </div>
@@ -769,6 +821,11 @@ img{max-width:100%}
     </span>
       <p class="panel-lbl">Jump to a section</p>
       <nav aria-label="Sections">
+    <p class="navgroup" data-ch="01">Revision notes</p>
+    <a href="#notes-found" data-ch="01">Foundations</a>
+    <a href="#notes-ans" data-ch="29">Autonomic</a>
+    <a href="#notes-cv" data-ch="43">Cardiovascular</a>
+    <a href="#notes-resp" data-ch="55">Respiratory</a>
     <p class="navgroup" data-ch="01">Ch 01 · Introduction to Drugs</p>
     <a href="#sources" data-ch="01">Sources &amp; names</a>
     <a href="#approval" data-ch="01">Approval phases</a>
@@ -895,6 +952,259 @@ img{max-width:100%}
 <div class="shell">
 
   <main>
+  <section id="notes-found" data-ch="01 02 03 04 05 06" class="notesec">
+    <div class="head"><span class="slide">Revision notes</span>
+      <h2>Study notes &mdash; foundations</h2>
+      <p>Weeks 1 and 2. Less drug-heavy, more principle-heavy &mdash; and the safety rules here are the ones that show up inside every other unit.</p></div>
+    <div class="notebar"><p>The <b>Say it out loud</b> answers can be covered so you have to retrieve them.</p><button type="button" id="notehide" aria-pressed="false">Hide answers</button></div>
+    <div class="nbody">
+      <div class="ncol">
+        <h3 class="nh">Kinetics vs dynamics</h3>
+        <ul class="nl">
+          <li><b>Kinetics</b> = what the <i>body</i> does to the drug (ADME)</li>
+          <li><b>Dynamics</b> = what the <i>drug</i> does to the body (receptors)</li>
+          <li><b>First pass</b> &mdash; oral only. SL, IM, transdermal, IV all skip it; <b>only IV skips absorption too</b></li>
+          <li><b>Half-life</b> sets the dosing interval &middot; steady state at <b>4&ndash;5 half-lives</b></li>
+          <li><b>Low albumin</b> &rarr; more free drug &rarr; <b>toxicity at a normal dose</b></li>
+          <li><b>Liver failure</b> &rarr; accumulation &rarr; reduce dose. Kidneys cannot compensate</li>
+        </ul>
+        <h3 class="nh">Adverse reactions</h3>
+        <ul class="nl">
+          <li><b>Type I</b> minutes &mdash; anaphylaxis &middot; <b>Type IV</b> days &mdash; rash. <b>Timing classifies it</b></li>
+          <li>Anaphylaxis &rarr; <b>stop the drug first</b>, then airway and help</li>
+          <li><b>Idiosyncratic</b> = unexpected, unexplained (agitation from a sedative)</li>
+          <li><b>Teratogenic risk peaks first trimester</b> &mdash; organogenesis</li>
+          <li>Blood dyscrasia &rarr; infection + bleeding precautions</li>
+        </ul>
+      </div>
+      <div class="ncol">
+        <h3 class="nh">Safety rules that recur everywhere</h3>
+        <ul class="nl">
+          <li><b>Leading zero yes</b> (0.5 mg) &middot; <b>trailing zero never</b> (5.0 mg reads as 50)</li>
+          <li>Spell out <b>units</b> &mdash; "U" misreads as 0 or 4 &middot; write <b>mcg</b></li>
+          <li>A naked decimal = <b>tenfold overdose risk</b> &rarr; clarify, never guess, never rewrite</li>
+          <li><b>Two identifiers that travel with the patient</b> &mdash; name + DOB, not room number</li>
+          <li>After an error: <b>assess the patient first</b>, then notify, document, report</li>
+          <li>Near miss &rarr; <b>ISMP</b> &middot; adverse event &rarr; MedWatch</li>
+          <li><b>Scope:</b> nurses do not alter a dose, rewrite an order, or discontinue a drug</li>
+          <li><b>Refusal:</b> competent adult may refuse &mdash; assess why, inform, notify, document</li>
+          <li><b>Teach-back</b> checks <i>your</i> explanation, not the patient</li>
+        </ul>
+        <h3 class="nh">Challenges to therapy</h3>
+        <ul class="nl">
+          <li><b>Inhibitor &rarr; levels up</b> (grapefruit) &middot; <b>inducer &rarr; levels down</b> (St John's wort)</li>
+          <li>Supplements are <b>regulated but not approved</b> &mdash; ask by name</li>
+          <li>Stacked OTC products &rarr; <b>duplicate ingredients</b> &rarr; unintended overdose</li>
+          <li>Cost and literacy are barriers you can act on &mdash; ask before labelling non-adherence</li>
+        </ul>
+        <h3 class="nh">Say it out loud</h3>
+        <ul class="nl qz">
+          <li>Steady state after? <span class="an">4&ndash;5 half-lives</span></li>
+          <li>Albumin 1.8, normal dose &rarr;? <span class="an">more free drug, toxicity</span></li>
+          <li>Rash at 60 hours is type? <span class="an">IV, cell-mediated</span></li>
+          <li>Order reads ".5 mg" &rarr;? <span class="an">clarify &mdash; do not give or rewrite</span></li>
+          <li>Grapefruit does what to levels? <span class="an">raises them &mdash; CYP3A4 inhibition</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section id="notes-ans" data-ch="29 30 31 32 33" class="notesec">
+    <div class="head"><span class="slide">Revision notes</span>
+      <h2>Study notes &mdash; autonomic</h2>
+      <p>Condensed for revision, not reference. Read it top to bottom in about ten minutes; everything here is derivable from the four receptors.</p></div>
+    <div class="nbody">
+      <div class="ncol">
+        <h3 class="nh">The four receptors &mdash; everything else follows</h3>
+        <ul class="nl">
+          <li><b>&alpha;1</b> SQUEEZE &middot; vessels &middot; stimulate &rarr; BP&uarr; &middot; block &rarr; BP&darr;, orthostasis</li>
+          <li><b>&beta;1</b> ONE HEART &middot; stimulate &rarr; HR&uarr; force&uarr; &middot; block &rarr; HR&darr; BP&darr;</li>
+          <li><b>&beta;2</b> TWO LUNGS &middot; stimulate &rarr; bronchodilate &middot; block &rarr; <b>bronchospasm</b></li>
+          <li><b>M</b> MOIST + MOVING &middot; stimulate &rarr; SLUDGE &middot; block &rarr; dry, dilated, retained, confused</li>
+          <li class="nx">&alpha;2 is <b>not</b> on your list &mdash; skip clonidine, dexmedetomidine, guanfacine</li>
+        </ul>
+        <h3 class="nh">Reverse it to get adverse effects</h3>
+        <ul class="nl">
+          <li>Blockers cause the <i>opposite</i> of stimulation. You never memorise an adverse-effect list &mdash; you derive it.</li>
+          <li>Nonselective &beta; blocker = &beta;1 + &beta;2 &rarr; the asthma problem</li>
+        </ul>
+        <h3 class="nh">Prototypes</h3>
+        <ul class="nl">
+          <li><b>epinephrine</b> &alpha;+&beta; &middot; anaphylaxis &middot; verify route &amp; concentration</li>
+          <li><b>norepinephrine</b> &alpha;1 &middot; shock &middot; <b>extravasation &rarr; phentolamine</b></li>
+          <li><b>phenylephrine</b> &alpha;1 &middot; expect <b>reflex bradycardia</b></li>
+          <li><b>albuterol</b> &beta;2 &middot; rescue &middot; tremor + tachycardia expected &middot; K&#8314;&darr;</li>
+          <li><b>metoprolol</b> &beta;1 &middot; apical pulse 1 min &middot; never stop abruptly</li>
+          <li><b>propranolol</b> &beta;1+&beta;2 &middot; <b>question in asthma</b></li>
+          <li><b>prazosin</b> &alpha;1 block &middot; first dose at bedtime &middot; syncope</li>
+          <li><b>tamsulosin</b> &middot; tell the eye surgeon &mdash; floppy iris</li>
+          <li><b>bethanechol</b> M agonist &middot; <b>rule out obstruction first</b> &middot; empty stomach</li>
+          <li><b>pyridostigmine</b> &middot; 30&ndash;60 min <b>before meals</b></li>
+          <li><b>atropine</b> M block &middot; bradycardia &middot; success = HR rises</li>
+        </ul>
+      </div>
+      <div class="ncol">
+        <h3 class="nh">Traps</h3>
+        <ul class="nl">
+          <li><b>Therapeutic vs side effect.</b> Albuterol worked if <i>wheeze&darr; and air moves</i> &mdash; not if HR rose.</li>
+          <li><b>Cholinergic vs myasthenic crisis.</b> Both = weakness. Discriminator is <b>SLUDGE alongside it</b> &rarr; too much drug.</li>
+          <li><b>Retention</b> is anticholinergic. <b>Urination</b> is cholinergic. These mirror each other &mdash; the commonest mix-up.</li>
+          <li><b>New confusion in an older adult</b> = check the med list before blaming age or infection. Beers: anticholinergics.</li>
+          <li><b>Anticholinergic burden</b> &mdash; three mild drugs stack into one strong effect.</li>
+          <li><b>Hold parameters</b> come from the written order, not a remembered number.</li>
+        </ul>
+        <h3 class="nh">Must-not-confuse</h3>
+        <table class="ntab"><tbody>
+          <tr><td>albuterol</td><td>salmeterol</td><td>rescue / maintenance</td></tr>
+          <tr><td>metoprolol</td><td>propranolol</td><td>&beta;1 only / &beta;1+&beta;2</td></tr>
+          <tr><td>bethanechol</td><td>atropine</td><td>opposites &mdash; one voids, one retains</td></tr>
+          <tr><td>SLUDGE</td><td>dry/dilated</td><td>cholinergic / anticholinergic</td></tr>
+        </tbody></table>
+        <h3 class="nh">Say it out loud</h3>
+        <ul class="nl qz">
+          <li>Which receptor opens bronchi? <span class="an">&beta;2</span></li>
+          <li>Antidote for norepinephrine extravasation? <span class="an">phentolamine</span></li>
+          <li>Why pyridostigmine before meals? <span class="an">peak strength for swallowing</span></li>
+          <li>Atropine working looks like? <span class="an">HR rises, perfusion improves</span></li>
+          <li>Beta blocker in diabetes hides what? <span class="an">tachycardia of hypoglycemia &mdash; teach sweating/hunger</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section id="notes-cv" data-ch="42 43 44 45 46 47 48 49 51" class="notesec">
+    <div class="head"><span class="slide">Revision notes</span>
+      <h2>Study notes &mdash; cardiovascular</h2>
+      <p>The whole unit hangs off four levers and one electrolyte. Learn those and the drug lists stop being lists.</p></div>
+    <div class="nbody">
+      <div class="ncol">
+        <h3 class="nh">The four levers</h3>
+        <ul class="nl">
+          <li><span class="mono">CO = HR &times; SV</span> &nbsp; <span class="mono">BP &asymp; CO &times; SVR</span></li>
+          <li><b>Rate</b> &darr; beta blockers, diltiazem, verapamil, digoxin</li>
+          <li><b>Contractility</b> &darr; beta blockers, non-DHP CCB &middot; &uarr; digoxin, dobutamine</li>
+          <li><b>Volume / preload</b> &darr; furosemide, HCTZ, spironolactone, nitrates</li>
+          <li><b>Vessel tone / afterload</b> &darr; ACEI, ARB, ARNI, amlodipine, &alpha;1 blockers</li>
+          <li class="nx">Low BP? Ask <i>which lever is on the floor</i> &mdash; bradycardic &rarr; rate drugs; dry &rarr; the diuretic</li>
+        </ul>
+        <h3 class="nh">Potassium &mdash; the thread</h3>
+        <ul class="nl">
+          <li><b>&uarr;K</b> ACEI &middot; ARB &middot; ARNI &middot; spironolactone</li>
+          <li><b>&darr;K</b> furosemide &middot; hydrochlorothiazide</li>
+          <li><b>Low K + digoxin = toxicity at a normal level</b> &mdash; they compete at the Na/K-ATPase</li>
+          <li>Peaked T = high K &middot; flat T + U wave = low K</li>
+        </ul>
+        <h3 class="nh">Derive, don't memorise</h3>
+        <ul class="nl">
+          <li><b>RAAS blocked</b> &rarr; vasodilation + less aldosterone &rarr; <b>BP&darr;, K&uarr;, creatinine may rise</b></li>
+          <li><b>ACE cough/angioedema</b> = bradykinin builds up. ARBs skip bradykinin &rarr; less cough</li>
+          <li><b>Amlodipine edema</b> = capillary pressure, <i>not</i> fluid overload &mdash; no weight gain, no crackles, diuretic won't fix</li>
+          <li><b>Loops lose Ca, thiazides keep Ca</b> &mdash; from where they act</li>
+        </ul>
+        <h3 class="nh">Reversal pairs</h3>
+        <ul class="nl">
+          <li>heparin &rarr; <b>protamine</b> &middot; warfarin &rarr; <b>vitamin K</b> &middot; digoxin &rarr; <b>immune Fab</b></li>
+        </ul>
+      </div>
+      <div class="ncol">
+        <h3 class="nh">Signature dangers</h3>
+        <ul class="nl">
+          <li><b>Angioedema</b> on ACEI &rarr; airway emergency, drug stopped for good</li>
+          <li><b>Digoxin toxicity</b> &rarr; anorexia/nausea first, then <b>yellow halos</b>, then bradycardia. Normal level does not exclude it</li>
+          <li><b>HIT</b> &rarr; platelets fall but the risk is <b>clotting</b>. Stop all heparin incl. flushes. Never transfuse platelets</li>
+          <li><b>Statin + dark urine</b> &rarr; myoglobin = kidney injury, not blood</li>
+          <li><b>Nitrate + PDE-5</b> &rarr; refractory hypotension. Sildenafil ~24 h, tadalafil ~36 h &mdash; an hour apart is <i>not</i> safe</li>
+          <li><b>Amiodarone</b> &rarr; HEART &middot; LUNGS &middot; THYROID &middot; LIVER. New cough = report</li>
+          <li><b>Beta blocker + diltiazem/verapamil</b> &rarr; additive AV block</li>
+          <li><b>Entresto</b> &rarr; 36-hour washout from any ACEI</li>
+          <li><b>Non-DHP CCB in reduced-EF HF</b> &rarr; contraindicated</li>
+        </ul>
+        <h3 class="nh">Must-not-confuse</h3>
+        <table class="ntab"><tbody>
+          <tr><td>amlodipine</td><td>diltiazem</td><td>vessels / AV node</td></tr>
+          <tr><td>antiplatelet</td><td>anticoagulant</td><td>platelet plug / cascade</td></tr>
+          <tr><td>anticoagulant</td><td>thrombolytic</td><td>prevents / dissolves</td></tr>
+          <tr><td>INR</td><td>DOAC</td><td>warfarin only / renal function</td></tr>
+          <tr><td>iron dark stool</td><td>melena</td><td>well / dizzy &amp; weak</td></tr>
+          <tr><td>folate</td><td>B12</td><td>same anemia, only B12 has neuro signs</td></tr>
+        </tbody></table>
+        <h3 class="nh">Say it out loud</h3>
+        <ul class="nl qz">
+          <li>Why does low K cause digoxin toxicity? <span class="an">they compete at the same pump site</span></li>
+          <li>Ankle edema on amlodipine &mdash; what rules out overload? <span class="an">stable weight, clear lungs</span></li>
+          <li>Platelets 80k on heparin + leg pain? <span class="an">HIT &mdash; stop all heparin</span></li>
+          <li>Apixaban, INR 1.1 &mdash; concerning? <span class="an">no, INR is not used for DOACs</span></li>
+          <li>Creatinine 0.9&rarr;2.1 on digoxin, K normal? <span class="an">renal clearance fell &mdash; level is rising</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section id="notes-resp" data-ch="53 54 55" class="notesec">
+    <div class="head"><span class="slide">Revision notes</span>
+      <h2>Study notes &mdash; respiratory</h2>
+      <p>One question decides most respiratory items: <b>symptoms NOW, or preventing future symptoms?</b></p></div>
+    <div class="nbody">
+      <div class="ncol">
+        <h3 class="nh">Rescue vs maintenance</h3>
+        <ul class="nl">
+          <li><b>RESCUE</b> &mdash; albuterol. That is the list.</li>
+          <li><b>MAINTENANCE</b> &mdash; salmeterol, formoterol, tiotropium, ICS, montelukast</li>
+          <li>Ipratropium = SAMA, acute <i>adjunct</i> &middot; tiotropium = LAMA, maintenance</li>
+          <li class="nx">LABA in asthma must sit inside an <b>ICS-containing</b> plan &mdash; never alone</li>
+          <li>Frequent rescue use = <b>poor control</b>, not a refill</li>
+        </ul>
+        <h3 class="nh">Two ways to open an airway</h3>
+        <ul class="nl">
+          <li>Sympathetic &rarr; dilates. <b>&beta;2 agonist presses the accelerator</b></li>
+          <li>Parasympathetic &rarr; constricts. <b>Anticholinergic releases the brake</b></li>
+          <li>&rarr; side effects differ: <b>tremor/tachycardia</b> vs <b>dry mouth</b></li>
+        </ul>
+        <h3 class="nh">Hypoxia</h3>
+        <ul class="nl">
+          <li><b>Early</b> restless &middot; anxious &middot; tachycardic &middot; pale &mdash; looks like anxiety; do not sedate</li>
+          <li><b>Late</b> cyanosis &middot; confusion &middot; <b>bradycardia</b> &middot; distress</li>
+          <li>SpO&#8322; 95&ndash;100%, &ge;92% in illness &middot; PaO&#8322; = oxygenation &middot; <b>PaCO&#8322; = ventilation</b></li>
+          <li>hypox<b>ia</b> = tissues &middot; hypox<b>emia</b> = arterial blood</li>
+        </ul>
+        <h3 class="nh">Inhaler order</h3>
+        <ul class="nl">
+          <li>bronchodilator &rarr; device-specific wait &rarr; ICS &rarr; <b>rinse &amp; spit</b> &rarr; spacer if prescribed</li>
+          <li class="nx">No single universal wait time &mdash; follow the device</li>
+        </ul>
+      </div>
+      <div class="ncol">
+        <h3 class="nh">Signature dangers</h3>
+        <ul class="nl">
+          <li><b>Silent chest</b> &mdash; drowsy + diminished breath sounds = emergency. A wheeze that returns <i>with better air movement</i> is progress</li>
+          <li><b>Montelukast</b> &rarr; agitation, vivid dreams, mood change, suicidal thoughts. Outranks headache/tremor reported alongside</li>
+          <li><b>Theophylline</b> 10&ndash;20 mcg/mL. Early: N/V, restless, tachycardic. Late: arrhythmia, seizure. <b>Quitting smoking raises the level</b></li>
+          <li><b>Benzonatate swallowed whole</b> &mdash; chewed it numbs the throat, kills the gag reflex. Lethal to small children</li>
+          <li><b>Pseudoephedrine</b> &rarr; BP&uarr; HR&uarr; &mdash; caution in HTN</li>
+          <li><b>Oxymetazoline &gt;3 days</b> &rarr; rebound congestion. More spray makes it worse</li>
+          <li><b>Acetylcysteine</b> &rarr; can trigger bronchospasm</li>
+          <li><b>ICS</b> &rarr; thrush + hoarseness. Rinse and spit. Not for an attack</li>
+        </ul>
+        <h3 class="nh">Must-not-confuse</h3>
+        <table class="ntab"><tbody>
+          <tr><td>albuterol</td><td>salmeterol</td><td>rescue / maintenance</td></tr>
+          <tr><td>ipratropium</td><td>tiotropium</td><td>SAMA / LAMA</td></tr>
+          <tr><td>guaifenesin</td><td>acetylcysteine</td><td>thins / dissolves</td></tr>
+          <tr><td>nasal steroid</td><td>decongestant spray</td><td>days to work / instant</td></tr>
+          <tr><td>1st gen antihist.</td><td>2nd gen</td><td>sedating+anticholinergic / not</td></tr>
+        </tbody></table>
+        <h3 class="nh">Recognition only</h3>
+        <ul class="nl">
+          <li>biologics (omalizumab, dupilumab) &middot; cromolyn &middot; surfactants &mdash; class, role, route. Do not sink time here.</li>
+        </ul>
+        <h3 class="nh">Say it out loud</h3>
+        <ul class="nl qz">
+          <li>Wheeze gone but patient drowsy? <span class="an">silent chest &mdash; emergency</span></li>
+          <li>Why rinse after ICS? <span class="an">prevents thrush and hoarseness</span></li>
+          <li>Patient quits smoking on theophylline? <span class="an">clearance falls, level rises, watch toxicity</span></li>
+          <li>Nasal spray day 10, worse? <span class="an">rebound &mdash; stop the spray</span></li>
+          <li>Productive cough + fever, wants a suppressant? <span class="an">assess infection first</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
   <section id="sources" data-ch="01">
     <div class="head"><span class="slide">Ch 01 &middot; pp. 4&ndash;7 &middot; Slides 6, 9</span>
@@ -4143,6 +4453,28 @@ BANK.forEach(function(q){ if(q.d===undefined) q.d=1; });
   var saved='0'; try{ saved=localStorage.getItem(KEY)||'0'; }catch(e){}
   apply(saved==='1');
   btn.addEventListener('click',function(){ apply(!document.body.classList.contains('lectonly')); });
+})();
+
+(function(){
+  /* Notes button jumps to the revision notes; the hide toggle turns them into active recall. */
+  var btn=document.getElementById('notes');
+  if(btn) btn.addEventListener('click',function(){
+    var t=document.getElementById('notes-found')||document.querySelector('.notesec');
+    if(t){ t.scrollIntoView({behavior:'smooth',block:'start'}); }
+  });
+  var hide=document.getElementById('notehide');
+  if(hide) hide.addEventListener('click',function(){
+    var on=!document.body.classList.contains('notehide');
+    document.body.classList.toggle('notehide',on);
+    hide.setAttribute('aria-pressed',on?'true':'false');
+    hide.textContent = on ? 'Answers hidden' : 'Hide answers';
+    if(!on) document.querySelectorAll('.notesec .an.show').forEach(function(a){a.classList.remove('show');});
+  });
+  document.addEventListener('click',function(e){
+    if(!document.body.classList.contains('notehide')) return;
+    var a=e.target.closest('.notesec .an');
+    if(a) a.classList.add('show');
+  });
 })();
 </script>
 </body>
